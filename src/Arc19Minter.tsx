@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { SessionWallet } from "algorand-session-wallet";
 import AlgorandWalletConnector from "./AlgorandWalletConnector";
 import { Logo } from "./logo";
+import { FileViewer } from "./FileViewer";
 import {
   Alignment,
   AnchorButton,
@@ -290,10 +291,10 @@ function Arc19Minter() {
               style={{ alignItems: "center" }}
             >
               <h1 className="MuiTypography-root jss10 MuiTypography-h1">
-                <span>NFT</span> Minter
+                <span>ARC 19 NFT</span> Minter
               </h1>
               <h6 className="MuiTypography-root jss11 MuiTypography-subtitle1">
-                Mint NFT on polygon at speed of light!
+                Mint ARC19 NFTs on Algorand at the speed of light!
               </h6>
             </div>
           </div>
@@ -327,6 +328,7 @@ function Arc19Minter() {
                         Supports JPG, PNG and MP4 videos. Max file size : 10MB.
                       </p>
                     </div>
+                    <FileViewer></FileViewer>
                   </div>
                 </div>
                 <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
@@ -335,48 +337,25 @@ function Arc19Minter() {
                       <label htmlFor="name">Title</label>
                       <input
                         type="text"
-                        className="inputErr"
                         defaultValue=""
-                        required=""
                         id="name"
+                        required={true}
                       />
-                      <p className="jss32">Name cannot be empty</p>
+                      <p className="jss32" style={{display:"none"}}>Name cannot be empty</p>
                     </div>
                   </div>
                   <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                     <div className="jss16">
-                      <grammarly-extension
-                        data-grammarly-shadow-root="true"
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          pointerEvents: "none"
-                        }}
-                        className="cGcvT"
-                      />
-                      <grammarly-extension
-                        data-grammarly-shadow-root="true"
-                        style={{
-                          mixBlendMode: "darken",
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          pointerEvents: "none"
-                        }}
-                        className="cGcvT"
-                      />
                       <label htmlFor="description">Description</label>
                       <textarea
                         type="text"
-                        className="inputErr"
                         style={{ minHeight: 100 }}
-                        required=""
                         id="description"
                         spellCheck="false"
+                        required={true}
                         defaultValue={""}
                       />
-                      <p className="jss32">Add description for your token</p>
+                      <p style={{display:"none"}} className="jss32">Add description for your token</p>
                     </div>
                   </div>
                   <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2">
@@ -387,18 +366,18 @@ function Arc19Minter() {
                           className="MuiButtonBase-root MuiButton-root MuiButton-text jss31 Mui-disabled Mui-disabled"
                           tabIndex={-1}
                           type="button"
-                          disabled=""
+                          disabled={true}
                         >
-                          <span className="MuiButton-label">ERC721</span>
+                          <span className="MuiButton-label">ARC19</span>
                         </button>
                         <button
-                          className="MuiButtonBase-root MuiButton-root MuiButton-text jss31"
-                          tabIndex={0}
-                          type="button"
-                        >
-                          <span className="MuiButton-label">ERC1155</span>
-                          <span className="MuiTouchRipple-root" />
-                        </button>
+    className="MuiButtonBase-root MuiButton-root MuiButton-text jss31"
+    tabIndex={-1}
+    type="button"
+    disabled={false}
+  >
+    <span className="MuiButton-label">ARC69</span>
+  </button>
                       </div>
                     </div>
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
@@ -429,11 +408,11 @@ function Arc19Minter() {
                     </div>
                   </div>
                   <p className="jss36">
-                    Once your NFT is minted on the Polygon blockchain, you will
+                    Once your NFT is minted on the Algorand blockchain, you will
                     not be able to edit or update any of its information.
                     <br />
                     <br />
-                    You agree that any information uploaded to the Polygon's NFT
+                    You agree that any information uploaded to the Algorand's NFT
                     Minter will not contain material subject to copyright or
                     other proprietary rights, unless you have necessary
                     permission or are otherwise legally entitled to post the
@@ -474,14 +453,13 @@ function Arc19Minter() {
           >
             <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
               <p className="jss50">
-                Polygon is a protocol and a framework for building and
-                connecting Ethereum-compatible blockchain networks
+              Algorand is a carbon-negative, pure proof-of-stake blockchain network built to last. 
               </p>
             </div>
             <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
               <div className="jss52">
                 <a
-                  href="https://twitter.com/0xPolygon"
+                  href="https://twitter.com/headline_crypto"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -498,7 +476,7 @@ function Arc19Minter() {
                   </div>
                 </a>
                 <a
-                  href="https://discord.gg/polygon"
+                  href="https://discord.gg/headline_crypto"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -538,7 +516,7 @@ function Arc19Minter() {
           overflowWrap: "normal"
         }}
       >
-        NFT Minter
+        ARC19 NFT Minter
       </p>
     </next-route-announcer>
     <div id="WEB3_CONNECT_MODAL_ID">
@@ -617,7 +595,6 @@ function Arc19Minter() {
 
       <div className="container body-2">
       </div>
-      <ClaimDialog triggerHelp={triggerHelp} open={open} signed={signed} />
     </div>
   );
 }
