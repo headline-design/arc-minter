@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { SessionWallet } from "algorand-session-wallet";
 import AlgorandWalletConnector from "./AlgorandWalletConnector";
+import { Arc19Minter } from "./Arc19Minter";
 import {
   Alignment,
   AnchorButton,
@@ -318,7 +319,7 @@ function App() {
         </Navbar.Group>
       </Navbar>
       <div className="container body-1">
-        
+        <Arc19Minter></Arc19Minter>
         <Card elevation={Elevation.FOUR} className={initial?"ticket-card":"ticket-card-wide"}>
           <div className="content">
             <div className="content-piece">

@@ -1,434 +1,242 @@
-html,
-body,
-#root,
-.App {
-    height: 100%;
-    width: 100%;
-    background: #000;
-}
-
-button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:hover,
-button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:active {
-    background-color: #7b78ff;
-    border-color: #9896ff !important;
-    color: #000 !important;
-}
-
-.bp3-button.bp3-outlined.bp3-intent-primary {
-    border-color: rgb(38 217 202 / 10%);
-    color: #26d9ca;
-    border-radius: 8px;
-    background-color: rgb(38 217 202 / 10%);
-}
-
-.bp3-button.bp3-outlined.bp3-intent-primary:hover {
-    border-color: rgb(38 217 202 / 41%);
-    background-color: rgb(38 217 202 / 20%);
-    color: #26d9ca;
-}
-
-.content-piece img {
-    max-width: 95%;
-    border-radius: 0.375rem;
-}
-
-
-
-.bp3-button.bp3-outlined.bp3-intent-primary:focus {
-    border-color: rgb(38 217 202 / 10%);
-    background-color: rgb(38 217 202 / 22%) !important;
-    color: #26d9ca !important;
-    outline: none !important;
-    border-color: #26d9ca;
-}
-
-.bp3-dialog-body {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    line-height: 18px;
-    margin: 0px;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    padding: 10px
-}
-
-
-
-.bp3-dialog{
-    padding-bottom:0px
-}
-
-.wallet-option-list li {
-    margin: 1em;
-}
-
-
-
-:focus {
-    outline: rgb(23 19 189 / 60%) auto 2px !important;
-}
-
-button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:focus {
-    background-color: #7b78ff;
-    color: #000 !important;
-}
-
-.margin-0 {
-    margin-bottom: 2px;
-}
-
-.container.footer-container {
-    background-color: black;
-    color: #a3a3a3;
-    padding: 3rem;
-    text-align: center;
-    display: block;
-}
-
-a {
-    color: #7b78ff;
-    text-decoration: none;
-}
-
-.bp3-html-select.bp3-minimal select:hover,
-.bp3-select.bp3-minimal select:hover {
-    background: rgba(167, 182, 194, 0.3);
-}
-
-.bp3-html-select select:hover,
-.bp3-select select:hover {
-    color: #7b78ff
-}
-
-.bp3-overlay-backdrop {
-    background-color: rgb(0 0 0 / 60%);
-}
-
-.bp3-heading {
-    color: #fff;
-}
-.bp3-dialog {
-    box-shadow: rgb(0 0 0 / 50%) 0px 20px 25px -5px, rgb(0 0 0 / 25%) 0px 10px 10px -5px, rgb(255 255 255 / 10%) 0px 0px 0px 1px inset;
-    border-radius: 11px;
-    background: #242424 !important;
-    color: #f9f9f9;
-}
-
-button.bp3-button.bp3-minimal {
-    fill: currentColor !important;
-    color: #f9f9f9;
-}
-
-button#wallet-connect{
-    color: #fff !important;
-    background-color: rgba(44, 47, 54, 0.523) !important;
-    border: 1px solid #404040 !important;
-}
-
-button#wallet-connect:hover,button#wallet-connect:active,button#wallet-connect:focus,button#wallet-connect:visited {
-    background: rgb(44, 47, 54) !important;
-    color: #9896ff !important;
-    border-color:  1px solid #404040 !important;
-}
-
-select:hover,
-select:focus,
-select:active {
-    background-color: rgb(123 120 255 / 10%) !important;
-    color: #9896ff !important;
-}
-
-.bp3-html-select select,
-.bp3-select select {
-    color: #959595;
-    font-size: .875rem;
-}
-
-.bp3-icon bp3-icon-log-out {
-    color: unset
-}
-
-.bp3-button .bp3-icon,
-.bp3-button .bp3-icon-standard,
-.bp3-button .bp3-icon-large {
-    color: unset;
-}
-
-button.bp3-button.bp3-disabled.bp3-large.bp3-minimal.bp3-outlined.bp3-intent-success:hover {
-    background: rgb(123, 120, 255) !important;
-    color: rgb(0, 0, 0) !important;
-}
-
-.bp3-button.bp3-outlined.bp3-intent-primary:hover {
-    border-color: rgb(38 217 202 / 41%);
-    background-color: rgb(38 217 202 / 20%) !important;
-    color: #26d9ca !important;
-}
-
-
-button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:hover,
-button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:active,
-button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:focus {
-    background-color: #7b78ff !important;
-    border-color: #9896ff !important;
-    color: #000 !important;
-}
-
-select:hover,
-.bp3-button.bp3-minimal:hover,
-.bp3-button.bp3-minimal:focus {
-    background-color: rgb(123 120 255 / 10%) !important;
-    color: #9896ff !important;
-}
-
-
-.bp3-button.bp3-minimal:hover {
-    color: #9896ff;
-}
-
-.body-1,
-.body-2 {
-    background-color: #090909;
-}
-
-a:hover {
-    color: #7b78ff;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.header-icon {
-    max-width: 5rem;
-    width: 45px;
-    height: auto;
-    margin-top: 0.3rem;
-    color: white;
-}
-
-.bp3-button.bp3-outlined.bp3-intent-success:hover,
-.bp3-button.bp3-outlined.bp3-intent-success:focus {
-    background: #5855f3
-}
-
-.wallet-option-list {
-    display: initial;
-}
-
-.bp3-button.bp3-large:hover,
-.bp3-large .bp3-button:hover {
-    background-color: rgb(67, 56, 202) !important;
-    color: white !important;
-    fill: white !important;
-}
-
-.help-text p {
-    color: white;
-}
-
-.wallet-con {
-    text-indent: 0.3rem;
-    margin: 1rem;
-    margin-left: 0px;
-    margin-right: 0px;
-    font-size: 1.1rem;
-}
-
-.bp3-button.bp3-large.wallet-btn> :last-child {
-    margin-right: 0;
-    width: 100%;
-}
-
-.wallet-option {
-    display: flex;
-    align-items: center;
-    width: 100% !important;
-    justify-content: space-between;
-}
-
-svg.r-ff-icon-walletIcon {
-    overflow: visible;
-    margin-right: .3rem;
-}
-
-.bp3-dialog-header {
-    background-color: unset;
-    border-bottom: 1px solid #404040;
-    padding-right: 24px !important;
-    padding-left: 24px !important;
-    padding: 12px;
-}
-
-.header-icon:hover {
-    color: #d6d6d7;
-}
-
-.bp3-dialog-header .bp3-heading {
-    font-size: 1rem;
-}
-
-
-.container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px;
-}
-
-.content {
-    display: flex;
-    flex-flow: row;
-    align-items: flex-start;
-}
-
-@media (max-width: 756px) {
-    .content {
-        flex-direction: column;
-    }
-}
-
-.ticket-card {
-    max-width: 650px;
-    background: rgb(36 36 36);
-    border-radius: 12px;
-    box-shadow: 0 0 0 1px rgb(245 245 245 / 10%);
-}
-
-.ticket-card:hover {
-    box-shadow: 0 0 0 2px #7b78ff;
-}
-
-.content-piece {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    margin: 0.5rem;
-    flex-basis: fit-content;
-}
-
-.content-piece img {
-    max-width: 95%;
-}
-
-.content-details {
-    display: flex;
-    flex-direction: column;
-    margin: 0.5rem;
-    overflow-wrap: break-word;
-}
-
-.collect-button {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
 
-.wallet-option-list {
-    list-style: none;
-}
-
-.wallet-option-list li {
-    margin: 1em;
-}
-
-.wallet-option {
-    display: flex;
-    align-items: center;
-}
-
-.wallet-branding {
-    width: 2em;
-    margin-right: 0.5em
-}
-
-
-.help-container {
-    display: flex;
-    flex-flow: column;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px;
-    padding-top: 5px;
-}
-
-.help-container-2 {
-    padding-top: 0px;
-}
-
-.help-text {
-    padding: 5px;
-}
-
-
-.help-text p {
-    overflow-wrap: break-word;
-}
-
-.card {
-    margin: 0 0 0.5rem;
-    position: relative;
-    padding: 1.5rem;
-    border-radius: 0.375rem;
-    background: #171717;
-    color: #fafafa;
-    box-shadow: 0 0 0 1px rgb(255 255 255 / 15%);
-}
-
-.card-flex {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
-
-.meta-card {
-    color: #fafafa;
-    background: rgb(249 249 249 / 5%);
-    border-radius: 0.375rem;
-    border: 1px solid #242424;
-    padding: 1rem;
-    cursor: pointer;
-}
-
-
-button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning.warning-btn {
-    background: unset !important;
-    color: #bf7326 !important;
-    border-color: unset !important;
-}
-
-.bp3-button.bp3-outlined.bp3-intent-warning:hover {
-    background: rgba(217, 130, 43, 0.15) !important;
-    color: #bf7326 !important;
-}
-
-img.hashlock {
-    box-shadow: 0 0 0 1px rgb(0 0 0 / 10%);
-    border-radius: 12px;
-    margin-top: 1rem;
-}
-
-.ticket-card-wide {
-    max-width: 900px;
-    background: rgb(36 36 36);
-    border-radius: 12px;
-    box-shadow: 0 0 0 1px rgb(245 245 245 / 10%);
-}
-
-b {
-    color: #7b78ff;
-}
-
-.button-connected {
-    color: #575757;
-    border-radius: 6px;
-    background-color: #3d3d3d;
-    border-color: #575757;
-    border: 1px solid;
-}
-
-.bp3-icon.bp3-icon-small-cross > svg {
-    width: 28px !important;
-    height: 24px !important;
-}
+/*! CSS Used from: Embedded */
+*,*::before,*::after{box-sizing:inherit;}
+body{color:rgba(0, 0, 0, 0.87);margin:0;font-size:0.875rem;font-family:"Nunito Sans",sans-serif;font-weight:400;line-height:1.43;background-color:#fafafa;}
+@media print{
+body{background-color:#fff;}
+}
+/*! CSS Used from: Embedded */
+.MuiPaper-root{color:rgba(0, 0, 0, 0.87);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;background-color:#fff;}
+.MuiPaper-elevation4{box-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);}
+/*! CSS Used from: Embedded */
+.MuiAppBar-root{width:100%;display:flex;z-index:1100;box-sizing:border-box;flex-shrink:0;flex-direction:column;}
+.MuiAppBar-positionStatic{position:static;}
+.MuiAppBar-colorPrimary{color:#fff;background-color:#7167D9;}
+/*! CSS Used from: Embedded */
+.MuiContainer-root{width:100%;display:block;box-sizing:border-box;margin-left:auto;margin-right:auto;padding-left:16px;padding-right:16px;}
+@media (min-width:600px){
+.MuiContainer-root{padding-left:24px;padding-right:24px;}
+}
+@media (min-width:1280px){
+.MuiContainer-maxWidthLg{max-width:1280px;}
+}
+/*! CSS Used from: Embedded */
+.MuiSvgIcon-root{fill:currentColor;width:1em;height:1em;display:inline-block;font-size:1.5rem;transition:fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;flex-shrink:0;user-select:none;}
+/*! CSS Used from: Embedded */
+.jss1{margin:auto;padding:0;max-width:1080px;}
+@media (max-width:1120px){
+.jss1{padding:0 20px;}
+}
+@media (max-width:599px){
+.jss1{padding:0 15px;}
+}
+.jss2{height:80px;position:relative;box-shadow:none;border-bottom:2px solid #7533E2;background-color:#fff;}
+.jss3{display:flex;align-items:center;justify-content:space-between;}
+.jss4{height:40px;}
+@media (max-width:599px){
+.jss4{height:30px;}
+}
+.jss5{width:100%;display:flex;align-items:center;padding-left:30px;justify-content:space-between;}
+@media (max-width:859px){
+.jss5{justify-content:flex-end;}
+}
+.jss6{display:flex;}
+@media (max-width:859px){
+.jss6{top:80px;left:0;width:100%;height:0;padding:0;overflow:hidden;position:absolute;transition:all 0.5s ease;justify-content:space-evenly;background-color:white;}
+}
+.jss6 .menuItem{color:#000;border:1px solid #E8E8E8;height:36px;display:flex;padding:0 15px 0 12px;font-size:12px;align-items:center;font-weight:700;line-height:36px;margin-right:15px;border-radius:19px;text-decoration:none;background-color:transparent;}
+.jss6 .menuItemIcon{fill:#6E798F;width:20px;height:20px;transition:none;margin-right:4px;}
+.jss6 .menuItem.active{color:#fff;border-color:#8247E5;background-color:#8247E5;}
+.jss6 .menuItem:hover{color:#fff;border-color:#8247E5;background-color:#8247E5;}
+@media (max-width:859px){
+.jss6 .menuItem{text-align:center;line-height:50px;margin-right:0;}
+}
+.jss6 .menuItem:hover svg{fill:#EDF0F7;}
+.jss6 .menuItem.active svg{fill:#EDF0F7;}
+.jss7{display:none;}
+@media (max-width:859px){
+.jss7{color:black;display:block;margin-top:6px;margin-left:20px;}
+}
+/*! CSS Used from: Embedded */
+.MuiGrid-container{width:100%;display:flex;flex-wrap:wrap;box-sizing:border-box;}
+.MuiGrid-item{margin:0;box-sizing:border-box;}
+.MuiGrid-spacing-xs-2{width:calc(100% + 16px);margin:-8px;}
+.MuiGrid-spacing-xs-2 > .MuiGrid-item{padding:8px;}
+.MuiGrid-spacing-xs-3{width:calc(100% + 24px);margin:-12px;}
+.MuiGrid-spacing-xs-3 > .MuiGrid-item{padding:12px;}
+.MuiGrid-grid-xs-12{flex-grow:0;max-width:100%;flex-basis:100%;}
+@media (min-width:600px){
+.MuiGrid-grid-sm-6{flex-grow:0;max-width:50%;flex-basis:50%;}
+.MuiGrid-grid-sm-8{flex-grow:0;max-width:66.666667%;flex-basis:66.666667%;}
+}
+@media (min-width:960px){
+.MuiGrid-grid-md-6{flex-grow:0;max-width:50%;flex-basis:50%;}
+}
+/*! CSS Used from: Embedded */
+.jss47{margin:auto;padding:0;max-width:1080px;}
+@media (max-width:1120px){
+.jss47{padding:0 20px;}
+}
+@media (max-width:599px){
+.jss47{padding:0 15px;}
+}
+.jss48{padding:70px 0;position:relative;border-top:10px solid #8247E5;background-color:#061024;}
+.jss48:after{top:0;left:0;width:100%;height:100%;content:" ";opacity:0.2;position:absolute;background-size:cover;background-image:url(https://mintnft.today/images/footer-bg.png);background-position:center;}
+.jss49{height:40px;}
+.jss50{color:white;font-size:14px;max-width:360px;margin-top:20px;font-weight:600;margin-bottom:0;}
+.jss51{color:#ffffff;width:40px;height:40px;display:flex;transition:0.1s ease;align-items:center;border-radius:6px;justify-content:center;background-color:#271F58;}
+.jss51:first-child{margin-right:20px;}
+.jss51:hover{color:#8247E5;background-color:white;}
+.jss51 svg{fill:#fff;width:30px;}
+@media (max-width:599px){
+.jss51{margin-top:30px;}
+}
+.jss51:hover svg{fill:black;}
+.jss52{height:100%;display:flex;align-items:flex-end;justify-content:flex-end;}
+@media (max-width:599px){
+.jss52{justify-content:flex-start;}
+}
+/*! CSS Used from: Embedded */
+.MuiTouchRipple-root{top:0;left:0;right:0;bottom:0;z-index:0;overflow:hidden;position:absolute;border-radius:inherit;pointer-events:none;}
+/*! CSS Used from: Embedded */
+.MuiButtonBase-root{color:inherit;border:0;cursor:pointer;margin:0;display:inline-flex;outline:0;padding:0;position:relative;align-items:center;user-select:none;border-radius:0;vertical-align:middle;-moz-appearance:none;justify-content:center;text-decoration:none;background-color:transparent;-webkit-appearance:none;-webkit-tap-highlight-color:transparent;}
+.MuiButtonBase-root::-moz-focus-inner{border-style:none;}
+.MuiButtonBase-root.Mui-disabled{cursor:default;pointer-events:none;}
+@media print{
+.MuiButtonBase-root{-webkit-print-color-adjust:exact;}
+}
+/*! CSS Used from: Embedded */
+.MuiButton-root{color:rgba(0, 0, 0, 0.87);padding:6px 16px;font-size:0.875rem;min-width:64px;box-sizing:border-box;transition:background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;font-family:"Nunito Sans",sans-serif;font-weight:500;line-height:1.75;border-radius:4px;text-transform:uppercase;}
+.MuiButton-root:hover{text-decoration:none;background-color:rgba(0, 0, 0, 0.04);}
+.MuiButton-root.Mui-disabled{color:rgba(0, 0, 0, 0.26);}
+@media (hover: none){
+.MuiButton-root:hover{background-color:transparent;}
+}
+.MuiButton-root:hover.Mui-disabled{background-color:transparent;}
+.MuiButton-label{width:100%;display:inherit;align-items:inherit;justify-content:inherit;}
+.MuiButton-text{padding:6px 8px;}
+/*! CSS Used from: Embedded */
+.jss53{display:flex;position:relative;}
+.jss54{border:0;cursor:pointer;height:36px;display:flex;outline:none;padding:0 18px 0 8px;background:#e3e3e3;align-items:center;line-height:36px;border-radius:18px;}
+@media (max-width:599px){
+.jss54{padding:0;}
+}
+.jss54:hover{color:white;background-color:#000;}
+@media (max-width:599px){
+.jss54 div{margin:0;display:none;}
+}
+.jss55{width:24px!important;height:24px!important;margin-right:5px;border-radius:12px;}
+.jss55.green{border-color:green;}
+@media (max-width:599px){
+.jss55{width:36px!important;border:2px solid;height:36px!important;margin-right:0;border-radius:20px;}
+}
+/*! CSS Used from: Embedded */
+.jss14{margin:auto;padding:0;max-width:1080px;}
+@media (max-width:1120px){
+.jss14{padding:0 20px;}
+}
+@media (max-width:599px){
+.jss14{padding:0 15px;}
+}
+.jss15{top:-70px;filter:drop-shadow(0px 2px 24px rgba(0, 0, 0, 0.1));overflow:hidden;position:relative;border-radius:16px;}
+.jss15 .form-title{height:70px;padding:0 26px;font-size:18px;font-weight:600;line-height:70px;border-bottom:1px solid #E8E8E8;background-color:#F9F9FE;}
+.jss15 .form-title h3{margin:0;}
+.jss16{top:0;left:0;position:relative;margin-bottom:30px;}
+.jss16 input,.jss16 textarea{color:black;width:100%;border:1px solid #C7CBD9;height:50px;padding:0 15px;font-size:16px;font-family:"Nunito Sans",sans-serif;font-weight:500;border-radius:6px;background-color:#fff;}
+.jss16 textarea{padding:15px;}
+.jss16 label{color:#7533E2;display:block;;   font-size:14px;font-weight:700;margin-left:3px;margin-bottom:4px;}
+.jss16 label span{color:#515C72;font-size:14px;font-weight:normal;}
+.jss16 input:active,.jss16 textarea:active{border:1.5px solid #7533E2;outline:none;}
+.jss16 input:focus,.jss16 textarea:focus{border:1.5px solid #7533E2;outline:none;}
+.jss16 input:disabled,.jss16 textarea:disabled{position:relative;user-select:none;pointer-events:none;background-color:transparent;}
+.jss17{color:#7533e2;margin:0;font-size:14px;font-weight:bold;}
+.jss21{border:1px solid #8247E5;height:44px;display:inline-flex;padding:0 20px;position:relative;font-size:16px;transition:all 0.3s ease;font-weight:600;line-height:44px;border-radius:4px;text-transform:capitalize;}
+.jss21:hover{color:white;border-color:#7533e2;background-color:#7533e2;}
+.jss21:disabled{color:white;border-color:#bdc3c7;background-color:#bdc3c7;}
+.jss23{color:white;background-color:#8247E5;}
+.jss25{padding-bottom:70px;background-color:#F4F7F9;}
+@media (max-width:959px){
+.jss25{padding-bottom:0;}
+}
+.jss26{width:100%;padding:26px;background-color:#ffffff;}
+.jss27 p{color:#61677e;margin:0 0 20px 0;font-size:12px;text-align:left;font-weight:600;}
+.jss28{border:1px dashed #C7CBD9;display:flex;padding:60px 10px;margin-top:5px;align-ttems:center;border-radius:6px;flex-direction:column;justify-content:center;}
+.jss28 p{color:#939bba;margin:0;font-size:14px;text-align:center;font-weight:600;}
+.jss28 p label{color:#8247e5;cursor:pointer;text-decoration:underline;}
+.jss28 p label:hover{color:#7533e2;}
+.jss30{border:1px solid #C7CBD9;height:50px;display:flex;padding:5px;position:relative;margin-top:5px;border-radius:5px;background-color:white;}
+.jss31{width:50%;border:0;cursor:pointer;height:calc(50px - 12px);outline:0;font-weight:600;border-radius:5px;}
+.jss31:first-child{margin-right:5px;}
+.jss31:disabled{color:white;background-color:#3E3B51;}
+.jss31:enabled{background-color:#F6F6FF;}
+.jss32{top:40px;color:red;right:15px;margin:0;z-index:2;position:absolute;font-weight:600;}
+.jss36{color:#61677e;font-size:12px;margin-top:40px;}
+/*! CSS Used from: Embedded */
+.MuiTypography-root{margin:0;}
+.MuiTypography-h1{font-size:2.5rem;font-family:"Nunito Sans",sans-serif;font-weight:400;line-height:normal;letter-spacing:normal;}
+.MuiTypography-subtitle1{font-size:1rem;font-family:"Nunito Sans",sans-serif;font-weight:400;line-height:1.75;}
+/*! CSS Used from: Embedded */
+.jss8{margin:auto;padding:0;max-width:1080px;}
+@media (max-width:1120px){
+.jss8{padding:0 20px;}
+}
+@media (max-width:599px){
+.jss8{padding:0 15px;}
+}
+.jss9{padding:70px 0;overflow:hidden;position:relative;background-color:#7533E2;}
+.jss9::after{top:-20px;left:0;width:100%;height:calc(100% + 50px);content:' ';opacity:0.15;position:absolute;background-size:78%;background-image:url(https://mintnft.today/images/bg-art.png);}
+.jss10{color:white;margin-bottom:10px;}
+.jss10 span{font-weight:700;}
+.jss11{color:#D8C4F7;font-size:15px;font-weight:500;line-height:23px;margin-bottom:40px;}
+@media (max-width:959px){
+.jss11{margin-bottom:50px;}
+}
+/*! CSS Used from: Embedded */
+.jMhaxE{width:45px;height:45px;display:flex;border-radius:50%;overflow:visible;box-shadow:none;-webkit-box-pack:center;justify-content:center;-webkit-box-align:center;align-items:center;}
+.jMhaxE img{width:100%;height:100%;}
+@media screen and (max-width: 768px){
+.jMhaxE{width:8.5vw;height:8.5vw;}
+}
+.bktcUM{width:100%;font-size:24px;font-weight:700;margin-top:0.5em;color:rgb(12, 12, 13);}
+@media screen and (max-width: 768px){
+.bktcUM{font-size:5vw;}
+}
+.eFHlqH{width:100%;font-size:18px;margin:0.333em 0px;color:rgb(169, 169, 188);}
+@media screen and (max-width: 768px){
+.eFHlqH{font-size:4vw;}
+}
+.jcNZzC{transition:background-color 0.2s ease-in-out 0s;width:100%;display:flex;flex-direction:column;-webkit-box-pack:center;justify-content:center;-webkit-box-align:center;align-items:center;background-color:rgb(255, 255, 255);border-radius:12px;padding:24px 16px;}
+@media screen and (max-width: 768px){
+.jcNZzC{padding:1vw;}
+}
+.cjAFRf{width:100%;padding:8px;display:flex;-webkit-box-pack:center;justify-content:center;-webkit-box-align:center;align-items:center;flex-direction:column;cursor:pointer;border-radius:0px;border:1px solid rgba(195, 195, 195, 0.14);}
+@media (hover: hover){
+.cjAFRf:hover .sc-hKFyIo{background-color:rgba(195, 195, 195, 0.14);}
+}
+.kRmdPb{transition:opacity 0.1s ease-in-out 0s;text-align:center;position:fixed;width:100vw;height:100vh;margin-left:-50vw;top:0px;left:50%;z-index:2;will-change:opacity;background-color:rgba(0, 0, 0, 0.4);opacity:0;visibility:hidden;pointer-events:none;display:flex;-webkit-box-pack:center;justify-content:center;-webkit-box-align:center;align-items:center;}
+.kRmdPb *{box-sizing:border-box!important;}
+.fVQpCb{position:relative;width:100%;height:100%;padding:15px;display:flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;}
+.knnrxv{position:absolute;inset:0px;}
+.hCtqhh{position:relative;width:100%;background-color:rgb(255, 255, 255);border-radius:12px;margin:10px;padding:0px;opacity:0;visibility:hidden;pointer-events:none;display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));max-width:800px;min-width:fit-content;max-height:100%;overflow:auto;}
+@media screen and (max-width: 768px){
+.hCtqhh{max-width:800px;grid-template-columns:1fr;}
+}
+/*! CSS Used fontfaces */
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe0qMImSLYBIv1o4X1M8cfe5.woff) format('woff');}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc9iB_5p.woff) format('woff');}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc8GBv5p.woff) format('woff');}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe0qMImSLYBIv1o4X1M8ccewI9tAcVwob5A.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe0qMImSLYBIv1o4X1M8cce5I9tAcVwob5A.woff2) format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe0qMImSLYBIv1o4X1M8cceyI9tAcVwob5A.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe0qMImSLYBIv1o4X1M8ccezI9tAcVwob5A.woff2) format('woff2');unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe0qMImSLYBIv1o4X1M8cce9I9tAcVwo.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc9iB85gU1ECVZl_86Y.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc9iB85pU1ECVZl_86Y.woff2) format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc9iB85iU1ECVZl_86Y.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc9iB85jU1ECVZl_86Y.woff2) format('woff2');unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc9iB85tU1ECVZl_.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc8GBs5gU1ECVZl_86Y.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc8GBs5pU1ECVZl_86Y.woff2) format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc8GBs5iU1ECVZl_86Y.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc8GBs5jU1ECVZl_86Y.woff2) format('woff2');unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/nunitosans/v8/pe03MImSLYBIv1o4X1M8cc8GBs5tU1ECVZl_.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
