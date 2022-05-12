@@ -1,0 +1,187 @@
+#pragma version 5
+intcblock 1 0 4 3
+bytecblock 0xef66ea664cf01cafbc549fddd95b126d06334dc434201565f7de91e8bc00b715
+gtxn 0 Sender
+bytec_0 // DCIPMQ3SDOVBX5IUY65LR7BZ2R63JCULO72J7IS3W2PUNW7JTAGYEHBRRA
+==
+bnz main_l7
+gtxn 0 Sender
+bytec_0 // DCIPMQ3SDOVBX5IUY65LR7BZ2R63JCULO72J7IS3W2PUNW7JTAGYEHBRRA
+!=
+bnz main_l3
+err
+main_l3:
+global GroupSize
+intc_3 // 3
+==
+txn GroupIndex
+intc_0 // 1
+==
+bnz main_l6
+intc_0 // 1
+main_l5:
+&&
+gtxn 0 TypeEnum
+intc_2 // axfer
+==
+&&
+gtxn 0 Sender
+gtxn 0 AssetReceiver
+==
+&&
+gtxn 0 AssetAmount
+intc_1 // 0
+==
+&&
+gtxn 0 AssetCloseTo
+global ZeroAddress
+==
+&&
+gtxn 1 TypeEnum
+intc_2 // axfer
+==
+&&
+gtxn 1 AssetAmount
+intc_1 // 0
+==
+&&
+gtxn 1 XferAsset
+gtxn 0 XferAsset
+==
+&&
+gtxn 1 AssetCloseTo
+gtxn 0 Sender
+==
+&&
+gtxn 2 TypeEnum
+intc_0 // pay
+==
+&&
+gtxn 2 Amount
+intc_1 // 0
+==
+&&
+gtxn 2 CloseRemainderTo
+bytec_0 // DCIPMQ3SDOVBX5IUY65LR7BZ2R63JCULO72J7IS3W2PUNW7JTAGYEHBRRA
+==
+&&
+return
+main_l6:
+txn TxID
+arg 0
+pushbytes TMPL_GEN_ADDR // TMPL_GEN_ADDR
+ed25519verify
+b main_l5
+main_l7:
+global GroupSize
+intc_3 // 3
+==
+gtxn 0 TypeEnum
+intc_0 // pay
+==
+&&
+gtxn 0 Sender
+bytec_0 // DCIPMQ3SDOVBX5IUY65LR7BZ2R63JCULO72J7IS3W2PUNW7JTAGYEHBRRA
+==
+&&
+gtxn 0 Amount
+pushint 300000 // 300000
+==
+&&
+gtxn 0 CloseRemainderTo
+global ZeroAddress
+==
+&&
+gtxn 1 TypeEnum
+intc_2 // axfer
+==
+&&
+gtxn 1 AssetAmount
+intc_1 // 0
+==
+&&
+gtxn 1 AssetReceiver
+gtxn 1 Sender
+==
+&&
+gtxn 1 AssetReceiver
+gtxn 0 Receiver
+==
+&&
+gtxn 2 TypeEnum
+intc_2 // axfer
+==
+&&
+gtxn 2 AssetAmount
+intc_0 // 1
+==
+&&
+gtxn 2 AssetReceiver
+gtxn 0 Receiver
+==
+&&
+gtxn 2 Sender
+gtxn 0 Sender
+==
+&&
+gtxn 2 AssetCloseTo
+global ZeroAddress
+==
+&&
+gtxn 2 XferAsset
+gtxn 1 XferAsset
+==
+&&
+global GroupSize
+intc_3 // 3
+==
+gtxn 0 TypeEnum
+intc_0 // pay
+==
+&&
+gtxn 0 Sender
+bytec_0 // DCIPMQ3SDOVBX5IUY65LR7BZ2R63JCULO72J7IS3W2PUNW7JTAGYEHBRRA
+==
+&&
+gtxn 0 Receiver
+bytec_0 // DCIPMQ3SDOVBX5IUY65LR7BZ2R63JCULO72J7IS3W2PUNW7JTAGYEHBRRA
+==
+&&
+gtxn 0 Amount
+intc_1 // 0
+==
+&&
+gtxn 0 CloseRemainderTo
+global ZeroAddress
+==
+&&
+gtxn 0 RekeyTo
+global ZeroAddress
+==
+&&
+gtxn 1 TypeEnum
+intc_2 // axfer
+==
+&&
+gtxn 1 AssetAmount
+intc_1 // 0
+==
+&&
+gtxn 1 AssetCloseTo
+bytec_0 // DCIPMQ3SDOVBX5IUY65LR7BZ2R63JCULO72J7IS3W2PUNW7JTAGYEHBRRA
+==
+&&
+gtxn 2 TypeEnum
+intc_0 // pay
+==
+&&
+gtxn 2 Amount
+intc_1 // 0
+==
+&&
+gtxn 2 CloseRemainderTo
+bytec_0 // DCIPMQ3SDOVBX5IUY65LR7BZ2R63JCULO72J7IS3W2PUNW7JTAGYEHBRRA
+==
+&&
+||
+return

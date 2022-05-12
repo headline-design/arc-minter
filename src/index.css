@@ -1,0 +1,434 @@
+html,
+body,
+#root,
+.App {
+    height: 100%;
+    width: 100%;
+    background: #000;
+}
+
+button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:hover,
+button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:active {
+    background-color: #7b78ff;
+    border-color: #9896ff !important;
+    color: #000 !important;
+}
+
+.bp3-button.bp3-outlined.bp3-intent-primary {
+    border-color: rgb(38 217 202 / 10%);
+    color: #26d9ca;
+    border-radius: 8px;
+    background-color: rgb(38 217 202 / 10%);
+}
+
+.bp3-button.bp3-outlined.bp3-intent-primary:hover {
+    border-color: rgb(38 217 202 / 41%);
+    background-color: rgb(38 217 202 / 20%);
+    color: #26d9ca;
+}
+
+.content-piece img {
+    max-width: 95%;
+    border-radius: 0.375rem;
+}
+
+
+
+.bp3-button.bp3-outlined.bp3-intent-primary:focus {
+    border-color: rgb(38 217 202 / 10%);
+    background-color: rgb(38 217 202 / 22%) !important;
+    color: #26d9ca !important;
+    outline: none !important;
+    border-color: #26d9ca;
+}
+
+.bp3-dialog-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    line-height: 18px;
+    margin: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding: 10px
+}
+
+
+
+.bp3-dialog{
+    padding-bottom:0px
+}
+
+.wallet-option-list li {
+    margin: 1em;
+}
+
+
+
+:focus {
+    outline: rgb(23 19 189 / 60%) auto 2px !important;
+}
+
+button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:focus {
+    background-color: #7b78ff;
+    color: #000 !important;
+}
+
+.margin-0 {
+    margin-bottom: 2px;
+}
+
+.container.footer-container {
+    background-color: black;
+    color: #a3a3a3;
+    padding: 3rem;
+    text-align: center;
+    display: block;
+}
+
+a {
+    color: #7b78ff;
+    text-decoration: none;
+}
+
+.bp3-html-select.bp3-minimal select:hover,
+.bp3-select.bp3-minimal select:hover {
+    background: rgba(167, 182, 194, 0.3);
+}
+
+.bp3-html-select select:hover,
+.bp3-select select:hover {
+    color: #7b78ff
+}
+
+.bp3-overlay-backdrop {
+    background-color: rgb(0 0 0 / 60%);
+}
+
+.bp3-heading {
+    color: #fff;
+}
+.bp3-dialog {
+    box-shadow: rgb(0 0 0 / 50%) 0px 20px 25px -5px, rgb(0 0 0 / 25%) 0px 10px 10px -5px, rgb(255 255 255 / 10%) 0px 0px 0px 1px inset;
+    border-radius: 11px;
+    background: #242424 !important;
+    color: #f9f9f9;
+}
+
+button.bp3-button.bp3-minimal {
+    fill: currentColor !important;
+    color: #f9f9f9;
+}
+
+button#wallet-connect{
+    color: #fff !important;
+    background-color: rgba(44, 47, 54, 0.523) !important;
+    border: 1px solid #404040 !important;
+}
+
+button#wallet-connect:hover,button#wallet-connect:active,button#wallet-connect:focus,button#wallet-connect:visited {
+    background: rgb(44, 47, 54) !important;
+    color: #9896ff !important;
+    border-color:  1px solid #404040 !important;
+}
+
+select:hover,
+select:focus,
+select:active {
+    background-color: rgb(123 120 255 / 10%) !important;
+    color: #9896ff !important;
+}
+
+.bp3-html-select select,
+.bp3-select select {
+    color: #959595;
+    font-size: .875rem;
+}
+
+.bp3-icon bp3-icon-log-out {
+    color: unset
+}
+
+.bp3-button .bp3-icon,
+.bp3-button .bp3-icon-standard,
+.bp3-button .bp3-icon-large {
+    color: unset;
+}
+
+button.bp3-button.bp3-disabled.bp3-large.bp3-minimal.bp3-outlined.bp3-intent-success:hover {
+    background: rgb(123, 120, 255) !important;
+    color: rgb(0, 0, 0) !important;
+}
+
+.bp3-button.bp3-outlined.bp3-intent-primary:hover {
+    border-color: rgb(38 217 202 / 41%);
+    background-color: rgb(38 217 202 / 20%) !important;
+    color: #26d9ca !important;
+}
+
+
+button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:hover,
+button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:active,
+button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning:focus {
+    background-color: #7b78ff !important;
+    border-color: #9896ff !important;
+    color: #000 !important;
+}
+
+select:hover,
+.bp3-button.bp3-minimal:hover,
+.bp3-button.bp3-minimal:focus {
+    background-color: rgb(123 120 255 / 10%) !important;
+    color: #9896ff !important;
+}
+
+
+.bp3-button.bp3-minimal:hover {
+    color: #9896ff;
+}
+
+.body-1,
+.body-2 {
+    background-color: #090909;
+}
+
+a:hover {
+    color: #7b78ff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.header-icon {
+    max-width: 5rem;
+    width: 45px;
+    height: auto;
+    margin-top: 0.3rem;
+    color: white;
+}
+
+.bp3-button.bp3-outlined.bp3-intent-success:hover,
+.bp3-button.bp3-outlined.bp3-intent-success:focus {
+    background: #5855f3
+}
+
+.wallet-option-list {
+    display: initial;
+}
+
+.bp3-button.bp3-large:hover,
+.bp3-large .bp3-button:hover {
+    background-color: rgb(67, 56, 202) !important;
+    color: white !important;
+    fill: white !important;
+}
+
+.help-text p {
+    color: white;
+}
+
+.wallet-con {
+    text-indent: 0.3rem;
+    margin: 1rem;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-size: 1.1rem;
+}
+
+.bp3-button.bp3-large.wallet-btn> :last-child {
+    margin-right: 0;
+    width: 100%;
+}
+
+.wallet-option {
+    display: flex;
+    align-items: center;
+    width: 100% !important;
+    justify-content: space-between;
+}
+
+svg.r-ff-icon-walletIcon {
+    overflow: visible;
+    margin-right: .3rem;
+}
+
+.bp3-dialog-header {
+    background-color: unset;
+    border-bottom: 1px solid #404040;
+    padding-right: 24px !important;
+    padding-left: 24px !important;
+    padding: 12px;
+}
+
+.header-icon:hover {
+    color: #d6d6d7;
+}
+
+.bp3-dialog-header .bp3-heading {
+    font-size: 1rem;
+}
+
+
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+.content {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+}
+
+@media (max-width: 756px) {
+    .content {
+        flex-direction: column;
+    }
+}
+
+.ticket-card {
+    max-width: 650px;
+    background: rgb(36 36 36);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgb(245 245 245 / 10%);
+}
+
+.ticket-card:hover {
+    box-shadow: 0 0 0 2px #7b78ff;
+}
+
+.content-piece {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin: 0.5rem;
+    flex-basis: fit-content;
+}
+
+.content-piece img {
+    max-width: 95%;
+}
+
+.content-details {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+    overflow-wrap: break-word;
+}
+
+.collect-button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.wallet-option-list {
+    list-style: none;
+}
+
+.wallet-option-list li {
+    margin: 1em;
+}
+
+.wallet-option {
+    display: flex;
+    align-items: center;
+}
+
+.wallet-branding {
+    width: 2em;
+    margin-right: 0.5em
+}
+
+
+.help-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    padding-top: 5px;
+}
+
+.help-container-2 {
+    padding-top: 0px;
+}
+
+.help-text {
+    padding: 5px;
+}
+
+
+.help-text p {
+    overflow-wrap: break-word;
+}
+
+.card {
+    margin: 0 0 0.5rem;
+    position: relative;
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+    background: #171717;
+    color: #fafafa;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 15%);
+}
+
+.card-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.meta-card {
+    color: #fafafa;
+    background: rgb(249 249 249 / 5%);
+    border-radius: 0.375rem;
+    border: 1px solid #242424;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+
+button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning.warning-btn {
+    background: unset !important;
+    color: #bf7326 !important;
+    border-color: unset !important;
+}
+
+.bp3-button.bp3-outlined.bp3-intent-warning:hover {
+    background: rgba(217, 130, 43, 0.15) !important;
+    color: #bf7326 !important;
+}
+
+img.hashlock {
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 10%);
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+
+.ticket-card-wide {
+    max-width: 900px;
+    background: rgb(36 36 36);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgb(245 245 245 / 10%);
+}
+
+b {
+    color: #7b78ff;
+}
+
+.button-connected {
+    color: #575757;
+    border-radius: 6px;
+    background-color: #3d3d3d;
+    border-color: #575757;
+    border: 1px solid;
+}
+
+.bp3-icon.bp3-icon-small-cross > svg {
+    width: 28px !important;
+    height: 24px !important;
+}
