@@ -162,7 +162,7 @@ body{background-color:#fff;}
 }
 .jss26{width:100%;padding:26px;background-color:#ffffff;}
 .jss27 p{color:#61677e;margin:0 0 20px 0;font-size:12px;text-align:left;font-weight:600;}
-.jss28{border:1px dashed #C7CBD9;display:flex;padding:60px 10px;margin-top:5px;align-ttems:center;border-radius:6px;flex-direction:column;justify-content:center;}
+.jss28{border:1px dashed #C7CBD9;display:flex;padding:60px 10px;margin-top:5px;align-items:center;border-radius:6px;flex-direction:column;justify-content:center;}
 .jss28 p{color:#939bba;margin:0;font-size:14px;text-align:center;font-weight:600;}
 .jss28 p label{color:#8247e5;cursor:pointer;text-decoration:underline;}
 .jss28 p label:hover{color:#7533e2;}
@@ -245,9 +245,16 @@ body{background-color:#fff;}
 
 
 button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning {
-    height: 38px;
     padding-left: 12px;
     padding-right: 12px;
+    cursor: pointer;
+    height: 36px;
+    display: flex;
+    outline: none;
+    background: #e3e3e3;
+    align-items: center;
+    line-height: 36px;
+    border-radius: 18px !important;
 }
 
 .bp3-button.bp3-outlined.bp3-intent-warning:hover,.bp3-button.bp3-outlined.bp3-intent-warning:active, .bp3-button.bp3-outlined.bp3-intent-warning.bp3-active {
@@ -466,5 +473,37 @@ span.bp3-button-text {
 button#buttonUpload {
     width: 100%;
     margin-top: 1rem;
+    color: #fff;
     margin-bottom: 1rem;
+    height: 40px;
+    z-index: 1;
+    border-width: 0px;
+    transition: 0.3s ease;
+    border-radius: 5px;
+    background-color: #8247e5;
+}
+
+.jss35:not(:checked) + label div:first-child {
+    color: #fff;
+    transition: 0.3s ease;
+}
+
+.Mui-not-btn{
+border: 1px solid #8247E5;
+height: 44px;
+display: inline-flex;
+padding: 0 20px;
+position: relative;
+font-size: 16px;
+transition: all 0.3s ease;
+font-weight: 600;
+line-height: 44px;
+border-radius: 4px;
+text-transform: capitalize;
+}
+
+div#fileDropBox > label {
+    color: #8247e5;
+    cursor: pointer;
+    text-decoration: underline;
 }

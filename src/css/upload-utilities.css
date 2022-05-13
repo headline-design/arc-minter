@@ -103,9 +103,62 @@ spam#info {
 }
 /*! CSS Used from: Embedded */
 .jss83{color:#7533E2;display:block;;   font-size:14px;margin-top:0;font-weight:700;margin-left:3px;margin-bottom:4px;}
-.jss84{border:1px solid #C7CBD9;cursor:pointer;height:50px;display:flex;padding:5px;position:relative;border-radius:6px;margin-bottom:30px;background-color:white;}
+.jss84{border:1px solid #C7CBD9;cursor:pointer;height:50px;display:flex;padding:5px;position:relative;border-radius:6px;background-color:white;}
 .jss84 div{color:#6E798F;width:calc(50% - 2.5px);z-index:2;position:relative;font-size:14px;text-align:center;transition:0.3s ease;font-weight:600;line-height:40px;border-radius:5px;}
 .jss84::after{top:4px;left:5px;width:calc(50% - 7.5px);height:40px;content:' ';z-index:1;position:absolute;transition:0.3s ease;border-radius:5px;background-color:#3E3B51;}
 .jss84 div:first-child{margin-right:5px;}
 .jss85:checked + label::after{left:calc(50% + 2.5px);transition:0.3s ease;}
 .jss85:checked + label div:nth-child(2){color:#fff;transition:0.3s ease;}
+
+.jss35:not(:checked) + label div:first-child {
+    color: #fff;
+    transition: 0.3s ease;
+}
+
+.jss34 {
+    border: 1px solid #C7CBD9;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    padding: 5px;
+    position: relative;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    background-color: white;
+}
+
+.jss35:checked + label div:nth-child(2) {
+    color: #fff;
+    transition: 0.3s ease;
+}
+
+.jss35:checked + label::after {
+    left: calc(50% + 2.5px);
+    transition: 0.3s ease;
+}
+
+.jss34::after {
+    top: 4px;
+    left: 5px;
+    width: calc(50% - 7.5px);
+    height: 40px;
+    content: ' ';
+    z-index: 1;
+    position: absolute;
+    transition: 0.3s ease;
+    border-radius: 5px;
+    background-color: #3E3B51;
+}
+
+.jss34 div {
+    color: #6E798F;
+    width: calc(50% - 2.5px);
+    z-index: 2;
+    position: relative;
+    font-size: 14px;
+    text-align: center;
+    transition: 0.3s ease;
+    font-weight: 600;
+    line-height: 40px;
+    border-radius: 5px;
+}
