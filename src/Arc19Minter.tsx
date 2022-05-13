@@ -5,6 +5,7 @@ import { SessionWallet } from "algorand-session-wallet";
 import AlgorandWalletConnector from "./AlgorandWalletConnector";
 import { Logo } from "./logo";
 import { FileViewer } from "./FileViewer";
+import IpfsUpload from "./IpfsUpload"
 import {
   Alignment,
   AnchorButton,
@@ -320,6 +321,7 @@ function Arc19Minter() {
                         id="upload-file"
                         hidden={true}
                       />
+                      <IpfsUpload/>
                       <p>
                         <label htmlFor="upload-file">Browse file</label>
                       </p>
