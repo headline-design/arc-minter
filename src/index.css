@@ -83,7 +83,7 @@ body{background-color:#fff;}
 .jss48{padding:70px 0;position:relative;border-top:10px solid #8247E5;background-color:#061024;}
 .jss48:after{top:0;left:0;width:100%;height:100%;content:" ";opacity:0.2;position:absolute;background-size:cover;background-image:url(images/footer-bg.png);background-position:center;}
 .jss49{height:40px;}
-.jss50{color:white;font-size:14px;max-width:360px;margin-top:20px;font-weight:600;margin-bottom:0;}
+.jss50{color:white;font-size:14px;max-width:360px;font-weight:600;margin-bottom:0;}
 .jss51{color:#ffffff;width:40px;height:40px;display:flex;transition:0.1s ease;align-items:center;border-radius:6px;justify-content:center;background-color:#271F58;}
 .jss51:first-child{margin-right:20px;}
 .jss51:hover{color:#8247E5;background-color:white;}
@@ -317,7 +317,6 @@ g#_x31_3_Support_Ticket {
 
 .bp3-button:not([class*="bp3-intent-"]) {
     height: 38px;
-    width: 34px;
 }
 
 .bp3-html-select.bp3-minimal select, .bp3-select.bp3-minimal select {
@@ -440,4 +439,32 @@ button#wallet-connect {
 
 svg.r-ff-icon-walletIcon {
     overflow: visible;
+}
+
+h2.type-logo {
+    margin: 0px;
+    margin-left: 1rem;
+    font-size: 2.1rem;
+    font-family: inter;
+    color: #182026;
+}
+
+h2.type-logo:hover {
+   text-decoration: none;
+}
+
+a.logo-nav {
+    display: flex;
+    align-items: center;
+}
+
+span.bp3-button-text {
+    width: 100%;
+    text-align: center;
+}
+
+button#buttonUpload {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }

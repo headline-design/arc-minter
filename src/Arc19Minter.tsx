@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { SessionWallet } from "algorand-session-wallet";
 import AlgorandWalletConnector from "./AlgorandWalletConnector";
 import { Logo } from "./logo";
-import { FileViewer } from "./FileViewer";
 import IpfsUpload from "./IpfsUpload"
 import {
   Alignment,
@@ -267,9 +266,9 @@ function Arc19Minter() {
       <header className="MuiPaper-root MuiAppBar-root jss2 MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4">
         <div className="MuiContainer-root jss1 MuiContainer-maxWidthLg">
           <div className="jss3">
-            <a href="/">
+            <a className="logo-nav" href="/">
               {" "}
-              <Logo></Logo>
+              <Logo></Logo><h2 className="type-logo">NFT Assembly</h2>
             </a>
             <div className="buttons">
             <AlgorandWalletConnector
@@ -308,29 +307,27 @@ function Arc19Minter() {
               <h3>Mint your NFT</h3>
             </div>
             <form noValidate="" autoComplete="off" className="jss26">
+              
               <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
                 <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                   <div className="jss27">
+                    
                     <label className="jss17" htmlFor="upload-file">
                       Upload
                     </label>
-                    <div className="jss28">
+                    <IpfsUpload/>
+                    <div >
                       <input
                         type="file"
                         accept="audio/*, video/*, image/*, .html, .pdf"
                         id="upload-file"
                         hidden={true}
                       />
-                      <IpfsUpload/>
-                      <p>
-                        <label htmlFor="upload-file">Browse file</label>
-                      </p>
+                     
+                      
                       <br />
-                      <p>
-                        Supports JPG, PNG and MP4 videos. Max file size : 10MB.
-                      </p>
+                      
                     </div>
-                    <FileViewer></FileViewer>
                   </div>
                 </div>
                 <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
@@ -363,23 +360,31 @@ function Arc19Minter() {
                   <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2">
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
                       <p className="jss17">NFT Type</p>
-                      <div className="jss30">
-                        <button
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
+    <p className="jss83">NFT Type</p>
+    <input type="checkbox" id="checkedA" hidden="" className="jss85" />
+    <label htmlFor="checkedA" className="jss84">
+      <div>ARC19</div>
+      <div>ARC69</div>
+    </label>
+  </div>
+                      <div className="jss30" style={{display: "hidden"}}>
+                        <Button
                           className="MuiButtonBase-root MuiButton-root MuiButton-text jss31 Mui-disabled Mui-disabled"
                           tabIndex={-1}
                           type="button"
                           disabled={true}
                         >
                           <span className="MuiButton-label">ARC19</span>
-                        </button>
-                        <button
+                        </Button>
+                        <Button
     className="MuiButtonBase-root MuiButton-root MuiButton-text jss31"
     tabIndex={-1}
     type="button"
     disabled={false}
   >
     <span className="MuiButton-label">ARC69</span>
-  </button>
+  </Button>
                       </div>
                     </div>
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
@@ -420,7 +425,7 @@ function Arc19Minter() {
                     permission or are otherwise legally entitled to post the
                     material.
                   </p>
-                  <button
+                  <Button
     className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
     tabIndex={-1}
     type="submit"
@@ -428,9 +433,9 @@ function Arc19Minter() {
     style={{ marginBottom: 30 }}
   >
     <span className="MuiButton-label">Wallet not connected</span>
-  </button>
+  </Button>
   <div style={{display:"none"}}>
-                  <button
+                  <Button
                   hidden={true}
                     className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
                     tabIndex={-1}
@@ -439,7 +444,7 @@ function Arc19Minter() {
                     style={{ marginBottom: 30 }}
                   >
                     <span className="MuiButton-label">Mint NFT</span>
-                  </button>
+                  </Button>
                   </div>
                 </div>
               </div>
@@ -447,16 +452,27 @@ function Arc19Minter() {
           </div>
         </div>
       </div>
+      
       <footer className="jss48">
+      <footer>
+
+    <ul className="foot-menu">
+    
+    </ul>
+  </footer>
         <div className="MuiContainer-root jss47 MuiContainer-maxWidthLg">
           <div
             className="MuiGrid-root MuiGrid-container"
             style={{ position: "relative", zIndex: 2 }}
           >
             <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
+            <img src="algologo.svg" alt="banner" className="footer-img" />
+
               <p className="jss50">
+                
               Algorand is a carbon-negative, pure proof-of-stake blockchain network built to last. 
               </p>
+              
             </div>
             <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
               <div className="jss52">
@@ -499,6 +515,7 @@ function Arc19Minter() {
           </div>
         </div>
       </footer>
+
     </div>
     <next-route-announcer>
       <p

@@ -64492,6 +64492,7 @@ var streamFromFileReader = function streamFromFileReader(file, options) {
       _this.fileReader = new self.FileReader(file);
 
       _this.fileReader.onloadend = function (event) {
+       
         var data = event.target.result;
 
         if (data.byteLength === 0) {
@@ -77926,7 +77927,7 @@ function handleFileSelect(evt) {
 
 
     if (!files) {
-        alert("<p>At least one selected file is invalid - do not select any folders.</p><p>Please reselect and try again.</p>");
+        alert("At least one selected file is invalid - do not select any folders.Please reselect and try again.");
         return;
     }
     for (var i = 0; i < files.length; i++) {
@@ -77942,6 +77943,8 @@ function handleFileSelect(evt) {
             alert("This files is already listed");
             continue
         } else {
+          document.getElementById("img-preview").src = window.URL.createObjectURL(files[i])
+         
             files_checksum[filesOk.length] = fileChecksum(files[i])
             document.querySelector("#list").querySelector("ul").innerHTML += '<li id="' + fileChecksum(files[i]) + '"><strong class="fileName">' +
             files[i].name + '</strong> <spam class="itemClose"><a class="removeItem" href="#" onclick="removeItem(\''+fileChecksum(files[i])+'\')">&times;</a></spam>' +
