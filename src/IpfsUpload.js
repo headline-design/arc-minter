@@ -66,7 +66,7 @@ class IpfsUpload extends Component {
             
           </div>
           
-          <div id="list" style={{display:"none"}}>
+          <div id="list" style={{display:"block"}}>
          
                 <ul className="jss29">
                            

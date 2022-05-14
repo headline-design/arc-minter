@@ -251,7 +251,6 @@ button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning {
     height: 36px;
     display: flex;
     outline: none;
-    background: #e3e3e3;
     align-items: center;
     line-height: 36px;
     border-radius: 18px !important;
@@ -420,6 +419,8 @@ button#wallet-connect:hover, button#wallet-connect:focus, button#wallet-connect:
     padding-right: 24px!important;
     padding-left: 24px!important;
     padding: 12px;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
 }
 
 .bp3-icon.bp3-icon-small-cross>svg {
@@ -433,8 +434,8 @@ button#wallet-connect:hover, button#wallet-connect:focus, button#wallet-connect:
 
 .bp3-dialog {
     padding-bottom: 0px;
+    border-radius: 16px;
 }
-
 
 button#wallet-connect {
     height: 60px;
@@ -506,4 +507,42 @@ div#fileDropBox > label {
     color: #8247e5;
     cursor: pointer;
     text-decoration: underline;
+}
+
+.MuiAccordionSummary-expandIconWrapper.Mui-expanded.css-1n3veo1 {
+    transform: rotate(90deg);
+}
+
+.mr-2, .mx-2 {
+    margin-right: 0.5rem!important;
+}
+
+svg:not(:root).svg-inline--fa {
+    overflow: visible;
+}
+
+svg:not(:root).svg-inline--fa {
+    overflow: visible;
+}
+
+.svg-inline--fa.fa-w-10 {
+    width: 0.625em;
+}
+
+.svg-inline--fa.fa-w-10 {
+    width: 0.625em;
+}
+.mr-2, .mx-2 {
+    margin-right: 0.5rem!important;
+}
+.mr-2, .mx-2 {
+    margin-right: 0.5rem!important;
+}
+
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -0.125em;
 }

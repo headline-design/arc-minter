@@ -6,6 +6,7 @@ import Arc19Minter from "./Arc19Minter";
 import { conf } from "./lib/algorand";
 import Pipeline from "@pipeline-ui-2/pipeline";
 
+
 const wallet = Pipeline.init();
 
 function App() {

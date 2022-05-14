@@ -1,10 +1,11 @@
 // @ts-nocheck
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SessionWallet } from "algorand-session-wallet";
 import AlgorandWalletConnector from "./AlgorandWalletConnector";
 import { Logo } from "./logo";
 import IpfsUpload from "./IpfsUpload";
+import HexToAlgo from "./HexToAlgo";
 import {
   AnchorButton,
   Button,
@@ -15,8 +16,13 @@ import { Classes, Dialog } from "@blueprintjs/core";
 import { BrowserView, MobileView, isIOS } from "react-device-detect";
 import Pipeline from "@pipeline-ui-2/pipeline";
 import getNFTInfo from "./lib/getnft";
+import { AsaDetails } from "./AsaDetails";
+import { MintingUtils } from "./mintingUtils"
+import Tabs from "./Tabs";
+import Accordion from "./Accordion";
 
 const wallet = Pipeline.init();
+
 
 const MetaDataProps = (props) => {
   let properties = Object.keys(props.object);
@@ -56,6 +62,7 @@ function Arc19Minter() {
   const [open, setOpen] = React.useState(false);
   const [metaData, setMetaData] = React.useState("");
   const [metaData2, setMetaData2] = React.useState("");
+  const [activeTab, setActiveTab] = useState('1');
 
   const params = new URLSearchParams(window.location.search);
   const escrow = params.get("escrow");
@@ -317,6 +324,13 @@ function Arc19Minter() {
                           />
 
                           <br />
+                          <HexToAlgo></HexToAlgo>
+                       
+              <MintingUtils></MintingUtils>
+              <Accordion>
+                
+              </Accordion>
+                         
                         </div>
                       </div>
                     </div>
@@ -337,6 +351,10 @@ function Arc19Minter() {
                       </div>
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                         <div className="jss16">
+                   
+
+
+
                           <label htmlFor="description">Description</label>
                           <textarea
                             type="text"
@@ -351,7 +369,11 @@ function Arc19Minter() {
                           </p>
                         </div>
                       </div>
-                     
+                      <div container spacing={2}>
+                  
+
+                  
+                </div>
                       <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2">
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12">
                         <p className="jss83">NFT Type</p>
@@ -379,6 +401,7 @@ function Arc19Minter() {
                           </div>
                         </div>
                       </div>
+
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                         <div className="jss16">
                           <label htmlFor="sm-url">
