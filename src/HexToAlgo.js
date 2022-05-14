@@ -49,6 +49,8 @@ class HexToAlgo extends React.Component{
 
   handleClickConvert(ipfshash) {
     const { url, reserveAddress } = this.cidToReserveURL(ipfshash);
+    document.getElementById("input-reserve").value = reserveAddress
+    document.getElementById("input-asset-url").value = url
 
     this.setState({
       url,
@@ -67,16 +69,19 @@ class HexToAlgo extends React.Component{
   this.setState({address: algosdk.encodeAddress(bytes)})
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.hash !== prevProps.hash) {
+      this.handleClickConvert(this.props.hash)
+    }
+  }
+
 
   render(){
     return(
-    <div>
+    <div className="jss16">
 
     <hr className="col-3 col-md-2 mb-5" />
-    <input className="form-control" id="hex"></input>
-      <button className="w-100 btn btn-primary btn-lg mt-3 mb-3" onClick={()=>{this.handleClickConvert(document.getElementById("hex").value)}}>
-        Convert
-      </button>
+    <input id="hex" value={this.props.hash}></input>
       <div
         className="alert alert-secondary alert-dismissible fade show"
         role="alert"

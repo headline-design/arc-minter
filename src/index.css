@@ -546,3 +546,82 @@ svg:not(:root).svg-inline--fa {
     overflow: visible;
     vertical-align: -0.125em;
 }
+
+pre {
+    font-family: monospace, monospace;
+    overflow: scroll;
+    font-size: .8em;
+}
+
+.jss37 {
+    border: 1px solid #8247E5;
+    height: 44px;
+    display: inline-flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0 20px;
+    position: relative;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 44px;
+    border-radius: 4px;
+    text-transform: capitalize;
+}
+
+.unit-name-label {
+    color: #7533E2 !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    margin-left: 3px;
+    margin-bottom: 4px;
+}
+
+label.advanced-options {
+    cursor: pointer;
+}
+
+.custom-control-input:checked~.custom-control-label:before {
+    color: #fff;
+    border-color: #7533e2 !important;
+    background-color: #7533e2 !important;
+    cursor: pointer !important;
+}
+
+.label-switch .permitted .big-switch {
+    display: inline-block;
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    color: #7533E2;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-left: 3px;
+    margin-bottom: 4px;
+}
+
+.custom-switch .custom-control-label:before,.custom-switch .custom-control-label:after {
+    cursor: pointer !important;
+}
+
+.frozen-dropdown .frozen-dropdown-toggle {
+    width: 100%!important;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff!important;
+    border-color: #ced4da!important;
+    color: #000!important;
+    height: 50px;
+    align-items: center;
+}
+
+.jss37:hover {
+    color: white;
+    border-color: #7533e2;
+    background-color: #7533e2;
+}
+
+.alert.alert-secondary.alert-dismissible.fade.show {
+    font-family: monospace, monospace;
+    overflow: scroll;
+    font-size: .8em;
+}

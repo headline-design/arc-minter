@@ -8,7 +8,6 @@ import IpfsUpload from "./IpfsUpload";
 import HexToAlgo from "./HexToAlgo";
 import {
   AnchorButton,
-  Button,
   ProgressBar,
 } from "@blueprintjs/core";
 import { conf, collect, sendWait, getAsaId, getNFT } from "./lib/algorand";
@@ -16,10 +15,19 @@ import { Classes, Dialog } from "@blueprintjs/core";
 import { BrowserView, MobileView, isIOS } from "react-device-detect";
 import Pipeline from "@pipeline-ui-2/pipeline";
 import getNFTInfo from "./lib/getnft";
-import { AsaDetails } from "./AsaDetails";
 import { MintingUtils } from "./mintingUtils"
-import Tabs from "./Tabs";
 import Accordion from "./Accordion";
+
+const prevResponse = [{hash:"none yet"}]
+
+const asaData = {
+  creator: "",
+  note: "Hello world",
+  amount: 1,
+  decimals: 0,
+  assetName: "1NFT",
+  unitName: "1NFT"
+}
 
 const wallet = Pipeline.init();
 
@@ -41,6 +49,8 @@ const MetaDataProps = (props) => {
     </div>
   );
 };
+
+
 
 function Arc19Minter() {
   const sw = new SessionWallet(conf.network);
@@ -68,6 +78,7 @@ function Arc19Minter() {
   const escrow = params.get("escrow");
   const addr = params.get("addr");
   const secret = params.get("secret");
+  const [hash, setHash] = React.useState("")
 
   const [initial, setInitial] = React.useState(true);
 
@@ -75,10 +86,41 @@ function Arc19Minter() {
     setClaimable(secret !== null && addr !== null && escrow !== null);
   }, [escrow, addr, secret]);
 
+  useEffect(() => {
+    window.response1234 = [{ hash: "none yet" }];
+    setInterval(checkforResponse, 300);
+  }, []);
+
+  function checkforResponse() {
+    if (prevResponse[0].hash !== window.response1234[0].hash) {
+      prevResponse[0].hash = window.response1234[0].hash
+      let thisHash = window.response1234[0].hash
+      setHash(thisHash)
+    }
+  }
+
   function updateWallet(address) {
     setAddress(address);
     setConnected(true);
     setAddress(true);
+  }
+
+  async function createAsa () {
+    asaData.amount = parseInt (document.getElementById("input-amount").value)
+    asaData.assetName = document.getElementById("input-asset-name").value
+    asaData.creator = document.getElementById("input-manager").value
+    asaData.decimals = parseInt (document.getElementById("input-amount-decimals").value)
+    asaData.note = document.getElementById("input-note").value
+    asaData.assetURL = document.getElementById("input-asset-url").value
+    asaData.unitName = document.getElementById("input-unit-name").value
+    asaData.reserve = document.getElementById("input-reserve").value
+    asaData.manager = document.getElementById("input-manager").value
+    // asaData.clawback = document.getElementById("input-clawback").value
+    // asaData.freeze = document.getElementById("input-freeze").value
+    asaData.assetMetadataHash = document.getElementById("input-assetMetadataHash").value
+    
+    let asaId = await Pipeline.createAsa(asaData)
+    return asaId
   }
 
   function triggerHelp() {
@@ -269,7 +311,6 @@ function Arc19Minter() {
                 <a className="logo-nav" href="/">
                   {" "}
                   <Logo></Logo>
-                  <h2 className="type-logo">NFT Assembly</h2>
                 </a>
                 <div className="buttons">
                   <AlgorandWalletConnector
@@ -307,7 +348,7 @@ function Arc19Minter() {
                 <div className="form-title">
                   <h3>Mint your NFT</h3>
                 </div>
-                <form noValidate="" autoComplete="off" className="jss26">
+                <div className="jss26">
                   <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="jss27">
@@ -324,7 +365,8 @@ function Arc19Minter() {
                           />
 
                           <br />
-                          <HexToAlgo></HexToAlgo>
+                          <HexToAlgo
+                          hash={hash}></HexToAlgo>
                        
               <MintingUtils></MintingUtils>
               <Accordion>
@@ -431,6 +473,7 @@ function Arc19Minter() {
                       <button
                         className=" Mui-not-btn MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
                         tabIndex={-1}
+                        id="not-connected"
                         type="submit"
                         disabled=""
                         style={{ marginBottom: 30 }}
@@ -439,13 +482,15 @@ function Arc19Minter() {
                           Wallet not connected
                         </span>
                       </button>
-                      <div style={{ display: "none" }}>
+                      <div id="connected" style={{ display: "none" }}>
                         <button
                           hidden={true}
-                          className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
+                          onClick={ async () => {
+                            let asaId = await createAsa()
+                            alert(asaId)
+                          }}
+                          className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
                           tabIndex={-1}
-                          type="submit"
-                          disabled=""
                           style={{ marginBottom: 30 }}
                         >
                           <span className="MuiButton-label">Mint NFT</span>
@@ -453,7 +498,7 @@ function Arc19Minter() {
                       </div>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>

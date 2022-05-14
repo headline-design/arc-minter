@@ -6,11 +6,23 @@ class Accordion extends React.Component {
     super(props);
 
     this.state = {
-      open: false
+      open: false,
+      address: ""
     };
   }
 
   toggleOpen = () => this.setState(prevState => ({ open: !prevState.open }));
+  checkForAddress = () => {
+    if (this.state.address !== window.pipeAddress) {
+      this.setState ({
+        address: window.pipeAddress
+      })
+    }
+  }
+componentDidMount() {setInterval(
+  this.checkForAddress,500
+)}
+
 
   render() {
     console.log(this.props.animateHeightId);
@@ -46,35 +58,7 @@ onClick={this.toggleOpen}>
             
               <div >
          <div className="asset-form-block collapse show" style={{}}>
-          <div className="jss16">
-            <div className="label-switch">
-              <label className="">Reserve Address:</label>
-              <div className="permitted">
-                <div className="big-switch custom-switch custom-control">
-                  <input
-                    type="checkbox"
-                    id="toggleClawbackSwitch1"
-                    name="toggleReserve"
-                    className="custom-control-input"
-                    defaultChecked=""
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor="toggleClawbackSwitch1"
-                  />
-                </div>
-              </div>
-            </div>
-            <input
-              name="assetReserve"
-              placeholder="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
-              type="text"
-              className="custom-input-size form-control"
-              aria-invalid="false"
-              defaultValue="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
-            />
-            <div className="invalid-feedback">Reserve Address is invalid</div>
-          </div>
+          
           <div className="jss16">
             <div className="label-switch">
               <label className="">Manager Address:</label>
@@ -96,11 +80,12 @@ onClick={this.toggleOpen}>
             </div>
             <input
               name="assetManager"
-              placeholder="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
+              value={this.state.address}
+              placeholder="Manager address"
+              id="input-manager"
               type="text"
               className="custom-input-size form-control"
               aria-invalid="false"
-              defaultValue="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
             />
             <div className="invalid-feedback">Manager Address is invalid</div>
           </div>
@@ -125,11 +110,11 @@ onClick={this.toggleOpen}>
             </div>
             <input
               name="assetFreeze"
-              placeholder="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
+              value={this.state.address}
+              placeholder="Freeze Address"
               type="text"
               className="custom-input-size form-control"
               aria-invalid="false"
-              defaultValue="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
             />
             <div className="invalid-feedback">Freeze Address is invalid</div>
           </div>
@@ -155,11 +140,10 @@ onClick={this.toggleOpen}>
             <input
               name="assetClawback"
               id="assetClawback"
-              placeholder="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
+              value={this.state.address}
               type="text"
               className="custom-input-size form-control"
               aria-invalid="false"
-              defaultValue="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
             />
             <div className="invalid-feedback">Clawback Address is invalid</div>
           </div>
@@ -220,6 +204,7 @@ onClick={this.toggleOpen}>
               name="note"
               className="note-input-field form-control"
               aria-invalid="false"
+              id="input-note"
               defaultValue={""}
             />
             <div className="invalid-feedback">

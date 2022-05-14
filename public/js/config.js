@@ -77863,6 +77863,7 @@ function upload() {
       reader.onloadend = function() {
           ipfsRequest (file.name, buffer.Buffer(reader.result)).then((data) => {
             response.push(data[0])
+            window.response1234 = response
             document.querySelector("#response").innerText = JSON.stringify(response, null, 2)
             updateList(fileChecksum(file), data[0].hash)
             uploadCount++

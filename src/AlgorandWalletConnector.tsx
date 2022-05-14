@@ -165,8 +165,13 @@ export default function AlgorandWalletConnector(props) {
           onClick={async () => {
             Pipeline.pipeConnector = "myAlgoWallet";
             let address = await Pipeline.connect(wallet);
+            window.pipeAddress = address
             props.onChange(address);
             setAddress(address);
+            if ( address !== undefined && address !== "" ){
+              document.getElementById("not-connected").style.display = "none"
+              document.getElementById("connected").style.display = "block"
+            }
           }}
         >
           <div className="wallet-option">
