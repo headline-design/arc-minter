@@ -19,6 +19,7 @@ import { MintingUtils } from "./mintingUtils"
 import Accordion from "./Accordion";
 import SaveToJson from "./SaveToJson";
 import DynamicJSON from "./DynamicJSON";
+import JSONer from "./css/jsoner";
 
 const prevResponse = [{hash:"none yet"}]
 
@@ -52,6 +53,21 @@ const MetaDataProps = (props) => {
   );
 };
 
+const myJSON = {
+      "Logo": "NFDomains",
+      "Background": "Code"
+  }
+
+  const defaultJSON = {
+    "name": "Astro #220",
+    "description": "Algo Astros, An NFT Collection from the HEADLINE Team.",
+    "image": "ipfs://QmPntG5UdzPifpDaxMAwi1Fdh4e9Nr6jeeHApLSsrV7LJo",
+    "decimals": 0,
+    "unitName": "ASTRO220",
+    "image_integrity": "(sha256-18C15D17D33E6AA1C8579F740F9684C069F56C5F8750745C157F79FA528AC997",
+    "image_mimetype": "image/jpeg",
+    "properties": undefined
+}
 
 
 function Arc19Minter() {
@@ -95,10 +111,18 @@ function Arc19Minter() {
 
   function checkforResponse() {
     if (prevResponse[0].hash !== window.response1234[0].hash) {
-      prevResponse[0].hash = window.response1234[0].hash
-      let thisHash = window.response1234[0].hash
-      setHash(thisHash)
+      prevResponse[0].hash = window.response1234[0].hash;
+      let thisHash = window.response1234[0].hash;
+      setHash(thisHash);
     }
+  }
+
+  function updateJSON(event) {
+    let key = event.target.id;
+    let value = event.target.value;
+    defaultJSON[key] = value;
+    window.defaultJSON = defaultJSON
+    document.getElementById("preview").innerText = JSON.stringify(defaultJSON);
   }
 
   function updateWallet(address) {
@@ -327,7 +351,7 @@ function Arc19Minter() {
               </div>
             </div>
           </header>
-      
+
           <div className="jss9">
             <div className="MuiContainer-root jss8 MuiContainer-maxWidthLg">
               <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
@@ -355,7 +379,6 @@ function Arc19Minter() {
                   <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="jss27">
-                        
                         <label className="jss17" htmlFor="upload-file">
                           Upload
                         </label>
@@ -369,20 +392,154 @@ function Arc19Minter() {
                           />
 
                           <br />
-                          <DynamicJSON></DynamicJSON>
+                          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                        <div className="jss16">
+                          <label htmlFor="name">Title</label>
+                          <input
+                            type="text"
+                            defaultValue=""
+                            id="name"
+                            onChange={updateJSON}
+                            required={true}
+                          />
+                          <p className="jss32" style={{ display: "none" }}>
+                            Name cannot be empty
+                          </p>
+                        </div>
+                      </div>
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                        <div className="jss16">
+                          <label htmlFor="description">Description</label>
+                          <textarea
+                            type="text"
+                            style={{ minHeight: 100 }}
+                            id="description"
+                            spellCheck="false"
+                            onChange={updateJSON}
+                            required={true}
+                            defaultValue={""}
+                          />
+                          <p style={{ display: "none" }} className="jss32">
+                            Add description for your token
+                          </p>
+                        </div>
+                      </div>
+                      <div container spacing={2}></div>
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                        <div className="jss16">
+                          <label htmlFor="sm-url">
+                            File URL <span>(optional)</span>
+                          </label>
+                          <input
+                            type="url"
+                            placeholder="https://twitter.com/example"
+                            defaultValue=""
+                            pattern="https?://.+"
+                            onChange={updateJSON}
+                            id="image"
+                          />
+                        </div>
+                      </div>
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                        <div className="jss16">
+                          <label htmlFor="sm-url">
+                            Image Mimetype
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="https://twitter.com/example"
+                            defaultValue=""
+                            onChange={updateJSON}
+                            pattern=""
+                            id="image_mimetype"
+                          />
+                        </div>
+                      </div>
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                        <div className="jss16">
+                          <label htmlFor="sm-url">
+                            Decimals 
+                          </label>
+                          <input
+                            type="number"
+                            placeholder="https://twitter.com/example"
+                            defaultValue=""
+                            onChange={updateJSON}
+                            pattern=""
+                            id="decimals"
+                          />
+                        </div>
+                      </div>
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                        <div className="jss16">
+                          <label htmlFor="sm-url">
+                            Unit Name 
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="https://twitter.com/example"
+                            defaultValue=""
+                            pattern=""
+                            onChange={updateJSON}
+                            id="unitName"
+                          />
+                        </div>
+                      </div>
+                      <p className="jss36">
+                        Once your NFT is minted on the Algorand blockchain, you
+                        will not be able to edit or update any of its
+                        information.
+                        <br />
+                        <br />
+                        You agree that any information uploaded to the
+                        Algorand's NFT Minter will not contain material subject
+                        to copyright or other proprietary rights, unless you
+                        have necessary permission or are otherwise legally
+                        entitled to post the material.
+                      </p>
+                      <button
+                        className=" Mui-not-btn MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
+                        tabIndex={-1}
+                        id="not-connected"
+                        type="submit"
+                        disabled=""
+                        style={{ marginBottom: 30 }}
+                      >
+                        <span className="MuiButton-label">
+                          Wallet not connected
+                        </span>
+                      </button>
+                      <div >
+                        <button
+                          className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
+                          tabIndex={-1}
+                          id="JSONuploader"
+                          style={{ marginBottom: 30 }}
+                        >
+                          <span className="MuiButton-label">Upload JSON</span>
+                        </button>
+                      </div>
+          
+                          <p id="preview">{JSON.stringify(defaultJSON)}</p>
+                          <JSONer
+                            callBack={function (data) {
+                              defaultJSON.properties = data;
+                              window.defaultJSON = defaultJSON
+                              document.getElementById("preview").innerText =
+                                JSON.stringify(defaultJSON);
+                            }}
+                            object={myJSON}
+                          ></JSONer>
+
                           <div className="results">
-    <h2>Form Data</h2>
-    <pre />
-  </div>
+                            <h2>Form Data</h2>
+                            <pre />
+                          </div>
                           <SaveToJson></SaveToJson>
-                          <HexToAlgo
-                          hash={hash}></HexToAlgo>
-                       
-              <MintingUtils></MintingUtils>
-              <Accordion>
-                
-              </Accordion>
-                         
+                          <HexToAlgo hash={hash}></HexToAlgo>
+
+                          <MintingUtils></MintingUtils>
+                          <Accordion></Accordion>
                         </div>
                       </div>
                     </div>
@@ -403,10 +560,6 @@ function Arc19Minter() {
                       </div>
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                         <div className="jss16">
-                   
-
-
-
                           <label htmlFor="description">Description</label>
                           <textarea
                             type="text"
@@ -421,25 +574,21 @@ function Arc19Minter() {
                           </p>
                         </div>
                       </div>
-                      <div container spacing={2}>
-                  
-
-                  
-                </div>
+                      <div container spacing={2}></div>
                       <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2">
-                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12">
-                        <p className="jss83">NFT Type</p>
-                        <input
-                          type="checkbox"
-                          id="checkedA"
-                          hidden
-                          className="jss35"
-                        />
-                        <label htmlFor="checkedA" className="jss84">
-                          <div>ARC19</div>
-                          <div>ARC69</div>
-                        </label>
-                      </div>
+                        <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12">
+                          <p className="jss83">NFT Type</p>
+                          <input
+                            type="checkbox"
+                            id="checkedA"
+                            hidden
+                            className="jss35"
+                          />
+                          <label htmlFor="checkedA" className="jss84">
+                            <div>ARC19</div>
+                            <div>ARC69</div>
+                          </label>
+                        </div>
                         <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
                           <div className="jss16">
                             <label htmlFor="quantity">Quantity</label>
@@ -495,9 +644,9 @@ function Arc19Minter() {
                       <div id="connected" style={{ display: "none" }}>
                         <button
                           hidden={true}
-                          onClick={ async () => {
-                            let asaId = await createAsa()
-                            alert(asaId)
+                          onClick={async () => {
+                            let asaId = await createAsa();
+                            alert(asaId);
                           }}
                           className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
                           tabIndex={-1}
@@ -648,7 +797,6 @@ function Arc19Minter() {
                     <div className="sc-dlnjPT eFHlqH web3modal-provider-description">
                       Connect to Venly Wallet
                     </div>
-                    
                   </div>
                 </div>
               </div>
