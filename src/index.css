@@ -625,3 +625,95 @@ label.advanced-options {
     overflow: scroll;
     font-size: .8em;
 }
+
+  
+  .contact-form,
+  .results {
+    margin: 8vh auto;
+  }
+  
+  p {
+    margin-top: 0.5rem;
+    font-size: 87.5%;
+  }
+  
+  .results pre {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-gray-light);
+    overflow-x: scroll;
+  }
+  
+  .contact-form form {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 1rem 0 2rem;
+    border-top: 1px solid var(--color-gray-light);
+    border-bottom: 1px solid var(--color-gray-light);
+    overflow: hidden;
+  }
+  
+  .input-group {
+    margin-top: 0.25rem;
+  }
+  
+  .contact-form label {
+    display: block;
+    font-size: 90%;
+    line-height: 1.125;
+  }
+  
+  .group-label {
+    display: inline-block;
+    margin-right: 1rem;
+    font-size: 90%;
+  }
+  
+  .contact-form label.inline {
+    display: inline-block;
+    margin-left: 0.25rem;
+  }
+  
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea{
+    display: block;
+    margin-top: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    transition: 150ms border-color linear;
+  }
+  
+  .contact-form input[type=checkbox],
+  .contact-form input[type=radio] {
+    display: inline-block;
+    width: auto;
+  }
+  
+  .contact-form input[type=checkbox]:not(:first-of-type),
+  .contact-form input[type=radio]:not(:first-of-type) {
+    margin-left: 1rem;
+  }
+  
+  .contact-form button {
+    display: block;
+    margin: 0.5rem 1rem 0;
+    padding: 0 1rem 0.125rem;
+    border: 0;
+    font-family: lato, sans-serif;
+    font-size: 100%;
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+    text-transform: uppercase;
+    transition: 150ms all linear;
+  }
+  
+  .contact-form button:hover,
+  .contact-form button:active,
+  .contact-form button:focus {
+    cursor: pointer;
+  }
+  

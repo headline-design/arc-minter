@@ -17,6 +17,8 @@ import Pipeline from "@pipeline-ui-2/pipeline";
 import getNFTInfo from "./lib/getnft";
 import { MintingUtils } from "./mintingUtils"
 import Accordion from "./Accordion";
+import SaveToJson from "./SaveToJson";
+import DynamicJSON from "./DynamicJSON";
 
 const prevResponse = [{hash:"none yet"}]
 
@@ -325,6 +327,7 @@ function Arc19Minter() {
               </div>
             </div>
           </header>
+      
           <div className="jss9">
             <div className="MuiContainer-root jss8 MuiContainer-maxWidthLg">
               <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
@@ -352,6 +355,7 @@ function Arc19Minter() {
                   <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="jss27">
+                        
                         <label className="jss17" htmlFor="upload-file">
                           Upload
                         </label>
@@ -365,6 +369,12 @@ function Arc19Minter() {
                           />
 
                           <br />
+                          <DynamicJSON></DynamicJSON>
+                          <div className="results">
+    <h2>Form Data</h2>
+    <pre />
+  </div>
+                          <SaveToJson></SaveToJson>
                           <HexToAlgo
                           hash={hash}></HexToAlgo>
                        
@@ -638,6 +648,7 @@ function Arc19Minter() {
                     <div className="sc-dlnjPT eFHlqH web3modal-provider-description">
                       Connect to Venly Wallet
                     </div>
+                    
                   </div>
                 </div>
               </div>
