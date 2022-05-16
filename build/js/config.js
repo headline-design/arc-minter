@@ -77713,6 +77713,7 @@ module.exports = function (send) {
 
           if (cid.version === 0 && opts['cid-base'] !== 'base58btc') {
             cid = cid.toV1();
+            alert("got cid")
           }
 
           parts[2] = cid.toBaseEncodedString(opts['cid-base']);
@@ -77863,6 +77864,8 @@ function upload() {
       reader.onloadend = function() {
           ipfsRequest (file.name, buffer.Buffer(reader.result)).then((data) => {
             response.push(data[0])
+            window.response1234 = response
+            window.defaultJSON["image"] = "ipfs://" +  response[0].hash
             document.querySelector("#response").innerText = JSON.stringify(response, null, 2)
             updateList(fileChecksum(file), data[0].hash)
             uploadCount++
@@ -78016,3 +78019,33 @@ if (!window.FileReader) {
 updateNode(node.default)
 
 document.getElementById("buttonUpload").onclick = upload
+
+function uploadJSON() {
+  if (!connected) {
+    alert ("Connect to node First!")
+    return
+  }
+
+  document.querySelector('.min-loading.blue').classList.remove('loading-hidden') //loading event
+  document.querySelector('button#buttonUpload').setAttribute('disabled', '')
+  document.querySelector('button#buttonRemote').setAttribute('disabled', '')
+  document.querySelector('button#buttonLocal').setAttribute('disabled', '')
+
+          ipfsRequest ("filename", buffer.Buffer(JSON.stringify(window.defaultJSON))).then((data) => {
+            response.push(data[0])
+            window.response1234 = response
+            document.querySelector("#response").innerText = JSON.stringify(response, null, 2)
+            //updateList(fileChecksum(file), data[0].hash)
+
+              document.querySelector('.min-loading.blue').classList.add('loading-hidden');  //stop loading event
+              document.querySelector('button#buttonRemote').removeAttribute('disabled', '')
+              document.querySelector('button#buttonLocal').removeAttribute('disabled', '')
+              document.querySelector('button#buttonUpload').onclick=function(){resetFiles()}
+              document.querySelector('button#buttonUpload').innerHTML = 'Clean Up<img src="img/reset.png" />'
+              document.querySelector('button#buttonUpload').removeAttribute("disabled");
+            }
+            )
+          }
+let newButton = document.getElementById("JSONuploader")
+newButton.onclick = uploadJSON
+

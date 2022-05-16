@@ -78,10 +78,28 @@ class HexToAlgo extends React.Component{
 
   render(){
     return(
+      
     <div className="jss16">
-
-    <hr className="col-3 col-md-2 mb-5" />
-    <input id="hex" value={this.props.hash}></input>
+      
+  <div className="label-switch">
+    <label className="">Reserve Address:</label>
+    <div className="permitted">
+      <div className="big-switch custom-switch custom-control">
+        <input
+          type="checkbox"
+          id="toggle-hex"
+          name="toggleReserve"
+          className="custom-control-input"
+        />
+        <label
+          className="custom-control-label"
+          htmlFor="toggle-hex"
+        />
+      </div>
+    </div>
+  </div>
+  
+    <input id="hex" value={this.props.hash} disabled></input>
       <div
         className="alert alert-secondary alert-dismissible fade show"
         role="alert"
@@ -95,6 +113,7 @@ class HexToAlgo extends React.Component{
 >Reserve Address: &nbsp; 
   { this.state.address}
 </div>
+<hr className="col-3 col-md-2 mb-5" />
 </div>
 )
   }

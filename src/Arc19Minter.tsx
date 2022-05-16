@@ -469,44 +469,52 @@ function Arc19Minter() {
                           />
                         </div>
                       </div>
-                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        <div className="jss16">
-                          <label htmlFor="sm-url">
-                            Image Mimetype
-                          </label>
-                          <input
+                      <div className="jss16">
+    <div className="total-supply-label-container">
+      <label htmlFor="input-amount" className="">
+      Image Mimetype
+      </label>
+      <label htmlFor="input-amount-decimals" className="">
+        Decimals 
+      </label>
+    </div>
+    <div className="total-supply-container">
+    <input
                             type="text"
-                            placeholder="https://twitter.com/example"
+                            placeholder="image/jpeg"
                             defaultValue=""
                             onChange={updateJSON}
                             pattern=""
                             id="image_mimetype"
                           />
-                        </div>
-                      </div>
-                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        <div className="jss16">
-                          <label htmlFor="sm-url">
-                            Decimals 
-                          </label>
-                          <input
+                                <input
                             type="number"
-                            placeholder="https://twitter.com/example"
+                            placeholder="0"
                             defaultValue=""
                             onChange={updateJSON}
                             pattern=""
                             id="decimals"
                           />
                         </div>
-                      </div>
+
+      <div className="error-total-supply invalid-feedback">
+        Total asset supply must be a positive number and smaller than
+        18,446,744,073,709,552,000
+      </div>
+    </div>
+  </div>
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                         <div className="jss16">
-                          <label htmlFor="sm-url">
-                            Unit Name 
-                          </label>
+               <label htmlFor="input-unit-name" className="">
+            <span className="unit-name-label">Unit Name </span>
+            <small className="asset-description">
+              What Unit is associated with your asset?
+            </small>
+          </label>
                           <input
                             type="text"
-                            placeholder="https://twitter.com/example"
+                            placeholder="NFT1"
                             defaultValue=""
                             pattern=""
                             onChange={updateJSON}
@@ -514,25 +522,21 @@ function Arc19Minter() {
                           />
                         </div>
                       </div>
-                      <p className="jss36">
-                        Once your NFT is minted on the Algorand blockchain, you
-                        will not be able to edit or update any of its
-                        information.
-                        <br />
-                        <br />
-                        You agree that any information uploaded to the
-                        Algorand's NFT Minter will not contain material subject
-                        to copyright or other proprietary rights, unless you
-                        have necessary permission or are otherwise legally
-                        entitled to post the material.
-                      </p>
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        <div className="jss16">
-                          <label htmlFor="sm-url">
-                            Image Mimetype
-                          </label>
-                          
-                      <div >
+                        <div className="jss16">       
+                      <HexToAlgo hash={hash}></HexToAlgo>
+                      <JSONer
+                            callBack={function (data) {
+                              window.defaultJSON.properties = data;
+                              document.getElementById("preview").innerText =
+                                JSON.stringify(window.defaultJSON);
+                            }}
+                            object={myJSON}
+                          ></JSONer>
+                         </div>
+                         <div className="jss16">
+                         <p id="preview" className="metadata-object">{JSON.stringify(window.defaultJSON)}</p>
+                          <div >
                         <button
                           className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
                           tabIndex={-1}
@@ -541,18 +545,9 @@ function Arc19Minter() {
                         >
                           <span className="MuiButton-label">Upload JSON</span>
                         </button>
-                      </div>
-                      <HexToAlgo hash={hash}></HexToAlgo>
-                          <p id="preview" className="metadata-object">{JSON.stringify(window.defaultJSON)}</p>
-                          <JSONer
-                            callBack={function (data) {
-                              window.defaultJSON.properties = data;
-                              document.getElementById("preview").innerText =
-                                JSON.stringify(window.defaultJSON);
-                            }}
-                            object={myJSON}
-                          ></JSONer>
-                         
+                     
+                        </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -561,6 +556,7 @@ function Arc19Minter() {
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                       <div className="jss16">
+                        
           <label htmlFor="input-asset-name" className="">
             <span className="unit-name-label">Asset Name </span>
             <small className="asset-description">
@@ -578,12 +574,22 @@ function Arc19Minter() {
           <div className="invalid-feedback">Asset Name Max size is 32 bytes</div>
         </div>
         <div className="jss16">
-          <label htmlFor="input-unit-name" className="">
-            <span className="unit-name-label">Unit Name </span>
-            <small className="asset-description">
-              What Unit is associated with your asset?
-            </small>
-          </label>
+         
+          
+          <div className="invalid-feedback">
+            Asset Unit Name can not exceed 8 letters
+          </div>
+        </div>
+        <div className="jss16">
+          <div className="total-supply-label-container">
+            <label htmlFor="input-amount" className="">
+              Unit Name
+            </label>
+            <label htmlFor="input-amount-decimals" className="">
+              Decimals
+            </label>
+          </div>
+          <div className="total-supply-container">
           <input
             id="input-unit-name"
             name="assetUnitName"
@@ -593,30 +599,7 @@ function Arc19Minter() {
             aria-invalid="false"
             defaultValue=""
           />
-          <div className="invalid-feedback">
-            Asset Unit Name can not exceed 8 letters
-          </div>
-        </div>
-        <div className="jss16">
-          <div className="total-supply-label-container">
-            <label htmlFor="input-amount" className="">
-              Total Supply *{" "}
-            </label>
-            <label htmlFor="input-amount-decimals" className="">
-              Decimals *{" "}
-            </label>
-          </div>
-          <div className="total-supply-container">
-            <input
-              id="input-amount"
-              name="assetTotal"
-              className="custom-input-size form-control  "
-              placeholder={0}
-              type="text"
-              defaultValue={0}
-              inputMode="numeric"
-            />
-            <div className="dot-supply">.</div>
+
             <input
               id="input-amount-decimals"
               name="totalSupplyDecimals"
@@ -647,24 +630,6 @@ function Arc19Minter() {
             defaultValue=""
           />
           <div className="invalid-feedback">Asset Url Max size is 96 bytes.</div>
-        </div>
-        <div className="jss16">
-          <label htmlFor="assetMetadataHash" className="">
-            Metadata Hash
-          </label>
-          <input
-            id="input-assetMetadataHash"
-            name="assetMetadataHash"
-            placeholder="32 characters | 32 base64 characters | 64 Hex characters"
-            type="text"
-            className="custom-input-size form-control"
-            aria-invalid="false"
-            defaultValue=""
-          />
-          <div className="invalid-feedback">
-            Asset Metadata Hash size should be 32 characters, 32 base64 characters
-            or 64 Hex characters
-          </div>
         </div>
         <div className="jss16">
             <div className="label-switch">
@@ -727,7 +692,24 @@ onClick={toggle} >
             
               <div >
          <div className="asset-form-block collapse show" style={{display: advancedOptions}}>
-          
+         <div className="jss16">
+          <label htmlFor="assetMetadataHash" className="">
+            Metadata Hash
+          </label>
+          <input
+            id="input-assetMetadataHash"
+            name="assetMetadataHash"
+            placeholder="32 characters | 32 base64 characters | 64 Hex characters"
+            type="text"
+            className="custom-input-size form-control"
+            aria-invalid="false"
+            defaultValue=""
+          />
+          <div className="invalid-feedback">
+            Asset Metadata Hash size should be 32 characters, 32 base64 characters
+            or 64 Hex characters
+          </div>
+        </div>
           <div className="jss16">
             <div className="label-switch">
               <label className="">Manager Address:</label>
@@ -905,12 +887,14 @@ onClick={toggle} >
                           <div className="jss16">
                             <label htmlFor="quantity">Quantity</label>
                             <input
-                              type="number"
-                              placeholder={1}
-                              disabled=""
-                              defaultValue={1}
-                              id="quantity"
-                            />
+              id="input-amount"
+              name="assetTotal"
+              className="custom-input-size form-control  "
+              placeholder={0}
+              type="text"
+              defaultValue={0}
+              inputMode="numeric"
+            />
                           </div>
                         </div>
                       </div>

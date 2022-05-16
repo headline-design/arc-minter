@@ -70,7 +70,7 @@ class IpfsUpload extends Component {
          
                 <ul className="jss29">
                            
-              <img id="img-preview" width="auto" height="70px" alt="preview-img" />
+              <img src="img/post-add.svg" id="img-preview" width="auto" height="70px" alt="preview-img" />
             
              </ul> 
              <div id="divResponse">

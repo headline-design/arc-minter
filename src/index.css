@@ -150,12 +150,17 @@ body{background-color:#fff;}
 .jss16 label span{color:#515C72;font-size:14px;font-weight:normal;}
 .jss16 input:active,.jss16 textarea:active{border:1.5px solid #7533E2;outline:none;}
 .jss16 input:focus,.jss16 textarea:focus{border:1.5px solid #7533E2;outline:none;}
-.jss16 input:disabled,.jss16 textarea:disabled{position:relative;user-select:none;pointer-events:none;background-color:transparent;}
+.jss16 input:disabled, .jss16 textarea:disabled {
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    background-color: #fafafa;
+}
 .jss17{color:#7533e2;margin:0;font-size:14px;font-weight:bold;}
 .jss21{border:1px solid #8247E5;height:44px;display:inline-flex;padding:0 20px;position:relative;font-size:16px;transition:all 0.3s ease;font-weight:600;line-height:44px;border-radius:4px;text-transform:capitalize;}
 .jss21:hover{color:white;border-color:#7533e2;background-color:#7533e2;}
 .jss21:disabled{color:white;border-color:#bdc3c7;background-color:#bdc3c7;}
-.jss23{color:white;background-color:#8247E5;}
 .jss25{padding-bottom:70px;background-color:#F4F7F9;}
 @media (max-width:959px){
 .jss25{padding-bottom:0;}
@@ -764,21 +769,24 @@ div#frozen-dropdown {
     width: -webkit-fill-available;
     max-width: fit-content;
     background-color: white;
+    border-width: 1px;
 }
 
 .field-btn-change {
-    border-color: #8247e5;
+    border: 1px solid #C7CBD9;
     color: #8247e5;
 }
 
 .field-btn-delete {
-    border-color: #db3737;
+    border: 1px solid #C7CBD9;
     color: #db3737;
 }
 
 .field-btn-create {
-    border-color: #0d8050;
+    border: 1px solid #C7CBD9;
     color: #0d8050;
+    display: flex;
+    align-items: center;
 }
 
 svg:not(:root).svg-inline--fa {
@@ -1874,4 +1882,27 @@ textarea.form-control {
         height: 40px;
         width: 250px
     }
+}
+
+input.disabled-field {
+    background: transparent !important;
+}
+
+.card-border {
+    border-radius: 0.375rem;
+    padding: 1rem;
+    border: 1px solid #C7CBD9;
+}
+
+svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeSmall.MuiBox-root.css-1om0hkc {
+    width: 20px;
+    height: 20px;
+}
+
+input#hex {
+    margin-bottom: 1rem;
+}
+
+.bp3-dialog {
+    background: #ffffff;
 }
