@@ -20,8 +20,11 @@ import Accordion from "./Accordion";
 import SaveToJson from "./SaveToJson";
 import DynamicJSON from "./DynamicJSON";
 import JSONer from "./css/jsoner";
+import CID from 'cids'
 
 const prevResponse = [{hash:"none yet"}]
+
+var cid = ""
 
 const asaData = {
   creator: "",
@@ -33,6 +36,8 @@ const asaData = {
 }
 
 const wallet = Pipeline.init();
+
+
 
 
 const MetaDataProps = (props) => {
@@ -58,7 +63,7 @@ const myJSON = {
       "Background": "Code"
   }
 
-  const defaultJSON = {
+  window.defaultJSON = {
     "name": "Astro #220",
     "description": "Algo Astros, An NFT Collection from the HEADLINE Team.",
     "image": "ipfs://QmPntG5UdzPifpDaxMAwi1Fdh4e9Nr6jeeHApLSsrV7LJo",
@@ -73,6 +78,14 @@ const myJSON = {
 function Arc19Minter() {
   const sw = new SessionWallet(conf.network);
   const [sessionWallet] = React.useState(sw);
+
+ function checkForAddress () {
+    if (address !== window.pipeAddress) {
+      setAddress (
+        window.pipeAddress
+      )
+    }
+  }
 
   const [nft, setNFT] = React.useState({
     id: 0,
@@ -91,6 +104,8 @@ function Arc19Minter() {
   const [metaData, setMetaData] = React.useState("");
   const [metaData2, setMetaData2] = React.useState("");
   const [activeTab, setActiveTab] = useState('1');
+  const [advancedOptions, setAdvancedOptions] = useState("none");
+  
 
   const params = new URLSearchParams(window.location.search);
   const escrow = params.get("escrow");
@@ -109,20 +124,34 @@ function Arc19Minter() {
     setInterval(checkforResponse, 300);
   }, []);
 
+  function toggle() {
+    if (advancedOptions === "none") {
+      setAdvancedOptions("block");
+    } else {
+      setAdvancedOptions("none");
+    }
+  }
+
   function checkforResponse() {
-    if (prevResponse[0].hash !== window.response1234[0].hash) {
-      prevResponse[0].hash = window.response1234[0].hash;
-      let thisHash = window.response1234[0].hash;
+    let length = window.response1234.length - 1;
+    if (prevResponse[0].hash !== window.response1234[length].hash) {
+      prevResponse[0].hash = window.response1234[length].hash;
+      let cidWorking = new CID(window.response1234[0].hash).toV1()
+      let cidConverted = "sha256-" + cidWorking.toString("base16").substring(9)
+      window.defaultJSON["image_integrity"] = cidConverted
+      document.getElementById("preview").innerText = JSON.stringify(window.defaultJSON);
+      let thisHash = window.response1234[length].hash;
       setHash(thisHash);
     }
+    checkForAddress ()
   }
 
   function updateJSON(event) {
     let key = event.target.id;
     let value = event.target.value;
-    defaultJSON[key] = value;
-    window.defaultJSON = defaultJSON
-    document.getElementById("preview").innerText = JSON.stringify(defaultJSON);
+    window.defaultJSON[key] = value;
+    document.getElementById("preview").innerText = JSON.stringify(window.defaultJSON);
+    document.getElementById("input-asset-name").value = value
   }
 
   function updateWallet(address) {
@@ -497,18 +526,12 @@ function Arc19Minter() {
                         have necessary permission or are otherwise legally
                         entitled to post the material.
                       </p>
-                      <button
-                        className=" Mui-not-btn MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
-                        tabIndex={-1}
-                        id="not-connected"
-                        type="submit"
-                        disabled=""
-                        style={{ marginBottom: 30 }}
-                      >
-                        <span className="MuiButton-label">
-                          Wallet not connected
-                        </span>
-                      </button>
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                        <div className="jss16">
+                          <label htmlFor="sm-url">
+                            Image Mimetype
+                          </label>
+                          
                       <div >
                         <button
                           className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
@@ -519,61 +542,350 @@ function Arc19Minter() {
                           <span className="MuiButton-label">Upload JSON</span>
                         </button>
                       </div>
-          
-                          <p id="preview">{JSON.stringify(defaultJSON)}</p>
+                      <HexToAlgo hash={hash}></HexToAlgo>
+                          <p id="preview" className="metadata-object">{JSON.stringify(window.defaultJSON)}</p>
                           <JSONer
                             callBack={function (data) {
-                              defaultJSON.properties = data;
-                              window.defaultJSON = defaultJSON
+                              window.defaultJSON.properties = data;
                               document.getElementById("preview").innerText =
-                                JSON.stringify(defaultJSON);
+                                JSON.stringify(window.defaultJSON);
                             }}
                             object={myJSON}
                           ></JSONer>
-
-                          <div className="results">
-                            <h2>Form Data</h2>
-                            <pre />
-                          </div>
-                          <SaveToJson></SaveToJson>
-                          <HexToAlgo hash={hash}></HexToAlgo>
-
-                          <MintingUtils></MintingUtils>
-                          <Accordion></Accordion>
+                         
                         </div>
                       </div>
                     </div>
+                        </div>
+                      </div>
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        <div className="jss16">
-                          <label htmlFor="name">Title</label>
-                          <input
-                            type="text"
-                            defaultValue=""
-                            id="name"
-                            required={true}
-                          />
-                          <p className="jss32" style={{ display: "none" }}>
-                            Name cannot be empty
-                          </p>
-                        </div>
+                      <div className="jss16">
+          <label htmlFor="input-asset-name" className="">
+            <span className="unit-name-label">Asset Name </span>
+            <small className="asset-description">
+              What is the name of your digital asset?
+            </small>
+          </label>
+          <input
+            id="input-asset-name"
+            name="assetName"
+            placeholder="Tether"
+            type="text"
+            className="custom-input-size form-control"
+            aria-invalid="false"
+          />
+          <div className="invalid-feedback">Asset Name Max size is 32 bytes</div>
+        </div>
+        <div className="jss16">
+          <label htmlFor="input-unit-name" className="">
+            <span className="unit-name-label">Unit Name </span>
+            <small className="asset-description">
+              What Unit is associated with your asset?
+            </small>
+          </label>
+          <input
+            id="input-unit-name"
+            name="assetUnitName"
+            placeholder="USDt"
+            type="text"
+            className="custom-input-size form-control"
+            aria-invalid="false"
+            defaultValue=""
+          />
+          <div className="invalid-feedback">
+            Asset Unit Name can not exceed 8 letters
+          </div>
+        </div>
+        <div className="jss16">
+          <div className="total-supply-label-container">
+            <label htmlFor="input-amount" className="">
+              Total Supply *{" "}
+            </label>
+            <label htmlFor="input-amount-decimals" className="">
+              Decimals *{" "}
+            </label>
+          </div>
+          <div className="total-supply-container">
+            <input
+              id="input-amount"
+              name="assetTotal"
+              className="custom-input-size form-control  "
+              placeholder={0}
+              type="text"
+              defaultValue={0}
+              inputMode="numeric"
+            />
+            <div className="dot-supply">.</div>
+            <input
+              id="input-amount-decimals"
+              name="totalSupplyDecimals"
+              className="custom-input-size form-control  "
+              placeholder={0}
+              type="text"
+              defaultValue=""
+              inputMode="numeric"
+            />
+       
+            <div className="error-total-supply invalid-feedback">
+              Total asset supply must be a positive number and smaller than
+              18,446,744,073,709,552,000
+            </div>
+          </div>
+        </div>
+        <div className="jss16">
+          <label htmlFor="input-asset-url" className="">
+            Asset URL
+          </label>
+          <input
+            id="input-asset-url"
+            name="assetURL"
+            placeholder="https://www.algorand.com"
+            type="text"
+            className="custom-input-size form-control"
+            aria-invalid="false"
+            defaultValue=""
+          />
+          <div className="invalid-feedback">Asset Url Max size is 96 bytes.</div>
+        </div>
+        <div className="jss16">
+          <label htmlFor="assetMetadataHash" className="">
+            Metadata Hash
+          </label>
+          <input
+            id="input-assetMetadataHash"
+            name="assetMetadataHash"
+            placeholder="32 characters | 32 base64 characters | 64 Hex characters"
+            type="text"
+            className="custom-input-size form-control"
+            aria-invalid="false"
+            defaultValue=""
+          />
+          <div className="invalid-feedback">
+            Asset Metadata Hash size should be 32 characters, 32 base64 characters
+            or 64 Hex characters
+          </div>
+        </div>
+        <div className="jss16">
+            <div className="label-switch">
+              <label className="">Reserve Address:</label>
+              <div className="permitted">
+                <div className="big-switch custom-switch custom-control">
+                  <input
+                    type="checkbox"
+                    id="toggleClawbackSwitch1"
+                    name="toggleReserve"
+                    className="custom-control-input"
+                    defaultChecked=""
+                    
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="toggleClawbackSwitch1"
+                  />
+                </div>
+              </div>
+            </div>
+            <input
+              name="assetReserve"
+              placeholder="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
+              type="text"
+              id="input-reserve"
+              disabled
+              className="custom-input-size form-control"
+              aria-invalid="false"
+              defaultValue="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
+            />
+            <div className="invalid-feedback">Reserve Address is invalid</div>
+          </div>
+                      <div className="accordion">
+          <div className="accordion-header">
+          <div className="jss16">
+
+<label className="advanced-options "
+onClick={toggle} >
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    data-prefix="fas"
+    data-icon="angle-down"
+    className="svg-inline--fa fa-angle-down fa-w-10 mr-2"
+    role="img"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 320 512"
+  >
+    <path
+      fill="currentColor"
+      d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"
+    />
+  </svg>
+  Advanced Options
+  <hr />
+</label>
+
+          </div>
+            
+              <div >
+         <div className="asset-form-block collapse show" style={{display: advancedOptions}}>
+          
+          <div className="jss16">
+            <div className="label-switch">
+              <label className="">Manager Address:</label>
+              <div className="permitted">
+                <div className="big-switch custom-switch custom-control">
+                  <input
+                    type="checkbox"
+                    id="toggleClawbackSwitch2"
+                    name="toggleManager"
+                    className="custom-control-input"
+                    defaultChecked=""
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="toggleClawbackSwitch2"
+                  />
+                </div>
+              </div>
+            </div>
+            <input
+              name="assetManager"
+              value={address}
+              placeholder="Manager address"
+              id="input-manager"
+              type="text"
+              className="custom-input-size form-control"
+              aria-invalid="false"
+            />
+            <div className="invalid-feedback">Manager Address is invalid</div>
+          </div>
+          <div className="jss16">
+            <div className="label-switch">
+              <label className="">Freeze Address:</label>
+              <div className="permitted">
+                <div className="big-switch custom-switch custom-control">
+                  <input
+                    type="checkbox"
+                    id="toggleClawbackSwitch3"
+                    name="toggleFreeze"
+                    className="custom-control-input"
+                    defaultChecked=""
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="toggleClawbackSwitch3"
+                  />
+                </div>
+              </div>
+            </div>
+            <input
+              name="assetFreeze"
+              value={address}
+              placeholder="Freeze Address"
+              type="text"
+              className="custom-input-size form-control"
+              aria-invalid="false"
+            />
+            <div className="invalid-feedback">Freeze Address is invalid</div>
+          </div>
+          <div className="jss16">
+            <div className="label-switch">
+              <label className="">Clawback Address:</label>
+              <div className="permitted">
+                <div className="big-switch custom-switch custom-control">
+                  <input
+                    type="checkbox"
+                    id="toggleClawbackSwitch4"
+                    name="toggleClawback"
+                    className="custom-control-input"
+                    defaultChecked=""
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="toggleClawbackSwitch4"
+                  />
+                </div>
+              </div>
+            </div>
+            <input
+              name="assetClawback"
+              id="assetClawback"
+              value={address}
+              type="text"
+              className="custom-input-size form-control"
+              aria-invalid="false"
+            />
+            <div className="invalid-feedback">Clawback Address is invalid</div>
+          </div>
+          <div className="jss16">
+            <label htmlFor="frozen-dropdown" className="">
+              Asset Status:
+            </label>
+            <div
+              name="frozenStatus"
+              id="frozen-dropdown"
+              className="frozen-dropdown dropdown"
+            >
+              <button
+                type="button"
+                name="frozenStatus"
+                value="false"
+                aria-haspopup="true"
+                aria-expanded="false"
+                className="frozen-dropdown-toggle dropdown-toggle btn btn-secondary"
+              >
+                Unfrozen
+              </button>
+              <div
+                tabIndex={-1}
+                role="menu"
+                aria-hidden="true"
+                className="frozen-dropdown-menu dropdown-menu"
+              >
+                <button
+                  type="button"
+                  value="true"
+                  tabIndex={0}
+                  role="menuitem"
+                  className="dropdown-item"
+                >
+                  Frozen
+                </button>
+                <button
+                  type="button"
+                  value="false"
+                  tabIndex={0}
+                  role="menuitem"
+                  className="dropdown-item"
+                >
+                  Unfrozen
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="jss16">
+            <div className="label-switch">
+              <label htmlFor="frozen-dropdown" className="">
+                Note
+              </label>
+              <label className="">1000 bytes left</label>
+            </div>
+            <textarea
+              name="note"
+              className="note-input-field form-control"
+              aria-invalid="false"
+              id="input-note"
+              defaultValue={""}
+            />
+            <div className="invalid-feedback">
+              Note can not exceed 1000 bytes.
+            </div>
+          </div>
+        </div>
+              </div>
+</div>
+      </div>
                       </div>
-                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        <div className="jss16">
-                          <label htmlFor="description">Description</label>
-                          <textarea
-                            type="text"
-                            style={{ minHeight: 100 }}
-                            id="description"
-                            spellCheck="false"
-                            required={true}
-                            defaultValue={""}
-                          />
-                          <p style={{ display: "none" }} className="jss32">
-                            Add description for your token
-                          </p>
-                        </div>
-                      </div>
+                      
                       <div container spacing={2}></div>
                       <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2">
                         <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12">

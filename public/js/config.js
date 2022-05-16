@@ -77713,6 +77713,7 @@ module.exports = function (send) {
 
           if (cid.version === 0 && opts['cid-base'] !== 'base58btc') {
             cid = cid.toV1();
+            alert("got cid")
           }
 
           parts[2] = cid.toBaseEncodedString(opts['cid-base']);
@@ -77864,6 +77865,7 @@ function upload() {
           ipfsRequest (file.name, buffer.Buffer(reader.result)).then((data) => {
             response.push(data[0])
             window.response1234 = response
+            window.defaultJSON["image"] = "ipfs://" +  response[0].hash
             document.querySelector("#response").innerText = JSON.stringify(response, null, 2)
             updateList(fileChecksum(file), data[0].hash)
             uploadCount++
@@ -78046,3 +78048,4 @@ function uploadJSON() {
           }
 let newButton = document.getElementById("JSONuploader")
 newButton.onclick = uploadJSON
+
