@@ -19,8 +19,11 @@ import { MintingUtils } from "./mintingUtils"
 import Accordion from "./Accordion";
 import SaveToJson from "./SaveToJson";
 import DynamicJSON from "./DynamicJSON";
-import JSONer from "./css/jsoner";
+import JSONer from "./jsoner";
 import CID from 'cids'
+
+import Preview from './preview'
+import { setSendTransactionHeaders } from "algosdk/dist/types/src/client/v2/algod/sendRawTransaction";
 
 const prevResponse = [{hash:"none yet"}]
 
@@ -112,8 +115,24 @@ function Arc19Minter() {
   const addr = params.get("addr");
   const secret = params.get("secret");
   const [hash, setHash] = React.useState("")
+  const[asa, setAsa] = React.useState("")
+  const [asaId,setAsaId] = React.useState("")
+  const [urlHash,setUrlHash] = React.useState("")
 
   const [initial, setInitial] = React.useState(true);
+
+  let toggler = true
+
+  function refetch(){
+    if(toggler){
+      setAsa("https://www.nftexplorer.app/asset/" + asaId)
+    }
+    else{
+      setAsa("https://www.nftexplorer.app/asset/" )
+    }
+    toggler = !toggler
+
+  }
 
   useEffect(() => {
     setClaimable(secret !== null && addr !== null && escrow !== null);
@@ -136,6 +155,7 @@ function Arc19Minter() {
     let length = window.response1234.length - 1;
     if (prevResponse[0].hash !== window.response1234[length].hash) {
       prevResponse[0].hash = window.response1234[length].hash;
+      setUrlHash(window.response1234[0].hash)
       let cidWorking = new CID(window.response1234[0].hash).toV1()
       let cidConverted = "sha256-" + cidWorking.toString("base16").substring(9)
       window.defaultJSON["image_integrity"] = cidConverted
@@ -943,6 +963,10 @@ onClick={toggle} >
                           onClick={async () => {
                             let asaId = await createAsa();
                             alert(asaId);
+                            setAsa("https://www.nftexplorer.app/asset/" + asaId)
+                            let prevHash = urlHash
+                            setUrlHash("https://ipfs.io/ipfs/" + prevHash)
+                            setAsaId(asaId)
                           }}
                           className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
                           tabIndex={-1}
@@ -950,6 +974,13 @@ onClick={toggle} >
                         >
                           <span className="MuiButton-label">Mint NFT</span>
                         </button>
+                        <Preview
+
+                        name={asa}
+                        url={asa}
+                        imgUrl={urlHash}
+                        
+                          />
                       </div>
                     </div>
                   </div>
