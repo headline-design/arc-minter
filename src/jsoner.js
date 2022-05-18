@@ -30,9 +30,9 @@ const JSONer = (props) => {
           key +
           '"></input><input id="input' +
           key +
-          '"></input><button class="MuiButton-root field-btn-change" id="' +
+          '"></input><button class="MuiButton-root field-btn-change plus-circle-icon" id="' +
           key +
-          '"></button><button class="MuiButton-root field-btn-delete" name="' +
+          '"></button><button class="MuiButton-root field-btn-delete delete-icon" name="' +
           key +
           '" id="delete' +
           key +
@@ -57,8 +57,10 @@ const JSONer = (props) => {
 
   return (
     <div>
-    <h2>Optional Properties </h2>
-    <h4>disabled by default</h4>
+  <label htmlFor="sm-url">
+    JSON Editor <span>(optional)</span>
+  </label>
+   <div className="card-border">
       <div id="options">
         <div className="field-row">
          <input className="disabled-field" disabled value="key"/>
@@ -75,22 +77,22 @@ const JSONer = (props) => {
               <input value={key} disabled></input>
               <input id={"input" + key}></input>
               <button
-                className={"MuiButton-root field-btn-change"}
+                className={"MuiButton-root field-btn-change save-icon"}
                 id={key}
                 onClick={(event) => {
                   dojsonstuff(event.target.id);
                 }}
               >
-                ✔️
+                
               </button>
               <button
-                className={"MuiButton-root field-btn-delete"}
+                className={"MuiButton-root field-btn-delete delete-icon"}
                 name={key}
                 onClick={(event) => {
                   remove(event.target.name);
                 }}
               >
-                ❌
+                
               </button>
             </div>
           );
@@ -100,12 +102,13 @@ const JSONer = (props) => {
         <input id="jsonerNew"
         placeholder="New key"></input>
         <button
-          className={"MuiButton-root field-btn-create"}
+          className={"MuiButton-root field-btn-create plus-icon"}
           onClick={createNew}
         >
-          ➕
+          
         </button>
       </div>
+    </div>
     </div>
   );
 };

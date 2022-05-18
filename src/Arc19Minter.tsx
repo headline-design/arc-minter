@@ -109,8 +109,38 @@ function Arc19Minter() {
   const [asa, setAsa] = React.useState("");
   const [asaId, setAsaId] = React.useState("");
   const [urlHash, setUrlHash] = React.useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled2, setIsDisabled2] = useState(true);
+  const [isDisabled3, setIsDisabled3] = useState(true);
+  const [isDisabled4, setIsDisabled4] = useState(true);
+  const [isDisabled5, setIsDisabled5] = useState(true);
+  const [isDisabled6, setIsDisabled6] = useState(true);
 
   const [initial, setInitial] = React.useState(true);
+
+  const handleClick = () => {
+    setIsDisabled(!isDisabled);
+  };
+
+  const handleClick2 = () => {
+    setIsDisabled2(!isDisabled2);
+  };
+
+  const handleClick3 = () => {
+    setIsDisabled3(!isDisabled3);
+  };
+
+  const handleClick4 = () => {
+    setIsDisabled4(!isDisabled4);
+  };
+
+  const handleClick5 = () => {
+    setIsDisabled5(!isDisabled5);
+  };
+
+  const handleClick6 = () => {
+    setIsDisabled6(!isDisabled6);
+  };
 
   let toggler = true;
 
@@ -403,7 +433,7 @@ function Arc19Minter() {
                   style={{ alignItems: "center" }}
                 >
                   <h1 className="MuiTypography-root jss10 MuiTypography-h1">
-                    <span>ARC 19 NFT</span> Minter
+                    <span>ARC NFT</span> Minter
                   </h1>
                   <h6 className="MuiTypography-root jss11 MuiTypography-subtitle1">
                     Mint ARC19 NFTs on Algorand at the speed of light!
@@ -471,26 +501,40 @@ function Arc19Minter() {
 
                           <div className="jss16">
                             <div className="total-supply-label-container">
-                              <label htmlFor="input-amount" className="">
-                                Image Mimetype
-                              </label>
-                              <label
+                              
+                            <label
                                 htmlFor="input-amount-decimals"
                                 className=""
                               >
                                 Decimals
                               </label>
+                              <label htmlFor="ImageMimetype" className="">
+                                  Image Mimetype
+                                </label>
+                          <div className="label-switch">
+                          <div className="big-switch custom-switch custom-control">
+                                <input
+                                  type="checkbox"
+                                  id="toggleImageMimetypeSwitch"
+                                  name="toggleInputAssetURL"
+                                  onClick={handleClick6}
+                                  className="custom-control-input"
+                                  defaultChecked=""
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="toggleImageMimetypeSwitch"
+                                />
+                              </div>
+                                           
+                             
+                     
+                                
+                              </div>
+                              
                             </div>
                             <div className="total-supply-container">
-                              <input
-                                type="text"
-                                placeholder="image/jpeg"
-                                defaultValue=""
-                                onChange={updateJSON}
-                                pattern=""
-                                id="image_mimetype"
-                                disabled
-                              />
+                              
                               <input
                                 type="number"
                                 placeholder="0"
@@ -498,6 +542,15 @@ function Arc19Minter() {
                                 onChange={updateJSON}
                                 pattern=""
                                 id="decimals"
+                              />
+                              <input
+                                type="text"
+                                placeholder="image/jpeg"
+                                defaultValue=""
+                                onChange={updateJSON}
+                                pattern=""
+                                id="image_mimetype"
+                                disabled={isDisabled6}
                               />
                             </div>
 
@@ -564,9 +617,25 @@ function Arc19Minter() {
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                         <div className="jss16">
-                          <label htmlFor="input-asset-url" className="">
-                            Asset URL
-                          </label>
+                          <div className="label-switch">
+                            <label className="">Asset URL</label>
+                            <div className="permitted">
+                              <div className="big-switch custom-switch custom-control">
+                                <input
+                                  type="checkbox"
+                                  id="toggleInputAssetURLSwitch"
+                                  name="toggleInputAssetURL"
+                                  onClick={handleClick5}
+                                  className="custom-control-input"
+                                  defaultChecked=""
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="toggleInputAssetURLSwitch"
+                                />
+                              </div>
+                            </div>
+                          </div>
                           <input
                             id="input-asset-url"
                             name="assetURL"
@@ -575,7 +644,7 @@ function Arc19Minter() {
                             className="custom-input-size form-control"
                             aria-invalid="false"
                             defaultValue="template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}"
-                            disabled
+                            disabled={isDisabled5}
                           />
                           <div className="invalid-feedback">
                             Asset Url Max size is 96 bytes.
@@ -588,14 +657,15 @@ function Arc19Minter() {
                               <div className="big-switch custom-switch custom-control">
                                 <input
                                   type="checkbox"
-                                  id="toggleClawbackSwitch1"
+                                  id="toggleInputReserveSwitch"
                                   name="toggleReserve"
+                                  onClick={handleClick4}
                                   className="custom-control-input"
                                   defaultChecked=""
                                 />
                                 <label
                                   className="custom-control-label"
-                                  htmlFor="toggleClawbackSwitch1"
+                                  htmlFor="toggleInputReserveSwitch"
                                 />
                               </div>
                             </div>
@@ -605,7 +675,7 @@ function Arc19Minter() {
                             placeholder="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
                             type="text"
                             id="input-reserve"
-                            disabled
+                            disabled={isDisabled4}
                             className="custom-input-size form-control"
                             aria-invalid="false"
                             defaultValue="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
@@ -675,14 +745,15 @@ function Arc19Minter() {
                                       <div className="big-switch custom-switch custom-control">
                                         <input
                                           type="checkbox"
-                                          id="toggleClawbackSwitch2"
+                                          id="toggleInputManagerSwitch"
                                           name="toggleManager"
+                                          onClick={handleClick3}
                                           className="custom-control-input"
                                           defaultChecked=""
                                         />
                                         <label
                                           className="custom-control-label"
-                                          htmlFor="toggleClawbackSwitch2"
+                                          htmlFor="toggleInputManagerSwitch"
                                         />
                                       </div>
                                     </div>
@@ -695,6 +766,7 @@ function Arc19Minter() {
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
+                                    disabled={isDisabled3}
                                   />
                                   <div className="invalid-feedback">
                                     Manager Address is invalid
@@ -707,14 +779,15 @@ function Arc19Minter() {
                                       <div className="big-switch custom-switch custom-control">
                                         <input
                                           type="checkbox"
-                                          id="toggleClawbackSwitch3"
+                                          id="toggleFreezeSwitch"
                                           name="toggleFreeze"
+                                          onClick={handleClick2}
                                           className="custom-control-input"
                                           defaultChecked=""
                                         />
                                         <label
                                           className="custom-control-label"
-                                          htmlFor="toggleClawbackSwitch3"
+                                          htmlFor="toggleFreezeSwitch"
                                         />
                                       </div>
                                     </div>
@@ -726,7 +799,7 @@ function Arc19Minter() {
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
-                                    disabled
+                                    disabled={isDisabled2}
                                   />
                                   <div className="invalid-feedback">
                                     Freeze Address is invalid
@@ -741,14 +814,15 @@ function Arc19Minter() {
                                       <div className="big-switch custom-switch custom-control">
                                         <input
                                           type="checkbox"
-                                          id="toggleClawbackSwitch4"
+                                          id="toggleClawbackSwitch"
                                           name="toggleClawback"
+                                          onClick={handleClick}
                                           className="custom-control-input"
                                           defaultChecked=""
                                         />
                                         <label
                                           className="custom-control-label"
-                                          htmlFor="toggleClawbackSwitch4"
+                                          htmlFor="toggleClawbackSwitch"
                                         />
                                       </div>
                                     </div>
@@ -759,7 +833,9 @@ function Arc19Minter() {
                                     value={address}
                                     type="text"
                                     className="custom-input-size form-control"
+                                    placeholder="Clawback address"
                                     aria-invalid="false"
+                                    disabled={isDisabled}
                                   />
                                   <div className="invalid-feedback">
                                     Clawback Address is invalid

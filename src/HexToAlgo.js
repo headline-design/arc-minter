@@ -6,10 +6,14 @@ class HexToAlgo extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      address:""
+      address:"",
+     disabled: true 
     }
   }
 
+  handleGameClik() {
+    this.setState( {disabled: !this.state.disabled} )
+  } 
 
   codeToCodec = (code) => {
     switch (code.toString(16)) {
@@ -28,6 +32,7 @@ class HexToAlgo extends React.Component{
     const decoded = CID.parse(cid);
     const version = decoded.version;
     const codec = this.codeToCodec(decoded.code);
+    
 
     if (version === 0 && filename) {
       throw new Error('CID version 0 does not support directories');
@@ -42,6 +47,7 @@ class HexToAlgo extends React.Component{
     );
 
     return {
+      
       url,
       reserveAddress,
     };
@@ -57,6 +63,7 @@ class HexToAlgo extends React.Component{
       address: reserveAddress,
     });
   }
+  
 
   hexToBytes = (hex = []) => {
     let bytes = []
@@ -75,6 +82,8 @@ class HexToAlgo extends React.Component{
     }
   }
 
+  
+
 
   render(){
     return(
@@ -88,7 +97,8 @@ class HexToAlgo extends React.Component{
         <input
           type="checkbox"
           id="toggle-hex"
-          name="toggleReserve"
+          name="toggleHex"
+          onClick = {this.handleGameClik.bind(this)}
           className="custom-control-input"
         />
         <label
@@ -99,7 +109,11 @@ class HexToAlgo extends React.Component{
     </div>
   </div>
   
-    <input id="hex" value={this.props.hash} disabled></input>
+    <input  type="text"
+                              
+                                defaultValue=""
+                          
+                                pattern=""id="hex" value={this.props.hash} disabled = {(this.state.disabled)? "disabled" : ""}></input>
       <div
         className="alert alert-secondary alert-dismissible fade show"
         role="alert"
