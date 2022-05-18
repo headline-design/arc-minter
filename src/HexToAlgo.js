@@ -82,7 +82,7 @@ class HexToAlgo extends React.Component{
     <div className="jss16">
       
   <div className="label-switch">
-    <label className="">Reserve Address:</label>
+    <label className="">File hash:</label>
     <div className="permitted">
       <div className="big-switch custom-switch custom-control">
         <input
