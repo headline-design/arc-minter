@@ -177,7 +177,7 @@ body{background-color:#fff;}
 .jss31:disabled{color:white;background-color:#3E3B51;}
 .jss31:enabled{background-color:#F6F6FF;}
 .jss32{top:40px;color:red;right:15px;margin:0;z-index:2;position:absolute;font-weight:600;}
-.jss36{color:#61677e;font-size:12px;margin-top:40px;}
+.jss36{color:#61677e;font-size:12px;margin-top:10px;}
 /*! CSS Used from: Embedded */
 .MuiTypography-root{margin:0;}
 .MuiTypography-h1{font-size:2.5rem;font-family:"Nunito Sans",sans-serif;font-weight:400;line-height:normal;letter-spacing:normal;}
@@ -1947,4 +1947,36 @@ input#hex {
 
 .big-switch.custom-switch.custom-control.ml-2 {
     margin-left: .5rem;
+}
+
+img.hashlock {
+    width: -webkit-fill-available;
+    max-width: fit-content;
+}
+
+@media (max-width: 959px){
+    .jss51 {
+        margin-top: 15px;
+    }
+    .footer-right {
+        display: flex;
+        flex-direction: column;
+    }
+    button#JSONuploader {
+        margin-bottom: 0px !important;
+    }
+}
+
+input#hex:disabled {
+    color: #d3cfcf!important;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.footer-right {
+    display: flex;
 }
