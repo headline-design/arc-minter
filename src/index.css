@@ -45,7 +45,7 @@ body{background-color:#fff;}
 .jss6{top:80px;left:0;width:100%;height:0;padding:0;overflow:hidden;position:absolute;transition:all 0.5s ease;justify-content:space-evenly;background-color:white;}
 }
 .jss6 .menuItem{color:#000;border:1px solid #E8E8E8;height:36px;display:flex;padding:0 15px 0 12px;font-size:12px;align-items:center;font-weight:700;line-height:36px;margin-right:15px;border-radius:19px;text-decoration:none;background-color:transparent;}
-.jss6 .menuItemIcon{fill:#6E798F;width:20px;height:20px;transition:none;margin-right:4px;}
+.jss6 .menuItemIcon{fill:#6E798F;width:16px;height:16px;transition:none;margin-right:5px;}
 .jss6 .menuItem.active{color:#fff;border-color:#8247E5;background-color:#8247E5;}
 .jss6 .menuItem:hover{color:#fff;border-color:#8247E5;background-color:#8247E5;}
 @media (max-width:859px){
@@ -255,6 +255,9 @@ button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning {
     cursor: pointer;
     height: 36px;
     display: flex;
+    background: #e3e3e3;
+    color: #3e3b51;
+    border-style: none;
     outline: none;
     align-items: center;
     line-height: 36px;
@@ -262,8 +265,8 @@ button.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning {
 }
 
 .bp3-button.bp3-outlined.bp3-intent-warning:hover,.bp3-button.bp3-outlined.bp3-intent-warning:active, .bp3-button.bp3-outlined.bp3-intent-warning.bp3-active {
-    background: rgb(65 43 217 / 15%);
-    color: #7533E2 !important;
+    background: #3e3b51 !important;
+    color: #ffffff !important;
 }
 
 :focus {
@@ -444,7 +447,7 @@ button#wallet-connect:hover, button#wallet-connect:focus, button#wallet-connect:
 
 button#wallet-connect {
     height: 60px;
-    background-color: transparent !important;
+    background-color: #fafafa !important;
     color: #000 !important;
     border-color: #d0d6db !important;
     padding: 14px;

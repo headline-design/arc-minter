@@ -213,7 +213,7 @@ export default function AlgorandWalletConnector(props) {
         <Button
           minimal={true}
           style={{
-            color: "rgb(123, 120, 255)",
+            color: "#3e3b51",
             borderColor: "rgb(123, 120, 255)",
             borderRadius: "8px",
           }}
