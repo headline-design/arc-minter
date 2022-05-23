@@ -19,8 +19,8 @@ const Preview = (props) => {
       }
 
   return (
-    <div>
-      <div>
+    <div style={{display:"none"}}>
+      <div >
       <img alt="NFT" className="hashlock" src={props.imgUrl} />
         <Button
           style={{
@@ -60,14 +60,10 @@ const Preview = (props) => {
         </AnchorButton>
       </div>
       <div>
-        <h3> Congrats on successfully collecting your HashLock NFT!</h3>
+        <h3> Congrats on successfully minting your ARC NFT!</h3>
         <p>
-          Please make sure the asset is in your Algorand Mobile Wallet and ready
-          to be presented when you arrive at the venue. See you on the Moon!
-        </p>
-        <p>
-          <b>Note: </b>If the image of your HashLock isn't appearing yet, give
-          it a moment, it might be shy
+          <b>Note: </b>If the image of your ARC NFT isn't appearing yet, give
+          it a moment, it might be shy.
         </p>
       </div>
     </div>

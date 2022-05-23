@@ -68,7 +68,7 @@ class IpfsUpload extends Component {
           
           <div id="list" style={{display:"block"}}>
          
-                <ul className="jss29">
+                <ul style={{display:"none"}} className="jss29" id="img-preview-block">
                            
               <img src="img/post-add.svg" id="img-preview" width="auto" height="70px" alt="preview-img" />
             

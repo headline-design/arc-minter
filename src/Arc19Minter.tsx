@@ -632,6 +632,12 @@ function Arc19Minter() {
                               ></JSONer>
                             </div>
                             <div className="jss16">
+                            <label
+                             
+                             className=""
+                           >
+                             JSON Object
+                           </label> 
                               <p id="preview" className="metadata-object">
                                 {JSON.stringify(window.defaultJSON)}
                               </p>

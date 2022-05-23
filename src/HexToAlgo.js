@@ -127,7 +127,6 @@ class HexToAlgo extends React.Component{
 >Reserve Address: &nbsp; 
   { this.state.address}
 </div>
-<hr className="col-3 col-md-2 mb-5" />
 </div>
 )
   }
