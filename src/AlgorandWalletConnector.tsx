@@ -125,8 +125,8 @@ export default function AlgorandWalletConnector(props) {
             <h3 className="wallet-con">WalletConnect</h3>
             <svg
               className="r-ff-icon-walletIcon"
-              width="24"
-              height="24"
+              width="28"
+              height="28"
               id="Layer_1"
               data-name="Layer 1"
               xmlns="http://www.w3.org/2000/svg"
@@ -179,8 +179,8 @@ export default function AlgorandWalletConnector(props) {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="r-ff-icon-walletIcon"
-              width="24"
-              height="24"
+              width="28"
+              height="28"
               viewBox="0 0 34 34"
               fill="currentColor"
               overflow="visible"

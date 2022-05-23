@@ -45,14 +45,25 @@ body{background-color:#fff;}
 .jss6{top:80px;left:0;width:100%;height:0;padding:0;overflow:hidden;position:absolute;transition:all 0.5s ease;justify-content:space-evenly;background-color:white;}
 }
 .jss6 .menuItem{color:#000;border:1px solid #E8E8E8;height:36px;display:flex;padding:0 15px 0 12px;font-size:12px;align-items:center;font-weight:700;line-height:36px;margin-right:15px;border-radius:19px;text-decoration:none;background-color:transparent;}
-.jss6 .menuItemIcon{fill:#6E798F;width:16px;height:16px;transition:none;margin-right:5px;}
+
+.jss6 .menuItemIcon {
+    fill: #6E798F;
+    width: 16px;
+    height: 16px;
+    transition: none;
+    margin-right: 5px;
+    color: #6E798F;
+}
 .jss6 .menuItem.active{color:#fff;border-color:#8247E5;background-color:#8247E5;}
 .jss6 .menuItem:hover{color:#fff;border-color:#8247E5;background-color:#8247E5;}
 @media (max-width:859px){
 .jss6 .menuItem{text-align:center;line-height:50px;margin-right:0;}
 }
-.jss6 .menuItem:hover svg{fill:#EDF0F7;}
-.jss6 .menuItem.active svg{fill:#EDF0F7;}
+
+.jss6 .menuItem.active svg, .jss6 .menuItem:hover svg {
+    fill: #fff;
+    color: #fff;
+}
 .jss7{display:none;}
 @media (max-width:859px){
 .jss7{color:black;display:block;margin-top:6px;margin-left:20px;}
@@ -314,10 +325,10 @@ g#_x31_3_Support_Ticket {
 .button-connected {
     border-style: solid;
     border-width: 1px;
-    border-color: #bdc3c7;
-    background-color: #f9f9fe;
-    border-radius: 0.375rem;
+    border-color: #753ae6;
+    background-color: #ffffff;
     height: 38px;
+    border-radius: 18px !important;
     display: flex;
     align-content: center;
     align-items: center;

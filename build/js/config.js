@@ -77947,7 +77947,7 @@ function handleFileSelect(evt) {
             continue
         } else {
           document.getElementById("img-preview").src = window.URL.createObjectURL(files[i])
-         
+          document.getElementById("img-preview-block").style = "block"
             files_checksum[filesOk.length] = fileChecksum(files[i])
             document.querySelector("#list").querySelector("ul").innerHTML += '<li id="' + fileChecksum(files[i]) + '"><strong class="fileName">' +
             files[i].name + '</strong> <spam class="itemClose"><a class="removeItem" href="#" onclick="removeItem(\''+fileChecksum(files[i])+'\')">&times;</a></spam>' +
