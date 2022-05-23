@@ -10,7 +10,7 @@ import { AnchorButton, ProgressBar } from "@blueprintjs/core";
 import { conf, collect, sendWait, getAsaId, getNFT } from "./lib/algorand";
 import { Classes, Dialog } from "@blueprintjs/core";
 import { BrowserView, MobileView, isIOS } from "react-device-detect";
-import Pipeline from "@pipeline-ui-2/pipeline";
+import Pipeline, {sendTxns} from "@pipeline-ui-2/pipeline";
 import getNFTInfo from "./lib/getnft";
 import { MintingUtils } from "./mintingUtils";
 import Accordion from "./Accordion";
@@ -18,9 +18,11 @@ import SaveToJson from "./SaveToJson";
 import DynamicJSON from "./DynamicJSON";
 import JSONer from "./jsoner";
 import CID from "cids";
+import algosdk from "algosdk";
+import {configClient} from "../node_modules/@pipeline-ui-2/pipeline/utils"
 
 import Preview from "./preview";
-import { setSendTransactionHeaders } from "algosdk/dist/types/src/client/v2/algod/sendRawTransaction";
+
 
 const prevResponse = [{ hash: "none yet" }];
 
@@ -218,8 +220,37 @@ function ConfigModule() {
       "input-assetMetadataHash"
     ).value;
 
-    let asaId = await Pipeline.createAsa(asaData);
-    return asaId;
+
+    let params = await Pipeline.getParams()
+    
+    let txn = algosdk.makeAssetConfigTxn(
+      Pipeline.address,
+      1000,
+      params.firstRound,
+      params.lastRound,
+      undefined,
+      params.genesisHash,
+      params.genesisID,
+      parseInt(document.getElementById("assetIndex").value),
+      asaData.manager,
+      asaData.reserve,
+      undefined,
+      undefined,
+      false
+      )
+      txn.fee = 1000
+
+      let signedTxn = await Pipeline.sign(txn);
+
+      let clientb = await configClient(Pipeline.main, Pipeline.EnableDeveloperAPI, Pipeline)
+      let transServer = clientb.tranServer
+
+      try {
+          let response = await sendTxns(signedTxn, transServer, Pipeline.EnableDeveloperAPI, Pipeline.token, Pipeline.alerts)
+          console.log(response)
+          return response
+      }
+      catch (error) { console.log(error) }
   }
 
   function triggerHelp() {
@@ -498,7 +529,7 @@ function ConfigModule() {
                                 onChange={updateJSON}
                                 required={true}
                               />
-                              <p className="jss32" style={{ display: "none" }}>
+                              <p className="jss32" >
                                 Name cannot be empty
                               </p>
                             </div>
@@ -530,7 +561,7 @@ function ConfigModule() {
                                 required={true}
                                 defaultValue={""}
                               />
-                              <p style={{ display: "none" }} className="jss32">
+                              <p  className="jss32">
                                 Add description for your token
                               </p>
                             </div>
@@ -696,6 +727,13 @@ function ConfigModule() {
                           </div>
                         </div>
                         <div className="jss16">
+                          <input type="number" placeholder="asset index #" id="assetIndex" onChange={
+                            async (event) => {
+                              let data = await fetch ("https://arc3.xyz/nft/" + event.target.value)
+                              let dataText = await data.text()
+                              console.log (dataText)
+                            }
+                          }></input>
                           <div className="label-switch">
                             <label className="">Reserve Address:</label>
                             <div className="permitted">
@@ -970,7 +1008,7 @@ function ConfigModule() {
                           Wallet not connected
                         </span>
                       </button>
-                      <div id="connected" style={{ display: "none" }}>
+                      <div id="connected" >
                         <button
                           hidden={true}
                           onClick={async () => {
