@@ -455,6 +455,61 @@ button#wallet-connect:hover, button#wallet-connect:focus, button#wallet-connect:
     color: #fff;
 }
 
+@media (min-width: 320px) and (max-width: 767px){
+.sm\:justify-between {
+    justify-content: space-between!important;
+}
+.absolute {
+    position: unset!important;
+    padding-top: 6px;
+}
+}
+
+a.p-2.px-4.bg-white.text-black.label-sm.rounded-full {
+    background-color: #fff;
+    padding: 4px;
+    border-radius: 99999px !important;
+    color: #000;
+    font-weight: 600 !important;
+    padding-left: 0.75rem!important;
+    padding-right: 0.75rem!important;
+    padding-top: 0.25rem!important;
+    padding-bottom: 0.25rem !important;
+}
+
+.bg-primary-500 {
+    background-color: rgb(62 59 81);
+    padding-top: 0.75rem!important;
+    padding-bottom: 0.75rem!important;
+    color: #fff;
+    justify-content: center;
+    padding-left: 1rem!important;
+    display: flex;
+    font-weight: 600;
+    padding-right: 1rem!important;
+    align-items: center;
+}
+
+.label-md {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.mr-10 {
+    margin-right: 3rem!important;
+}
+
+.absolute {
+    position: absolute;
+    padding-top: 6px;
+    right: 0.5rem;
+}
+
+.right-3 {
+    right: 0.5rem!important;
+}
+
 span.bp3-button-text {
     font-weight: 600;
 }
