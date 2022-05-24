@@ -45,7 +45,7 @@ class NftFetch extends Component {
 
   render() {
     return <div>
-      <input type="number" value={752823772} id="assetIndex"></input>
+      <input type="number" defaultValue={752823772} id="assetIndex"></input>
       <button
         onClick={this.asaToIpfsJSON}
       >Do Black Magic</button>
