@@ -322,11 +322,16 @@ g#_x31_3_Support_Ticket {
     color: #7b78ff;
 }
 
+button.bp3-button.bp3-minimal.btn-selected-2 {
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left-color: #c4c9d1;
+}
+
 .button-connected {
     border-style: solid;
-    border-width: 1px;
-    border-color: #753ae6;
-    background-color: #ffffff;
+    border-color: #edeef2;
+    background-color: #edeef2;
     height: 38px;
     border-radius: 18px !important;
     display: flex;
@@ -351,6 +356,82 @@ g#_x31_3_Support_Ticket {
 .jss31:disabled {
     color: white !important;
     background-color: #3E3B51 !important;
+}
+
+.bp3-html-select.bp3-minimal > select:hover, .bp3-html-select.bp3-minimal > select:focus{
+    background: #874de6;
+    box-shadow: none;
+    color: #fff;
+    text-decoration: none;
+    border-top-left-radius: 18px !important;
+    border-bottom-left-radius: 18px !important;
+    border-top-right-radius: 0px;
+    outline: 0px !important;
+    border-bottom-right-radius: 0px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.btn-selected-2, .btn-selected-2:focus {
+    outline: 0px !important;
+}
+
+.btn-selected-2{
+    border-top-right-radius: 18px !important;
+    border-bottom-right-radius: 18px !important;
+    color: #fff;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+
+.btn-selected:hover > span {
+    color: #16c179;
+}
+
+.btn-selected:hover {
+
+    box-shadow: none;
+ 
+    text-decoration: none;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.btn-selected-2:hover,.btn-selected-2:active{
+    background: #874de6 !important;
+    box-shadow: none !important;
+    color: #fff;
+    text-decoration: none;
+    border-top-right-radius: 18px !important;
+    border-bottom-right-radius: 18px !important;
+    outline: 0px !important;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.btn-selected-2:hover > span, .btn-selected-2:focus > span{
+    fill: #fff !important;
+    color: #fff;
+}
+
+.button-connected:hover {
+    background-color: #874ee62e;
+}
+
+.btn-selected-2:focus:not(:focus-visible) {
+    outline: 0px;
+}
+
+.btn-selected-2:active > span {
+    color: #fff;
+}
+
+span.bp3-icon.bp3-icon-log-out:focus {
+    outline: 0px !important;
+}
+
+.btn-selected-2:hover > span{
+    outline: 0px !important;
 }
 
 .MuiButton-label {

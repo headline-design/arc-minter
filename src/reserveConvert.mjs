@@ -13,8 +13,11 @@ function toHexString(byteArray) {
 }
   
   function algotoHex (address){
-    let bytes = algosdk.decodeAddress(address)
-    console.log(hex)
+    let account = algosdk.decodeAddress(address)
+    let hexAddress = toHexString(account.publicKey)
+
+    console.log(hexAddress)
+    return new CID('f' +'01701220c3c4733ec8affd06cf9e9ff50ffc6bcd2ec85a6170004bb709669c31de94391a').toString('base32')
   }
   
-  algotoHex(testAddress)
+  console.log(algotoHex(testAddress))

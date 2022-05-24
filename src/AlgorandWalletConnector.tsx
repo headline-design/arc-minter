@@ -241,7 +241,7 @@ export default function AlgorandWalletConnector(props) {
   const addr_list = props.accts.map((addr, idx) => {
     return (
       <option value={idx} key={idx}>
-        {" "}
+       
         {addr.substr(0, 8)}...{" "}
       </option>
     );
@@ -256,17 +256,18 @@ export default function AlgorandWalletConnector(props) {
     <div className="button-connected">
       <HTMLSelect
         onChange={handleChangeAccount}
+        className="btn-selected"
         minimal={true}
         iconProps={iconprops}
         defaultValue={props.sessionWallet.accountIndex()}
       >
-        <option>
+        <option className="option">
           {address.slice(0, 3) +
             "..." +
             address.slice(address.length - 3, address.length)}
         </option>
       </HTMLSelect>
-      <Button icon="log-out" minimal={true} onClick={disconnectWallet}></Button>
+      <Button className="btn-selected-2" icon="log-out" minimal={true} onClick={disconnectWallet}></Button>
     </div>
   );
 }
