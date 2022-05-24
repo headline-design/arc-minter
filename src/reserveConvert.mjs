@@ -1,6 +1,9 @@
+//ellusive documentation for cid package is provided at https://github.com/multiformats/js-multiformats
+
 import algosdk from 'algosdk'
 import { CID } from "multiformats/cid";
 import {binary_to_base58} from 'base58-js'
+import { base58 } from "multiformats/bases/base58"
 
 let testAddress = "TRXTZKAR2MQOVEJ6EIIT7UGHDMLTGWMQSLGYUMZOBN2SVB7DE724NYSJGM"
 
@@ -17,7 +20,7 @@ function toHexString(byteArray) {
     let hexAddress = toHexString(account.publicKey)
 
     console.log(hexAddress)
-    return new CID('f' +'01701220c3c4733ec8affd06cf9e9ff50ffc6bcd2ec85a6170004bb709669c31de94391a').toString('base32')
+    return CID.create(1, 1, hexAddress)
   }
   
   console.log(algotoHex(testAddress))

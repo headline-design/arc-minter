@@ -7,6 +7,7 @@ import ConfigModule from "./ConfigModule";
 import AboutModule from "./AboutModule";
 import { conf } from "./lib/algorand";
 import Pipeline from "@pipeline-ui-2/pipeline";
+import Header from "./Header";
 
 
 const wallet = Pipeline.init();
@@ -58,10 +59,14 @@ function App() {
     </span>
   </button>
   </div>
+ 
+  
   <HashRouter>
+  <Header></Header>
   <Switch>
                 <Route exact path="/">
                   <Redirect to="/mint" />
+                  
                 </Route>
       <Route>
         <Route exact strict path="/mint">
