@@ -20,6 +20,7 @@ import JSONer from "./jsoner";
 import CID from "cids";
 import algosdk from "algosdk";
 import {configClient} from "../node_modules/@pipeline-ui-2/pipeline/utils"
+import NftFetch from  './NftFetch.js'
 
 import Preview from "./preview";
 
@@ -668,13 +669,7 @@ function ConfigModule() {
                           </div>
                         </div>
                         <div className="jss16">
-                          <input type="number" placeholder="asset index #" id="assetIndex" onChange={
-                            async (event) => {
-                              let data = await fetch ("https://arc3.xyz/nft/" + event.target.value)
-                              let dataText = await data.text()
-                              console.log (dataText)
-                            }
-                          }></input>
+                        <NftFetch/>
                           <div className="label-switch">
                             <label className="">Reserve Address:</label>
                             <div className="permitted">
