@@ -8,7 +8,7 @@ function Tabs() {
   function home() {
     return <p>This is home</p>;
   }
-  function about() {
+  function docs() {
     return <p>This is about</p>;
   }
   function profile() {
@@ -18,7 +18,7 @@ function Tabs() {
   return (
     <div>
       <div onClick={() => setActive(home)}>Home</div>
-      <div onClick={() => setActive(about)}>About</div>
+      <div onClick={() => setActive(docs)}>Docs</div>
       <div onClick={() => setActive(profile)}>profile</div>
       <div>{active}</div>
     </div>

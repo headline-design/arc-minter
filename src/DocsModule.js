@@ -14,7 +14,7 @@ import Pipeline, {sendTxns} from "@pipeline-ui-2/pipeline";
 import JSONer from "./jsoner";
 import CID from "cids";
 import algosdk from "algosdk";
-import {configClient} from "../node_modules/@pipeline-ui-2/pipeline/utils"
+import {configClient} from "@pipeline-ui-2/pipeline/utils"
 
 import Preview from "./preview";
 

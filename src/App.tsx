@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { SessionWallet } from "algorand-session-wallet";
 import Arc19Minter from "./Arc19Minter";
 import ConfigModule from "./ConfigModule";
-import AboutModule from "./AboutModule";
+import DocsModule from "./DocsModule";
 import { conf } from "./lib/algorand";
 import Pipeline from "@pipeline-ui-2/pipeline";
 import Header from "./Header";
@@ -32,7 +32,7 @@ function App() {
       Built by HEADLINE
     </div>
     <a
-      href="https://www.pipeline-ui.com"
+      href="https://www.twitter.com/headline_crypto"
       target="_blank"
       rel="noreferrer"
       className="p-2 px-4 bg-white text-black label-sm rounded-full"
@@ -75,8 +75,8 @@ function App() {
         <Route exact strict path="/config">
           <ConfigModule />
         </Route>
-        <Route exact strict path="/about">
-          <AboutModule />
+        <Route exact strict path="/docs">
+          <DocsModule />
         </Route>
       </Route>
     </Switch>
