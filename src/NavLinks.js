@@ -2,8 +2,35 @@ import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 function NavLinks() {
   const [change, setChange] = useState(false);
+  const [jss6, setJss6] = useState("none");
+
+
+  function toggle() {
+    if (jss6 === "72px") {
+      setJss6("0px");
+    } else {
+      setJss6("72px");
+    }
+  }
+
   return (
-      <div className="jss6">
+    <>
+      <button className="jss7" style={{cursor:"pointer"}} onClick={toggle}>
+      <span
+    icon="selection"
+    aria-hidden="true"
+    className="bp3-icon bp3-icon-selection"
+  >
+  <svg data-icon="menu" width={26} height={26} viewBox="0 0 20 20">
+    <path
+      d="M1 6h18c.55 0 1-.45 1-1s-.45-1-1-1H1c-.55 0-1 .45-1 1s.45 1 1 1zm18 3H1c-.55 0-1 .45-1 1s.45 1 1 1h18c.55 0 1-.45 1-1s-.45-1-1-1zm0 5H1c-.55 0-1 .45-1 1s.45 1 1 1h18c.55 0 1-.45 1-1s-.45-1-1-1z"
+      fillRule="evenodd"
+    />
+  </svg>
+  </span>
+
+  </button>
+      <div className="jss6" style={{ height: jss6 }}>
             <NavLink    to="mint"
   className={isActive =>
     "menuItem" + (!isActive ? " unselected" : "")
@@ -48,6 +75,7 @@ function NavLinks() {
   About
 </NavLink>
 </div>
+</>
   );
 }
 export default NavLinks;

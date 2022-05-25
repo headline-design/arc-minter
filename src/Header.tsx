@@ -77,6 +77,7 @@ function Header() {
   const addr = params.get("addr");
   const secret = params.get("secret");
   const [hash, setHash] = React.useState("");
+
   
 
   const [asa, setAsa] = React.useState("");
@@ -93,6 +94,7 @@ function Header() {
     }
     toggler = !toggler;
   }
+
 
   useEffect(() => {
     setClaimable(secret !== null && addr !== null && escrow !== null);
@@ -199,6 +201,7 @@ function Header() {
                     connected={connected}
                     onChange={updateWallet}
                   />
+                     
                 </div>
                 </div>
               </div>
