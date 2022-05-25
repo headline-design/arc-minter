@@ -96,7 +96,7 @@ button.jss7.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning{display: none
         background: #e3e3e3;
     }
     .jss7:focus{
-    background: rgb(93 96 116 / 37%)
+    background: #e0dede;
     }
 button.jss7.bp3-button.bp3-minimal.bp3-outlined.bp3-intent-warning {
     border-radius: 4px !important;
@@ -645,10 +645,11 @@ a.p-2.px-4.bg-white.text-black.label-sm.rounded-full {
     padding-right: 0.75rem!important;
     padding-top: 0.25rem!important;
     padding-bottom: 0.25rem !important;
+    margin-right: 3rem;
 }
 
 .bg-primary-500 {
-    background-color: rgb(62 59 81);
+    background-color: rgb(52 51 59);
     padding-top: 0.75rem!important;
     padding-bottom: 0.75rem!important;
     color: #fff;

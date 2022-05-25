@@ -87,15 +87,9 @@ function AboutModule() {
   const [accts] = React.useState(sw.accountList());
   const [connected, setConnected] = React.useState(sw.connected());
   const [claimable, setClaimable] = React.useState(true);
-  const [claimed, setClaimed] = React.useState(false);
   const [address, setAddress] = React.useState("");
 
-  const [loading, setLoading] = React.useState(false);
-  const [signed, setSigned] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const [metaData, setMetaData] = React.useState("");
-  const [metaData2, setMetaData2] = React.useState("");
-  const [activeTab, setActiveTab] = useState("1");
   const [advancedOptions, setAdvancedOptions] = useState("none");
 
   const params = new URLSearchParams(window.location.search);
@@ -106,38 +100,8 @@ function AboutModule() {
   const [asa, setAsa] = React.useState("");
   const [asaId, setAsaId] = React.useState("");
   const [urlHash, setUrlHash] = React.useState("");
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [isDisabled2, setIsDisabled2] = useState(true);
-  const [isDisabled3, setIsDisabled3] = useState(true);
-  const [isDisabled4, setIsDisabled4] = useState(true);
-  const [isDisabled5, setIsDisabled5] = useState(true);
-  const [isDisabled6, setIsDisabled6] = useState(true);
-
-  const [initial, setInitial] = React.useState(true);
-
-  const handleClick = () => {
-    setIsDisabled(!isDisabled);
-  };
-
-  const handleClick2 = () => {
-    setIsDisabled2(!isDisabled2);
-  };
-
-  const handleClick3 = () => {
-    setIsDisabled3(!isDisabled3);
-  };
-
-  const handleClick4 = () => {
-    setIsDisabled4(!isDisabled4);
-  };
-
-  const handleClick5 = () => {
-    setIsDisabled5(!isDisabled5);
-  };
-
-  const handleClick6 = () => {
-    setIsDisabled6(!isDisabled6);
-  };
+  const [jss6, setJss6] = useState("block");
+  const [jss7, setJss7] = useState("none");
 
   let toggler = true;
 
@@ -159,11 +123,14 @@ function AboutModule() {
     setInterval(checkforResponse, 300);
   }, []);
 
-  function toggle() {
-    if (advancedOptions === "none") {
-      setAdvancedOptions("block");
+  function toggle19() {
+    if (jss7 === "block") {
+      setJss7("none");
+      setJss6("block");
+
     } else {
-      setAdvancedOptions("none");
+      setJss6("none");
+      setJss7("block");
     }
   }
 
@@ -250,7 +217,6 @@ function AboutModule() {
 
   function triggerHelp() {
     setOpen(false);
-    setLoading(false);
     document.getElementById("help-text")?.click();
   }
 
@@ -324,12 +290,12 @@ function AboutModule() {
         </div>
       </div>
     </div>
-    <p className="jss83">NFT Type</p>
+    <p className="jss83">What is an ARC NFT?</p>
     <p className="jss36">
-      Once your NFT is minted on the Algorand blockchain, you will not be able
-      to edit or update any of its information unless you minted the NFT wtih
-      ARC19. If you minted the NFT with ARC19, you may update the NFT's
-      information with an "asset config" transaction.
+      ARC NFTs are NFTs minted on Algorand that adhere to a standard that is submitted as an Algorand Request for Comment to the community.
+      The goal of these conventions is to make it simpler for block explorers, wallets, exchanges, marketplaces, and more generally, client software to display the properties of a given ASA.
+      <br></br><br></br>
+      Below you will find instructions for minting ARC19 and ARC69 NFTs.
       <br />
     </p>
   </div>
@@ -337,34 +303,50 @@ function AboutModule() {
                 <p className="jss83">NFT Type</p>
                 <input
                   type="checkbox"
+                  
                   id="checkedA"
                   hidden=""
                   className="jss35"
                 />
                 <label htmlFor="checkedA" className="jss84">
-                  <div>ARC19</div>
-                  <div>ARC69</div>
-                </label>
+                  <div onClick={toggle19}>ARC19</div>
+                  <div onClick={toggle19}>ARC69</div>
+                </label> 
               </div>
               <div
                 className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
                 style={{ display: "none" }}
               >
-                <div className="jss16">
-                  <label htmlFor="quantity">Quantity</label>
-                  <input
-                    id="input-amount"
-                    name="assetTotal"
-                    className="custom-input-size form-control  "
-                    placeholder={1}
-                    type="text"
-                    inputMode="numeric"
-                    defaultValue={1}
-                  />
-                </div>
               </div>
             </div>
-            <p className="jss36">
+            <p id="arc19-1" className="jss36" style={{display: jss6}}>
+              <p>ARC19 Docs</p>
+              ARC19 NFTs allow anyone to mint NFTs and update the image at a later date via asset config transaction.
+              This is "a proposal to allow a templating mechanism of the URL so that changeable data in an asset can be substituted by a client, providing a mutable URL".
+              <br />
+              <br />
+              You agree that any information uploaded to ARC Minter will not
+              contain material subject to copyright or other proprietary rights,
+              unless you have necessary permission or are otherwise legally
+              entitled to post the material.
+            </p>
+            <p id="arc69-1" className="jss36" style={{display: jss7}}>
+            <p>ARC69 Docs</p>
+              ARC69 NFTs allow anyone to mint NFTs and update the metadata at a later date via asset config transaction.
+              "The goal of these conventions is to make it simpler to display the properties of a given ASA. This ARC differs from ARC3 by focusing on optimization for fetching of digital media, as well as the use of onchain metadata. Furthermore, since asset configuration transactions are used to store the metadata, this ARC can be applied to existing ASAs."
+              <br />
+              <br />
+              You agree that any information uploaded to ARC Minter will not
+              contain material subject to copyright or other proprietary rights,
+              unless you have necessary permission or are otherwise legally
+              entitled to post the material.
+            </p>
+          </div>
+          
+          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
+            <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12" />
+            <div spacing={2} />
+            <p id="arc19-2" className="jss36" style={{display: jss6}}>
               Once your NFT is minted on the Algorand blockchain, you will not
               be able to edit or update any of its information unless you minted
               the NFT wtih ARC19. If you minted the NFT with ARC19, you may
@@ -376,11 +358,7 @@ function AboutModule() {
               unless you have necessary permission or are otherwise legally
               entitled to post the material.
             </p>
-          </div>
-          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
-            <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12" />
-            <div spacing={2} />
-            <p className="jss36">
+            <p id="arc69-2" className="jss36" style={{display: jss7}}>
               Once your NFT is minted on the Algorand blockchain, you will not
               be able to edit or update any of its information unless you minted
               the NFT wtih ARC19. If you minted the NFT with ARC19, you may
