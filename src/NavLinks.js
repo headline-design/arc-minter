@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 function NavLinks() {
-  const [change, setChange] = useState(false);
   const [jss6, setJss6] = useState("none");
 
 

@@ -1,20 +1,12 @@
 // @ts-nocheck
 import { Redirect, HashRouter, Route, Switch } from "react-router-dom";
 import React, { useState } from "react";
-import { SessionWallet } from "algorand-session-wallet";
 import Arc19Minter from "./Arc19Minter";
 import ConfigModule from "./ConfigModule";
 import DocsModule from "./DocsModule";
-import { conf } from "./lib/algorand";
-import Pipeline from "@pipeline-ui-2/pipeline";
 import Header from "./Header";
 
-
-const wallet = Pipeline.init();
-
 function App() {
-  const sw = new SessionWallet(conf.network);
-  const [sessionWallet] = React.useState(sw);
   const [HeaderPromo, setHeaderPromo] = useState("true");
 
   function toggle() {

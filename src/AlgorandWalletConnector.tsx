@@ -150,7 +150,8 @@ export default function AlgorandWalletConnector(props) {
             props.onChange(address);
             setAddress(address);
             if ( address !== undefined && address !== "" ){
-
+              document.getElementById("not-connected").style.display = "none"
+              document.getElementById("connected").style.display = "block"
             }
           }}
         >

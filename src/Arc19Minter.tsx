@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { SessionWallet } from "algorand-session-wallet";
-import AlgorandWalletConnector from "./AlgorandWalletConnector";
-import { Logo } from "./logo";
 import IpfsUpload from "./IpfsUpload";
 import HexToAlgo from "./HexToAlgo";
 import { AnchorButton, ProgressBar } from "@blueprintjs/core";
@@ -16,7 +14,6 @@ import JSONer from "./jsoner";
 import CID from "cids";
 
 import Preview from "./preview";
-import { setSendTransactionHeaders } from "algosdk/dist/types/src/client/v2/algod/sendRawTransaction";
 
 const prevResponse = [{ hash: "none yet" }];
 
@@ -30,8 +27,6 @@ const asaData = {
   assetName: "1NFT",
   unitName: "1NFT",
 };
-
-const wallet = Pipeline.init();
 
 const MetaDataProps = (props) => {
   let properties = Object.keys(props.object);
@@ -83,7 +78,6 @@ function Arc19Minter() {
     url: "pixel-astro.png",
     name: "TBD",
   });
-  const [accts] = React.useState(sw.accountList());
   const [connected, setConnected] = React.useState(sw.connected());
   const [claimable, setClaimable] = React.useState(true);
   const [claimed, setClaimed] = React.useState(false);
@@ -94,7 +88,6 @@ function Arc19Minter() {
   const [open, setOpen] = React.useState(false);
   const [metaData, setMetaData] = React.useState("");
   const [metaData2, setMetaData2] = React.useState("");
-  const [activeTab, setActiveTab] = useState("1");
   const [advancedOptions, setAdvancedOptions] = useState("none");
 
   const params = new URLSearchParams(window.location.search);
@@ -111,6 +104,8 @@ function Arc19Minter() {
   const [isDisabled4, setIsDisabled4] = useState(true);
   const [isDisabled5, setIsDisabled5] = useState(true);
   const [isDisabled6, setIsDisabled6] = useState(true);
+  const [jss6, setJss6] = useState("block");
+  const [jss7, setJss7] = useState("none");
 
   const [initial, setInitial] = React.useState(true);
 
@@ -166,6 +161,16 @@ function Arc19Minter() {
     }
   }
 
+  function toggle19() {
+    if (jss7 === "block") {
+      setJss7("none");
+      setJss6("block");
+    } else {
+      setJss6("none");
+      setJss7("block");
+    }
+  }
+
   function checkforResponse() {
     let length = window.response1234.length - 1;
     if (prevResponse[0].hash !== window.response1234[length].hash) {
@@ -216,12 +221,6 @@ function Arc19Minter() {
 
     let asaId = await Pipeline.createAsa(asaData);
     return asaId;
-  }
-
-  function triggerHelp() {
-    setOpen(false);
-    setLoading(false);
-    document.getElementById("help-text")?.click();
   }
 
   async function handleDownload() {
@@ -355,12 +354,12 @@ function Arc19Minter() {
         <div>
           <h3> Congrats on successfully minting your Algorand NFT!</h3>
           <p>
-            Please make sure the NFT is live on Algorand mainnet and all content 
+            Please make sure the NFT is live on Algorand mainnet and all content
             has been uploaded to IPFS.
           </p>
           <p>
-            <b>Note: </b>If the asset information for your NFT isn't appearing on NFTExplorer yet, give
-            it up to 24 hours, it might be shy.
+            <b>Note: </b>If the asset information for your NFT isn't appearing
+            on NFTExplorer yet, give it up to 24 hours, it might be shy.
           </p>
         </div>
       );
@@ -376,13 +375,13 @@ function Arc19Minter() {
           <p>
             Treasure it as an ultra-rare HashLock NFT that you've earned by
             being a valuable part of the HEADLINE community. See you on Discord
-            in the exclusive{" "}
+            in the exclusive
             <a
               target="_blank"
               rel="noopener noreferrer"
               href="https://discord.gg/xRBEZB5j"
             >
-              HashLocks{" "}
+              HashLocks
             </a>
             channel!
           </p>
@@ -399,8 +398,6 @@ function Arc19Minter() {
     <div className="App" style={{ background: "#000" }}>
       <div className="container body-1">
         <div id="__next">
-         
-
           <div className="jss9">
             <div className="MuiContainer-root jss8 MuiContainer-maxWidthLg">
               <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
@@ -427,6 +424,19 @@ function Arc19Minter() {
                 <div className="jss26">
                   <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 mb-4">
+                        <p className="jss83">NFT Type</p>
+                        <input
+                          type="checkbox"
+                          id="checkedA"
+                          hidden
+                          className="jss35"
+                        />
+                        <label htmlFor="checkedA" className="jss84">
+                          <div onClick={toggle19}>ARC19</div>
+                          <div onClick={toggle19}>ARC69</div>
+                        </label>
+                      </div>
                       <div className="jss27">
                         <label className="jss17" htmlFor="upload-file">
                           Upload
@@ -458,6 +468,26 @@ function Arc19Minter() {
                           </div>
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                             <div className="jss16">
+                              <label htmlFor="input-unit-name" className="">
+                                <span className="unit-name-label">
+                                  Unit Name{" "}
+                                </span>
+                                <small className="asset-description">
+                                  What Unit is associated with your asset?
+                                </small>
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="NFT1"
+                                defaultValue=""
+                                pattern=""
+                                onChange={updateJSON}
+                                id="unitName"
+                              />
+                            </div>
+                          </div>
+                          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                            <div className="jss16">
                               <label htmlFor="description">Description</label>
                               <textarea
                                 type="text"
@@ -473,45 +503,43 @@ function Arc19Minter() {
                               </p>
                             </div>
                           </div>
+
                           <div container spacing={2}></div>
 
-                          <div className="jss16">
+                          <div className="jss16" style={{ display: jss6 }}>
                             <div className="total-supply-label-container">
-                              
-                            <label
+                              <label
                                 htmlFor="input-amount-decimals"
                                 className=""
                               >
                                 Decimals
                               </label>
-                             
-                          <div className="label-switch">
-                          <label htmlFor="ImageMimetype" className="" style={{marginRight: ".5rem"}}>
+
+                              <div className="label-switch">
+                                <label
+                                  htmlFor="ImageMimetype"
+                                  className=""
+                                  style={{ marginRight: ".5rem" }}
+                                >
                                   Image Mimetype
                                 </label>
-                          <div className="big-switch custom-switch custom-control">
-                                <input
-                                  type="checkbox"
-                                  id="toggleImageMimetypeSwitch"
-                                  name="toggleInputAssetURL"
-                                  onClick={handleClick6}
-                                  className="custom-control-input"
-                                  defaultChecked=""
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor="toggleImageMimetypeSwitch"
-                                />
+                                <div className="big-switch custom-switch custom-control">
+                                  <input
+                                    type="checkbox"
+                                    id="toggleImageMimetypeSwitch"
+                                    name="toggleInputAssetURL"
+                                    onClick={handleClick6}
+                                    className="custom-control-input"
+                                    defaultChecked=""
+                                  />
+                                  <label
+                                    className="custom-control-label"
+                                    htmlFor="toggleImageMimetypeSwitch"
+                                  />
+                                </div>
                               </div>
-                                           
-                             
-                     
-                                
-                              </div>
-                              
                             </div>
                             <div className="total-supply-container">
-                              
                               <input
                                 type="number"
                                 placeholder="0"
@@ -538,27 +566,10 @@ function Arc19Minter() {
                           </div>
                         </div>
                         <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                            <div className="jss16">
-                              <label htmlFor="input-unit-name" className="">
-                                <span className="unit-name-label">
-                                  Unit Name{" "}
-                                </span>
-                                <small className="asset-description">
-                                  What Unit is associated with your asset?
-                                </small>
-                              </label>
-                              <input
-                                type="text"
-                                placeholder="NFT1"
-                                defaultValue=""
-                                pattern=""
-                                onChange={updateJSON}
-                                id="unitName"
-                              />
-                            </div>
-                          </div>
-                          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                          <div
+                            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                            style={{ display: jss6 }}
+                          >
                             <div className="jss16">
                               <HexToAlgo hash={hash}></HexToAlgo>
                               <JSONer
@@ -571,12 +582,7 @@ function Arc19Minter() {
                               ></JSONer>
                             </div>
                             <div className="jss16">
-                            <label
-                             
-                             className=""
-                           >
-                             JSON Object
-                           </label> 
+                              <label className="">JSON Object</label>
                               <p id="preview" className="metadata-object">
                                 {JSON.stringify(window.defaultJSON)}
                               </p>
@@ -599,7 +605,7 @@ function Arc19Minter() {
                     </div>
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        <div className="jss16">
+                        <div className="jss16" style={{ display: jss6 }}>
                           <div className="label-switch">
                             <label className="">Asset URL</label>
                             <div className="permitted">
@@ -633,7 +639,7 @@ function Arc19Minter() {
                             Asset Url Max size is 96 bytes.
                           </div>
                         </div>
-                        <div className="jss16">
+                        <div className="jss16" style={{ display: jss6 }}>
                           <div className="label-switch">
                             <label className="">Reserve Address:</label>
                             <div className="permitted">
@@ -667,7 +673,27 @@ function Arc19Minter() {
                             Reserve Address is invalid
                           </div>
                         </div>
-                        <div className="accordion">
+                        <div className="jss16">
+                          <div className="label-switch">
+                            <label htmlFor="frozen-dropdown" className="">
+                              Note
+                            </label>
+                            <label className="" style={{ display: "none" }}>
+                              1000 bytes left
+                            </label>
+                          </div>
+                          <textarea
+                            name="note"
+                            className="note-input-field form-control"
+                            aria-invalid="false"
+                            id="input-note"
+                            defaultValue={""}
+                          />
+                          <div className="invalid-feedback">
+                            Note can not exceed 1000 bytes.
+                          </div>
+                        </div>
+                        <div className="accordion" style={{ display: jss6 }}>
                           <div className="accordion-header">
                             <div className="jss16">
                               <label
@@ -824,27 +850,6 @@ function Arc19Minter() {
                                     Clawback Address is invalid
                                   </div>
                                 </div>
-                                <div className="jss16">
-                                  <div className="label-switch">
-                                    <label
-                                      htmlFor="frozen-dropdown"
-                                      className=""
-                                    >
-                                      Note
-                                    </label>
-                                    <label className="">1000 bytes left</label>
-                                  </div>
-                                  <textarea
-                                    name="note"
-                                    className="note-input-field form-control"
-                                    aria-invalid="false"
-                                    id="input-note"
-                                    defaultValue={""}
-                                  />
-                                  <div className="invalid-feedback">
-                                    Note can not exceed 1000 bytes.
-                                  </div>
-                                </div>
                               </div>
                             </div>
                           </div>
@@ -853,19 +858,6 @@ function Arc19Minter() {
 
                       <div container spacing={2}></div>
                       <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2">
-                        <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12">
-                          <p className="jss83">NFT Type</p>
-                          <input
-                            type="checkbox"
-                            id="checkedA"
-                            hidden
-                            className="jss35"
-                          />
-                          <label htmlFor="checkedA" className="jss84">
-                            <div>ARC19</div>
-                            <div>ARC69</div>
-                          </label>
-                        </div>
                         <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
                           <div className="jss16">
                             <label htmlFor="quantity">Quantity</label>
@@ -884,16 +876,15 @@ function Arc19Minter() {
                       <p className="jss36">
                         Once your NFT is minted on the Algorand blockchain, you
                         will not be able to edit or update any of its
-                        information unless you minted the NFT wtih ARC19. If you minted
-                        the NFT with ARC19, you may update the NFT's information with an "asset config"
-                        transaction.
+                        information unless you minted the NFT wtih ARC19. If you
+                        minted the NFT with ARC19, you may update the NFT's
+                        information with an "asset config" transaction.
                         <br />
                         <br />
-                        You agree that any information uploaded to
-                        ARC Minter will not contain material subject
-                        to copyright or other proprietary rights, unless you
-                        have necessary permission or are otherwise legally
-                        entitled to post the material.
+                        You agree that any information uploaded to ARC Minter
+                        will not contain material subject to copyright or other
+                        proprietary rights, unless you have necessary permission
+                        or are otherwise legally entitled to post the material.
                       </p>
                       <button
                         className=" Mui-not-btn MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
@@ -946,53 +937,56 @@ function Arc19Minter() {
               >
                 <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
                   <div className="footer-flex">
-                <div className="footer-left">
-                  <img src="algologo.svg" alt="banner" className="footer-img" />
+                    <div className="footer-left">
+                      <img
+                        src="algologo.svg"
+                        alt="banner"
+                        className="footer-img"
+                      />
 
-                  <p className="jss50">
-                    Algorand is the #1 carbon-negative blockchain. <br></br> 
-                    Sustainable, scalable, and built to last.
-                  </p>
+                      <p className="jss50">
+                        Algorand is the #1 carbon-negative blockchain. <br></br>
+                        Sustainable, scalable, and built to last.
+                      </p>
+                    </div>
+                    <div className="footer-right">
+                      <a
+                        href="https://twitter.com/headline_crypto"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <div className="jss51">
+                          <svg
+                            className="MuiSvgIcon-root"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            style={{ fontSize: 26 }}
+                          >
+                            <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z" />
+                          </svg>
+                        </div>
+                      </a>
+                      <a
+                        href="https://discord.gg/headline_crypto"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <div className="jss51">
+                          <svg
+                            fill="#000000"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 50 50"
+                            width="100px"
+                            height="100px"
+                          >
+                            <path d="M 41.625 10.769531 C 37.644531 7.566406 31.347656 7.023438 31.078125 7.003906 C 30.660156 6.96875 30.261719 7.203125 30.089844 7.589844 C 30.074219 7.613281 29.9375 7.929688 29.785156 8.421875 C 32.417969 8.867188 35.652344 9.761719 38.578125 11.578125 C 39.046875 11.867188 39.191406 12.484375 38.902344 12.953125 C 38.710938 13.261719 38.386719 13.429688 38.050781 13.429688 C 37.871094 13.429688 37.6875 13.378906 37.523438 13.277344 C 32.492188 10.15625 26.210938 10 25 10 C 23.789063 10 17.503906 10.15625 12.476563 13.277344 C 12.007813 13.570313 11.390625 13.425781 11.101563 12.957031 C 10.808594 12.484375 10.953125 11.871094 11.421875 11.578125 C 14.347656 9.765625 17.582031 8.867188 20.214844 8.425781 C 20.0625 7.929688 19.925781 7.617188 19.914063 7.589844 C 19.738281 7.203125 19.34375 6.960938 18.921875 7.003906 C 18.652344 7.023438 12.355469 7.566406 8.320313 10.8125 C 6.214844 12.761719 2 24.152344 2 34 C 2 34.175781 2.046875 34.34375 2.132813 34.496094 C 5.039063 39.605469 12.972656 40.941406 14.78125 41 C 14.789063 41 14.800781 41 14.8125 41 C 15.132813 41 15.433594 40.847656 15.621094 40.589844 L 17.449219 38.074219 C 12.515625 36.800781 9.996094 34.636719 9.851563 34.507813 C 9.4375 34.144531 9.398438 33.511719 9.765625 33.097656 C 10.128906 32.683594 10.761719 32.644531 11.175781 33.007813 C 11.234375 33.0625 15.875 37 25 37 C 34.140625 37 38.78125 33.046875 38.828125 33.007813 C 39.242188 32.648438 39.871094 32.683594 40.238281 33.101563 C 40.601563 33.515625 40.5625 34.144531 40.148438 34.507813 C 40.003906 34.636719 37.484375 36.800781 32.550781 38.074219 L 34.378906 40.589844 C 34.566406 40.847656 34.867188 41 35.1875 41 C 35.199219 41 35.210938 41 35.21875 41 C 37.027344 40.941406 44.960938 39.605469 47.867188 34.496094 C 47.953125 34.34375 48 34.175781 48 34 C 48 24.152344 43.785156 12.761719 41.625 10.769531 Z M 18.5 30 C 16.566406 30 15 28.210938 15 26 C 15 23.789063 16.566406 22 18.5 22 C 20.433594 22 22 23.789063 22 26 C 22 28.210938 20.433594 30 18.5 30 Z M 31.5 30 C 29.566406 30 28 28.210938 28 26 C 28 23.789063 29.566406 22 31.5 22 C 33.433594 22 35 23.789063 35 26 C 35 28.210938 33.433594 30 31.5 30 Z" />
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
                   </div>
-                  <div className="footer-right">
-                  <a
-                      href="https://twitter.com/headline_crypto"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <div className="jss51">
-                        <svg
-                          className="MuiSvgIcon-root"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                          style={{ fontSize: 26 }}
-                        >
-                          <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z" />
-                        </svg>
-                      </div>
-                    </a>
-                    <a
-                      href="https://discord.gg/headline_crypto"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <div className="jss51">
-                        <svg
-                          fill="#000000"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 50 50"
-                          width="100px"
-                          height="100px"
-                        >
-                          <path d="M 41.625 10.769531 C 37.644531 7.566406 31.347656 7.023438 31.078125 7.003906 C 30.660156 6.96875 30.261719 7.203125 30.089844 7.589844 C 30.074219 7.613281 29.9375 7.929688 29.785156 8.421875 C 32.417969 8.867188 35.652344 9.761719 38.578125 11.578125 C 39.046875 11.867188 39.191406 12.484375 38.902344 12.953125 C 38.710938 13.261719 38.386719 13.429688 38.050781 13.429688 C 37.871094 13.429688 37.6875 13.378906 37.523438 13.277344 C 32.492188 10.15625 26.210938 10 25 10 C 23.789063 10 17.503906 10.15625 12.476563 13.277344 C 12.007813 13.570313 11.390625 13.425781 11.101563 12.957031 C 10.808594 12.484375 10.953125 11.871094 11.421875 11.578125 C 14.347656 9.765625 17.582031 8.867188 20.214844 8.425781 C 20.0625 7.929688 19.925781 7.617188 19.914063 7.589844 C 19.738281 7.203125 19.34375 6.960938 18.921875 7.003906 C 18.652344 7.023438 12.355469 7.566406 8.320313 10.8125 C 6.214844 12.761719 2 24.152344 2 34 C 2 34.175781 2.046875 34.34375 2.132813 34.496094 C 5.039063 39.605469 12.972656 40.941406 14.78125 41 C 14.789063 41 14.800781 41 14.8125 41 C 15.132813 41 15.433594 40.847656 15.621094 40.589844 L 17.449219 38.074219 C 12.515625 36.800781 9.996094 34.636719 9.851563 34.507813 C 9.4375 34.144531 9.398438 33.511719 9.765625 33.097656 C 10.128906 32.683594 10.761719 32.644531 11.175781 33.007813 C 11.234375 33.0625 15.875 37 25 37 C 34.140625 37 38.78125 33.046875 38.828125 33.007813 C 39.242188 32.648438 39.871094 32.683594 40.238281 33.101563 C 40.601563 33.515625 40.5625 34.144531 40.148438 34.507813 C 40.003906 34.636719 37.484375 36.800781 32.550781 38.074219 L 34.378906 40.589844 C 34.566406 40.847656 34.867188 41 35.1875 41 C 35.199219 41 35.210938 41 35.21875 41 C 37.027344 40.941406 44.960938 39.605469 47.867188 34.496094 C 47.953125 34.34375 48 34.175781 48 34 C 48 24.152344 43.785156 12.761719 41.625 10.769531 Z M 18.5 30 C 16.566406 30 15 28.210938 15 26 C 15 23.789063 16.566406 22 18.5 22 C 20.433594 22 22 23.789063 22 26 C 22 28.210938 20.433594 30 18.5 30 Z M 31.5 30 C 29.566406 30 28 28.210938 28 26 C 28 23.789063 29.566406 22 31.5 22 C 33.433594 22 35 23.789063 35 26 C 35 28.210938 33.433594 30 31.5 30 Z" />
-                        </svg>
-                      </div>
-                    </a>
-                    </div>
-                    </div>
                 </div>
-
               </div>
             </div>
           </footer>

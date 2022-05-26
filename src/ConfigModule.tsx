@@ -2,32 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { SessionWallet } from "algorand-session-wallet";
-import AlgorandWalletConnector from "./AlgorandWalletConnector";
-import { Logo } from "./logo";
 import IpfsUpload from "./IpfsUpload";
 import HexToAlgo from "./HexToAlgo";
-import { AnchorButton, ProgressBar } from "@blueprintjs/core";
-import { conf, collect, sendWait, getAsaId, getNFT } from "./lib/algorand";
-import { Classes, Dialog } from "@blueprintjs/core";
-import { BrowserView, MobileView, isIOS } from "react-device-detect";
-import Pipeline, {sendTxns} from "@pipeline-ui-2/pipeline";
-import getNFTInfo from "./lib/getnft";
-import { MintingUtils } from "./mintingUtils";
-import Accordion from "./Accordion";
-import SaveToJson from "./SaveToJson";
-import DynamicJSON from "./DynamicJSON";
+import { conf } from "./lib/algorand";
+import Pipeline, { sendTxns } from "@pipeline-ui-2/pipeline";
 import JSONer from "./jsoner";
 import CID from "cids";
 import algosdk from "algosdk";
-import {configClient} from "../node_modules/@pipeline-ui-2/pipeline/utils"
-import NftFetch from  './NftFetch.js'
+import { configClient } from "../node_modules/@pipeline-ui-2/pipeline/utils";
+import NftFetch from "./NftFetch.js";
 
 import Preview from "./preview";
 
-
 const prevResponse = [{ hash: "none yet" }];
-
-var cid = "";
 
 const asaData = {
   creator: "",
@@ -36,26 +23,6 @@ const asaData = {
   decimals: 0,
   assetName: "1NFT",
   unitName: "1NFT",
-};
-
-const wallet = Pipeline.init();
-
-const MetaDataProps = (props) => {
-  let properties = Object.keys(props.object);
-  return (
-    <div className="meta-card">
-      {properties.map((property) => {
-        return (
-          <div className="card-flex">
-            <label>
-              <b>{property}: &nbsp;</b>
-            </label>
-            <p>{props.object[property]}</p>
-          </div>
-        );
-      })}
-    </div>
-  );
 };
 
 const myJSON = {
@@ -85,23 +52,8 @@ function ConfigModule() {
     }
   }
 
-  const [nft, setNFT] = React.useState({
-    id: 0,
-    url: "pixel-astro.png",
-    name: "TBD",
-  });
-  const [accts] = React.useState(sw.accountList());
-  const [connected, setConnected] = React.useState(sw.connected());
   const [claimable, setClaimable] = React.useState(true);
-  const [claimed, setClaimed] = React.useState(false);
   const [address, setAddress] = React.useState("");
-
-  const [loading, setLoading] = React.useState(false);
-  const [signed, setSigned] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  const [metaData, setMetaData] = React.useState("");
-  const [metaData2, setMetaData2] = React.useState("");
-  const [activeTab, setActiveTab] = useState("1");
   const [advancedOptions, setAdvancedOptions] = useState("none");
 
   const params = new URLSearchParams(window.location.search);
@@ -118,8 +70,8 @@ function ConfigModule() {
   const [isDisabled4, setIsDisabled4] = useState(true);
   const [isDisabled5, setIsDisabled5] = useState(true);
   const [isDisabled6, setIsDisabled6] = useState(true);
-
-  const [initial, setInitial] = React.useState(true);
+  const [jss6, setJss6] = useState("block");
+  const [jss7, setJss7] = useState("none");
 
   const handleClick = () => {
     setIsDisabled(!isDisabled);
@@ -144,17 +96,6 @@ function ConfigModule() {
   const handleClick6 = () => {
     setIsDisabled6(!isDisabled6);
   };
-
-  let toggler = true;
-
-  function refetch() {
-    if (toggler) {
-      setAsa("https://www.nftexplorer.app/asset/" + asaId);
-    } else {
-      setAsa("https://www.nftexplorer.app/asset/");
-    }
-    toggler = !toggler;
-  }
 
   useEffect(() => {
     setClaimable(secret !== null && addr !== null && escrow !== null);
@@ -199,12 +140,6 @@ function ConfigModule() {
     );
   }
 
-  function updateWallet(address) {
-    setAddress(address);
-    setConnected(true);
-    setAddress(true);
-  }
-
   async function createAsa() {
     asaData.amount = parseInt(document.getElementById("input-amount").value);
     asaData.assetName = document.getElementById("name").value;
@@ -221,9 +156,8 @@ function ConfigModule() {
       "input-assetMetadataHash"
     ).value;
 
+    let params = await Pipeline.getParams();
 
-    let params = await Pipeline.getParams()
-    
     let txn = algosdk.makeAssetConfigTxn(
       Pipeline.address,
       1000,
@@ -238,196 +172,40 @@ function ConfigModule() {
       undefined,
       undefined,
       false
-      )
-      txn.fee = 1000
+    );
+    txn.fee = 1000;
 
-      let signedTxn = await Pipeline.sign(txn);
+    let signedTxn = await Pipeline.sign(txn);
 
-      let clientb = await configClient(Pipeline.main, Pipeline.EnableDeveloperAPI, Pipeline)
-      let transServer = clientb.tranServer
-
-      try {
-          let response = await sendTxns(signedTxn, transServer, Pipeline.EnableDeveloperAPI, Pipeline.token, Pipeline.alerts)
-          console.log(response)
-          return response
-      }
-      catch (error) { console.log(error) }
-  }
-
-  function triggerHelp() {
-    setOpen(false);
-    setLoading(false);
-    document.getElementById("help-text")?.click();
-  }
-
-  async function handleDownload() {
-    var a = document.createElement("a");
-    const image = await fetch(nft.url);
-    const imageBlog = await image.blob();
-    const imageURL = URL.createObjectURL(imageBlog);
-    a.href = imageURL;
-    a.download = nft.name;
-    a.target = "_blank";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  async function handleCollect() {
-    if (secret === null || addr === null || escrow === null) {
-      return;
-    }
-
-    setLoading(true);
-    setOpen(true);
+    let clientb = await configClient(
+      Pipeline.main,
+      Pipeline.EnableDeveloperAPI,
+      Pipeline
+    );
+    let transServer = clientb.tranServer;
 
     try {
-      const asaId = await getAsaId(escrow);
-      const txn_group = await collect(sw, asaId, escrow, addr, secret);
-
-      setSigned(true);
-
-      getNFT(asaId).then((nft) => {
-        setNFT(nft);
-      });
-
-      let metadata = await getNFTInfo(asaId);
-      setMetaData(metadata.properties.flavor);
-      setMetaData2(metadata.properties);
-
-      await sendWait(txn_group);
-
-      setClaimable(false);
-      setClaimed(true);
-      setInitial(false);
+      let response = await sendTxns(
+        signedTxn,
+        transServer,
+        Pipeline.EnableDeveloperAPI,
+        Pipeline.token,
+        Pipeline.alerts
+      );
+      console.log(response);
+      return response;
     } catch (error) {
-      const e = error as Error;
-      if (e.message.includes("overspend")) {
-        alert(
-          "This account doe not have enough Algos to claim. If needed, contact admin@headline-inc.com"
-        );
-      } else {
-        alert("Something went wrong: " + error);
-      }
-    } finally {
-      setOpen(false);
-      setLoading(false);
+      console.log(error);
     }
   }
 
-  let message = (
-    <div>
-      <h3> Welcome Collectors!</h3>
-      <p>Connect your wallet and collect your HashLock NFT</p>
-    </div>
-  );
-
-  let buttons = (
-    <button
-      style={{
-        color: "#000",
-        background: "#e3e3e3",
-        borderColor: "#7b78ff",
-        borderRadius: "8px",
-        width: "100%",
-        marginTop: "8px",
-      }}
-      minimal={true}
-      outlined={true}
-      intent="success"
-      large={true}
-      icon="circle"
-      text="Collect"
-      onClick={handleCollect}
-      disabled={!connected || !claimable}
-      loading={loading}
-    />
-  );
-
-  if (nft.id !== 0 && claimed === true) {
-    buttons = (
-      <div>
-        <button
-          style={{
-            color: "#3e3b51",
-            background: "#e3e3e3",
-            borderRadius: "8px",
-            margin: "8px",
-          }}
-          minimal={true}
-          outlined={true}
-          intent="success"
-          large={true}
-          icon="download"
-          text="Download"
-          onClick={handleDownload}
-        />
-        <AnchorButton
-          style={{
-            color: "white",
-            borderColor: "white",
-            borderRadius: "8px",
-            margin: "8px",
-          }}
-          minimal={true}
-          outlined={true}
-          large={true}
-          intent="success"
-          href={"https://www.nftexplorer.app/asset/" + nft.id}
-          target="_blank"
-        >
-          <img
-            style={{ width: "20px", float: "left", marginRight: "8px" }}
-            alt="nft explorer icon"
-            src="/nftexplorer.ico"
-          />
-          NFT Explorer
-        </AnchorButton>
-      </div>
-    );
-
-    if (nft.id < 420800534) {
-      message = (
-        <div>
-          <h3> Congrats on successfully minting your Algorand NFT!</h3>
-          <p>
-            Please make sure the NFT is live on Algorand mainnet and all content 
-            has been uploaded to IPFS.
-          </p>
-          <p>
-            <b>Note: </b>If the asset information for your NFT isn't appearing on NFTExplorer yet, give
-            it up to 24 hours, it might be shy.
-          </p>
-        </div>
-      );
+  function toggle19() {
+    if (jss6 === "block") {
+      setJss7("block");
+      setJss6("none");
     } else {
-      message = (
-        <div>
-          <h3> Congrats on successfully collecting your HashLock NFT! </h3>
-          <p>
-            <MetaDataProps object={metaData2}></MetaDataProps>
-            <p> {metaData}</p>
-          </p>
-          <p></p>
-          <p>
-            Treasure it as an ultra-rare HashLock NFT that you've earned by
-            being a valuable part of the HEADLINE community. See you on Discord
-            in the exclusive{" "}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://discord.gg/xRBEZB5j"
-            >
-              HashLocks
-            </a>
-            channel!
-          </p>
-          <p>
-            <b>Note: </b>If the image of your HashLock isn't appearing yet, give
-            it a moment, it might be shy
-          </p>
-        </div>
-      );
+      setJss6("block");
+      setJss7("none");
     }
   }
 
@@ -435,7 +213,7 @@ function ConfigModule() {
     <div className="App" style={{ background: "#000" }}>
       <div className="container body-1">
         <div id="__next">
-      <div className="jss9">
+          <div className="jss9">
             <div className="MuiContainer-root jss8 MuiContainer-maxWidthLg">
               <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
                 <div
@@ -443,7 +221,7 @@ function ConfigModule() {
                   style={{ alignItems: "center" }}
                 >
                   <h1 className="MuiTypography-root jss10 MuiTypography-h1">
-                    <span>ARC19</span> Config
+                    <span>ARC</span> Config
                   </h1>
                   <h6 className="MuiTypography-root jss11 MuiTypography-subtitle1">
                     Modify ARC19 NFTs with asset config transactions!
@@ -461,26 +239,42 @@ function ConfigModule() {
                 <div className="jss26">
                   <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
-                    <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12" >
-                            <div className="jss16">
-                              <label htmlFor="name">Asset Name</label>
-                              <input
-                                type="text"
-                                defaultValue=""
-                                id="name"
-                                onChange={updateJSON}
-                                required={true}
-                              />
-                              <p className="jss32" style={{display:"none"}} >
-                                Name cannot be empty
-                              </p>
-                            </div>
-                          </div>
-                      <div className="jss27">
-                        <label className="jss17" htmlFor="upload-file">
-                          Upload
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 mb-4">
+                        <p className="jss83">NFT Type</p>
+                        <input
+                          type="checkbox"
+                          id="checkedA"
+                          hidden
+                          className="jss35"
+                        />
+                        <label htmlFor="checkedA" className="jss84">
+                          <div onClick={toggle19}>ARC19</div>
+                          <div onClick={toggle19}>ARC69</div>
                         </label>
-                        <IpfsUpload />
+                      </div>
+                      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                        <NftFetch />
+                        <div className="jss16" style={{ display: jss6 }}>
+                          <label htmlFor="name">Asset Name</label>
+                          <input
+                            type="text"
+                            defaultValue=""
+                            id="name"
+                            onChange={updateJSON}
+                            required={true}
+                          />
+                          <p className="jss32" style={{ display: "none" }}>
+                            Name cannot be empty
+                          </p>
+                        </div>
+                      </div>
+                      <div className="jss27">
+                        <div style={{ display: jss6 }}>
+                          <label className="jss17" htmlFor="upload-file">
+                            Upload
+                          </label>
+                          <IpfsUpload></IpfsUpload>
+                        </div>
                         <div>
                           <input
                             type="file"
@@ -490,71 +284,55 @@ function ConfigModule() {
                           />
 
                           <br />
-                          
-                          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12" style={{display:"none"}}>
-                            <div className="jss16">
-                              <label htmlFor="description">Description</label>
-                              <textarea
-                                type="text"
-                                style={{ minHeight: 100 }}
-                                id="description"
-                                spellCheck="false"
-                                onChange={updateJSON}
-                                required={true}
-                                defaultValue={""}
-                              />
-                              <p  className="jss32">
-                                Add description for your token
-                              </p>
-                            </div>
-                          </div>
+
+                          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"></div>
                           <div container spacing={2}></div>
 
-                          <div className="jss16" style={{display:"none"}}>
+                          <div className="jss16">
                             <div className="total-supply-label-container">
-                              
-                            <label
-                                htmlFor="input-amount-decimals"
-                                className=""
-                              >
-                                Decimals
-                              </label>
-                             
-                          <div className="label-switch">
-                          <label htmlFor="ImageMimetype" className="" style={{marginRight: ".5rem"}}>
+                              <div style={{ display: jss6 }}>
+                                <label
+                                  htmlFor="input-amount-decimals"
+                                  className=""
+                                >
+                                  Decimals
+                                </label>
+                              </div>
+                              <div className="label-switch">
+                                <label
+                                  htmlFor="ImageMimetype"
+                                  className=""
+                                  style={{ marginRight: ".5rem" }}
+                                >
                                   Image Mimetype
                                 </label>
-                          <div className="big-switch custom-switch custom-control">
-                                <input
-                                  type="checkbox"
-                                  id="toggleImageMimetypeSwitch"
-                                  name="toggleInputAssetURL"
-                                  onClick={handleClick6}
-                                  className="custom-control-input"
-                                  defaultChecked=""
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor="toggleImageMimetypeSwitch"
-                                />
+                                <div className="big-switch custom-switch custom-control">
+                                  <input
+                                    type="checkbox"
+                                    id="toggleImageMimetypeSwitch"
+                                    name="toggleInputAssetURL"
+                                    onClick={handleClick6}
+                                    className="custom-control-input"
+                                    defaultChecked=""
+                                  />
+                                  <label
+                                    className="custom-control-label"
+                                    htmlFor="toggleImageMimetypeSwitch"
+                                  />
+                                </div>
                               </div>
-                                           
-                             
-                     
-                                
-                              </div>
-                              
                             </div>
                             <div className="total-supply-container">
-                              
-                              <input
-                                type="number"
-                                placeholder="0"
-                                defaultValue=""
-                                onChange={updateJSON}
-                                pattern=""
-                                id="decimals"
-                              />
+                              <div style={{ display: jss6 }}>
+                                <input
+                                  type="number"
+                                  placeholder="0"
+                                  defaultValue=""
+                                  onChange={updateJSON}
+                                  pattern=""
+                                  id="decimals"
+                                />
+                              </div>
                               <input
                                 type="text"
                                 placeholder="image/jpeg"
@@ -573,7 +351,10 @@ function ConfigModule() {
                           </div>
                         </div>
                         <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12" style={{display:"none"}}>
+                          <div
+                            className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                            style={{ display: jss6 }}
+                          >
                             <div className="jss16">
                               <label htmlFor="input-unit-name" className="">
                                 <span className="unit-name-label">
@@ -595,7 +376,9 @@ function ConfigModule() {
                           </div>
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                             <div className="jss16">
-                              <HexToAlgo hash={hash}></HexToAlgo>
+                              <div style={{ display: jss6 }}>
+                                <HexToAlgo hash={hash}></HexToAlgo>
+                              </div>
                               <JSONer
                                 callBack={function (data) {
                                   window.defaultJSON.properties = data;
@@ -606,16 +389,11 @@ function ConfigModule() {
                               ></JSONer>
                             </div>
                             <div className="jss16">
-                            <label
-                             
-                             className=""
-                           >
-                             JSON Object
-                           </label> 
+                              <label className="">JSON Object</label>
                               <p id="preview" className="metadata-object">
                                 {JSON.stringify(window.defaultJSON)}
                               </p>
-                              <div>
+                              <div style={{ display: jss6 }}>
                                 <button
                                   className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
                                   tabIndex={-1}
@@ -634,7 +412,7 @@ function ConfigModule() {
                     </div>
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        <div className="jss16">
+                        <div className="jss16" style={{ display: jss6 }}>
                           <div className="label-switch">
                             <label className="">Asset URL</label>
                             <div className="permitted">
@@ -668,8 +446,7 @@ function ConfigModule() {
                             Asset Url Max size is 96 bytes.
                           </div>
                         </div>
-                        <div className="jss16">
-                        <NftFetch/>
+                        <div className="jss16" style={{ display: jss6 }}>
                           <div className="label-switch">
                             <label className="">Reserve Address:</label>
                             <div className="permitted">
@@ -703,28 +480,25 @@ function ConfigModule() {
                             Reserve Address is invalid
                           </div>
                         </div>
-                        <div className="jss16">
-                                  <div className="label-switch">
-                                    <label
-                                      htmlFor="frozen-dropdown"
-                                      className=""
-                                    >
-                                      Note
-                                    </label>
-                                    <label className="">1000 bytes left</label>
-                                  </div>
-                                  <textarea
-                                    name="note"
-                                    className="note-input-field form-control"
-                                    aria-invalid="false"
-                                    id="input-note"
-                                    defaultValue={""}
-                                  />
-                                  <div className="invalid-feedback">
-                                    Note can not exceed 1000 bytes.
-                                  </div>
-                                </div>
-                        <div className="accordion">
+                        <div className="jss16" style={{ display: jss6 }}>
+                          <div className="label-switch">
+                            <label htmlFor="frozen-dropdown" className="">
+                              Note
+                            </label>
+                            <label className="">1000 bytes left</label>
+                          </div>
+                          <textarea
+                            name="note"
+                            className="note-input-field form-control"
+                            aria-invalid="false"
+                            id="input-note"
+                            defaultValue={""}
+                          />
+                          <div className="invalid-feedback">
+                            Note can not exceed 1000 bytes.
+                          </div>
+                        </div>
+                        <div className="accordion" style={{ display: jss6 }}>
                           <div className="accordion-header">
                             <div className="jss16">
                               <label
@@ -881,7 +655,6 @@ function ConfigModule() {
                                     Clawback Address is invalid
                                   </div>
                                 </div>
-                                
                               </div>
                             </div>
                           </div>
@@ -890,20 +663,10 @@ function ConfigModule() {
 
                       <div container spacing={2}></div>
                       <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2">
-                        <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12">
-                          <p className="jss83">NFT Type</p>
-                          <input
-                            type="checkbox"
-                            id="checkedA"
-                            hidden
-                            className="jss35"
-                          />
-                          <label htmlFor="checkedA" className="jss84">
-                            <div>ARC19</div>
-                            <div>ARC69</div>
-                          </label>
-                        </div>
-                        <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6" style={{display:"none"}}>
+                        <div
+                          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+                          style={{ display: "none" }}
+                        >
                           <div className="jss16">
                             <label htmlFor="quantity">Quantity</label>
                             <input
@@ -918,20 +681,32 @@ function ConfigModule() {
                           </div>
                         </div>
                       </div>
+                      <div className="jss16">
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                          type="text"
+                          style={{ minHeight: 100 }}
+                          id="description"
+                          spellCheck="false"
+                          onChange={updateJSON}
+                          required={true}
+                          defaultValue={""}
+                        />
+                      </div>
                       <p className="jss36">
                         Once your NFT is minted on the Algorand blockchain, you
                         will not be able to edit or update any of its
-                        information unless you minted the NFT wtih ARC19. If you minted
-                        the NFT with ARC19, you may update the NFT's information with an "asset config"
-                        transaction.
+                        information unless you minted the NFT wtih ARC19. If you
+                        minted the NFT with ARC19, you may update the NFT's
+                        information with an "asset config" transaction.
                         <br />
                         <br />
-                        You agree that any information uploaded to
-                        ARC Minter will not contain material subject
-                        to copyright or other proprietary rights, unless you
-                        have necessary permission or are otherwise legally
-                        entitled to post the material.
+                        You agree that any information uploaded to ARC Minter
+                        will not contain material subject to copyright or other
+                        proprietary rights, unless you have necessary permission
+                        or are otherwise legally entitled to post the material.
                       </p>
+
                       <button
                         className=" Mui-not-btn MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
                         tabIndex={-1}
@@ -944,7 +719,8 @@ function ConfigModule() {
                           Wallet not connected
                         </span>
                       </button>
-                      <div id="connected" >
+
+                      <div id="connected" style={{ display: "none" }}>
                         <button
                           hidden={true}
                           onClick={async () => {
@@ -961,8 +737,9 @@ function ConfigModule() {
                           tabIndex={-1}
                           style={{ marginBottom: 30 }}
                         >
-                          <span className="MuiButton-label">Mint NFT</span>
+                          <span className="MuiButton-label">Modify NFT</span>
                         </button>
+
                         <Preview name={asa} url={asa} imgUrl={urlHash} />
                       </div>
                     </div>
@@ -983,189 +760,66 @@ function ConfigModule() {
               >
                 <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
                   <div className="footer-flex">
-                <div className="footer-left">
-                  <img src="algologo.svg" alt="banner" className="footer-img" />
+                    <div className="footer-left">
+                      <img
+                        src="algologo.svg"
+                        alt="banner"
+                        className="footer-img"
+                      />
 
-                  <p className="jss50">
-                    Algorand is the #1 carbon-negative blockchain. <br></br> 
-                    Sustainable, scalable, and built to last.
-                  </p>
+                      <p className="jss50">
+                        Algorand is the #1 carbon-negative blockchain.{" "}
+                        <br style={{ display: jss6 }}></br>
+                        Sustainable, scalable, and built to last.
+                      </p>
+                    </div>
+                    <div className="footer-right">
+                      <a
+                        href="https://twitter.com/headline_crypto"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <div className="jss51">
+                          <svg
+                            className="MuiSvgIcon-root"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            style={{ fontSize: 26 }}
+                          >
+                            <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z" />
+                          </svg>
+                        </div>
+                      </a>
+                      <a
+                        href="https://discord.gg/headline_crypto"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <div className="jss51">
+                          <svg
+                            fill="#000000"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 50 50"
+                            width="100px"
+                            height="100px"
+                          >
+                            <path d="M 41.625 10.769531 C 37.644531 7.566406 31.347656 7.023438 31.078125 7.003906 C 30.660156 6.96875 30.261719 7.203125 30.089844 7.589844 C 30.074219 7.613281 29.9375 7.929688 29.785156 8.421875 C 32.417969 8.867188 35.652344 9.761719 38.578125 11.578125 C 39.046875 11.867188 39.191406 12.484375 38.902344 12.953125 C 38.710938 13.261719 38.386719 13.429688 38.050781 13.429688 C 37.871094 13.429688 37.6875 13.378906 37.523438 13.277344 C 32.492188 10.15625 26.210938 10 25 10 C 23.789063 10 17.503906 10.15625 12.476563 13.277344 C 12.007813 13.570313 11.390625 13.425781 11.101563 12.957031 C 10.808594 12.484375 10.953125 11.871094 11.421875 11.578125 C 14.347656 9.765625 17.582031 8.867188 20.214844 8.425781 C 20.0625 7.929688 19.925781 7.617188 19.914063 7.589844 C 19.738281 7.203125 19.34375 6.960938 18.921875 7.003906 C 18.652344 7.023438 12.355469 7.566406 8.320313 10.8125 C 6.214844 12.761719 2 24.152344 2 34 C 2 34.175781 2.046875 34.34375 2.132813 34.496094 C 5.039063 39.605469 12.972656 40.941406 14.78125 41 C 14.789063 41 14.800781 41 14.8125 41 C 15.132813 41 15.433594 40.847656 15.621094 40.589844 L 17.449219 38.074219 C 12.515625 36.800781 9.996094 34.636719 9.851563 34.507813 C 9.4375 34.144531 9.398438 33.511719 9.765625 33.097656 C 10.128906 32.683594 10.761719 32.644531 11.175781 33.007813 C 11.234375 33.0625 15.875 37 25 37 C 34.140625 37 38.78125 33.046875 38.828125 33.007813 C 39.242188 32.648438 39.871094 32.683594 40.238281 33.101563 C 40.601563 33.515625 40.5625 34.144531 40.148438 34.507813 C 40.003906 34.636719 37.484375 36.800781 32.550781 38.074219 L 34.378906 40.589844 C 34.566406 40.847656 34.867188 41 35.1875 41 C 35.199219 41 35.210938 41 35.21875 41 C 37.027344 40.941406 44.960938 39.605469 47.867188 34.496094 C 47.953125 34.34375 48 34.175781 48 34 C 48 24.152344 43.785156 12.761719 41.625 10.769531 Z M 18.5 30 C 16.566406 30 15 28.210938 15 26 C 15 23.789063 16.566406 22 18.5 22 C 20.433594 22 22 23.789063 22 26 C 22 28.210938 20.433594 30 18.5 30 Z M 31.5 30 C 29.566406 30 28 28.210938 28 26 C 28 23.789063 29.566406 22 31.5 22 C 33.433594 22 35 23.789063 35 26 C 35 28.210938 33.433594 30 31.5 30 Z" />
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
                   </div>
-                  <div className="footer-right">
-                  <a
-                      href="https://twitter.com/headline_crypto"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <div className="jss51">
-                        <svg
-                          className="MuiSvgIcon-root"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                          style={{ fontSize: 26 }}
-                        >
-                          <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z" />
-                        </svg>
-                      </div>
-                    </a>
-                    <a
-                      href="https://discord.gg/headline_crypto"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <div className="jss51">
-                        <svg
-                          fill="#000000"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 50 50"
-                          width="100px"
-                          height="100px"
-                        >
-                          <path d="M 41.625 10.769531 C 37.644531 7.566406 31.347656 7.023438 31.078125 7.003906 C 30.660156 6.96875 30.261719 7.203125 30.089844 7.589844 C 30.074219 7.613281 29.9375 7.929688 29.785156 8.421875 C 32.417969 8.867188 35.652344 9.761719 38.578125 11.578125 C 39.046875 11.867188 39.191406 12.484375 38.902344 12.953125 C 38.710938 13.261719 38.386719 13.429688 38.050781 13.429688 C 37.871094 13.429688 37.6875 13.378906 37.523438 13.277344 C 32.492188 10.15625 26.210938 10 25 10 C 23.789063 10 17.503906 10.15625 12.476563 13.277344 C 12.007813 13.570313 11.390625 13.425781 11.101563 12.957031 C 10.808594 12.484375 10.953125 11.871094 11.421875 11.578125 C 14.347656 9.765625 17.582031 8.867188 20.214844 8.425781 C 20.0625 7.929688 19.925781 7.617188 19.914063 7.589844 C 19.738281 7.203125 19.34375 6.960938 18.921875 7.003906 C 18.652344 7.023438 12.355469 7.566406 8.320313 10.8125 C 6.214844 12.761719 2 24.152344 2 34 C 2 34.175781 2.046875 34.34375 2.132813 34.496094 C 5.039063 39.605469 12.972656 40.941406 14.78125 41 C 14.789063 41 14.800781 41 14.8125 41 C 15.132813 41 15.433594 40.847656 15.621094 40.589844 L 17.449219 38.074219 C 12.515625 36.800781 9.996094 34.636719 9.851563 34.507813 C 9.4375 34.144531 9.398438 33.511719 9.765625 33.097656 C 10.128906 32.683594 10.761719 32.644531 11.175781 33.007813 C 11.234375 33.0625 15.875 37 25 37 C 34.140625 37 38.78125 33.046875 38.828125 33.007813 C 39.242188 32.648438 39.871094 32.683594 40.238281 33.101563 C 40.601563 33.515625 40.5625 34.144531 40.148438 34.507813 C 40.003906 34.636719 37.484375 36.800781 32.550781 38.074219 L 34.378906 40.589844 C 34.566406 40.847656 34.867188 41 35.1875 41 C 35.199219 41 35.210938 41 35.21875 41 C 37.027344 40.941406 44.960938 39.605469 47.867188 34.496094 C 47.953125 34.34375 48 34.175781 48 34 C 48 24.152344 43.785156 12.761719 41.625 10.769531 Z M 18.5 30 C 16.566406 30 15 28.210938 15 26 C 15 23.789063 16.566406 22 18.5 22 C 20.433594 22 22 23.789063 22 26 C 22 28.210938 20.433594 30 18.5 30 Z M 31.5 30 C 29.566406 30 28 28.210938 28 26 C 28 23.789063 29.566406 22 31.5 22 C 33.433594 22 35 23.789063 35 26 C 35 28.210938 33.433594 30 31.5 30 Z" />
-                        </svg>
-                      </div>
-                    </a>
-                    </div>
-                    </div>
                 </div>
-
               </div>
             </div>
           </footer>
         </div>
-        <next-route-announcer>
-          <p
-            aria-live="assertive"
-            id="__next-route-announcer__"
-            role="alert"
-            style={{
-              border: 0,
-              clip: "rect(0px, 0px, 0px, 0px)",
-              height: 1,
-              margin: "-1px",
-              overflow: "hidden",
-              padding: 0,
-              position: "absolute",
-              width: 1,
-              whiteSpace: "nowrap",
-              overflowWrap: "normal",
-            }}
-          >
-            ARC19 NFT Minter
-          </p>
-        </next-route-announcer>
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
         <div id="WEB3_CONNECT_MODAL_ID" />
       </div>
 
       <div className="container body-2"></div>
     </div>
-  );
-}
-
-interface ClaimDialogProps {
-  open: boolean;
-  signed: boolean;
-  triggerHelp(): void;
-}
-
-function ClaimDialog(props: ClaimDialogProps) {
-  const [isOpen, setIsOpen] = React.useState(props.open);
-  const [signed, setSigned] = React.useState(props.signed);
-  const [progress, setProgress] = React.useState(0);
-
-  const handleClose = React.useCallback(() => setIsOpen(false), []);
-
-  useEffect(() => {
-    setIsOpen(props.open);
-    setSigned(props.signed);
-  }, [props]);
-
-  useEffect(() => {
-    let p = 0;
-    if (!signed || progress > 0 || progress >= 1.0) return;
-
-    // "fake" timer just to give enough time to submit txn and
-    // have it confirmed on the network, then load the NFT details
-    const step = 100 / (6 * 1000);
-    const interval = setInterval(() => {
-      p += step;
-      if (p > 1.0) {
-        clearInterval(interval);
-        setProgress(1.0);
-        return;
-      }
-      setProgress(p);
-    }, 100);
-  }, [signed, progress]);
-
-  return (
-    <Dialog
-      isOpen={isOpen}
-      onClose={handleClose}
-      style={{ background: "lightgray" }}
-    >
-      <div
-        className={Classes.DIALOG_BODY}
-        style={{
-          backgroundColor: "#171717",
-          boxShadow:
-            "rgb(0 0 0 / 50%) 0px 20px 25px -5px, rgb(0 0 0 / 25%) 0px 10px 10px -5px, rgb(255 255 255 / 10%) 0px 0px 0px 1px inset",
-          borderRadius: "11px",
-        }}
-      >
-        {!signed ? (
-          <div className="container">
-            <div className="container">
-              <p>
-                <b style={{ color: "#f0f0f0" }}>
-                  Please Approve the transaction in your Algo wallet.{" "}
-                </b>
-              </p>
-              <MobileView>
-                <AnchorButton
-                  style={{ borderRadius: "8px", margin: "20px 0px -30px" }}
-                  text="Take me there"
-                  href={
-                    isIOS
-                      ? "algorand-wc://wc?uri=wc:00e46b69-d0cc-4b3e-b6a2-cee442f97188@1"
-                      : "wc:00e46b69-d0cc-4b3e-b6a2-cee442f97188@1"
-                  }
-                  intent="success"
-                  large={true}
-                  minimal={true}
-                  outlined={true}
-                  rightIcon="double-chevron-right"
-                />
-              </MobileView>
-            </div>
-            <div className="container">
-              <button
-                style={{ borderRadius: "4px" }}
-                className="warning-btn"
-                minimal={true}
-                outlined={true}
-                onClick={props.triggerHelp}
-                intent="warning"
-                text="Having Issues?"
-              />
-            </div>
-          </div>
-        ) : (
-          <ProgressBar animate={true} intent="success" value={progress} />
-        )}
-      </div>
-    </Dialog>
   );
 }
 

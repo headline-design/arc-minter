@@ -42,7 +42,6 @@ const MetaDataProps = (props) => {
   );
 };
 
-
 window.defaultJSON = {
   name: "Astro #220",
   description: "Algo Astros, An NFT Collection from the HEADLINE Team.",
@@ -63,7 +62,7 @@ function Header() {
     if (address !== window.pipeAddress) {
       setAddress(window.pipeAddress);
     }
-  } 
+  }
 
   const [accts] = React.useState(sw.accountList());
   const [connected, setConnected] = React.useState(sw.connected());
@@ -77,8 +76,6 @@ function Header() {
   const addr = params.get("addr");
   const secret = params.get("secret");
   const [hash, setHash] = React.useState("");
-
-  
 
   const [asa, setAsa] = React.useState("");
   const [asaId, setAsaId] = React.useState("");
@@ -95,7 +92,6 @@ function Header() {
     toggler = !toggler;
   }
 
-
   useEffect(() => {
     setClaimable(secret !== null && addr !== null && escrow !== null);
   }, [escrow, addr, secret]);
@@ -104,7 +100,6 @@ function Header() {
     window.response1234 = [{ hash: "none yet" }];
     setInterval(checkforResponse, 300);
   }, []);
-
 
   function checkforResponse() {
     let length = window.response1234.length - 1;
@@ -121,6 +116,10 @@ function Header() {
       setHash(thisHash);
     }
     checkForAddress();
+    if (address !== undefined && address !== "") {
+      document.getElementById("not-connected").style.display = "none";
+      document.getElementById("connected").style.display = "block";
+    }
   }
 
   function updateJSON(event) {
@@ -135,6 +134,7 @@ function Header() {
   function updateWallet(address) {
     setAddress(address);
     setConnected(true);
+
     setAddress(true);
   }
 
@@ -179,35 +179,31 @@ function Header() {
     />
   );
 
-  
-
   return (
-          <header className="MuiPaper-root MuiAppBar-root jss2 MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4">
-            <div className="MuiContainer-root jss1 MuiContainer-maxWidthLg">
-              <div className="jss3">
-                <a className="logo-nav" href="/">
-                  <Logo></Logo>
-                </a>
-                <div className="jss5">
-                <div >
-                  <NavLinks></NavLinks>
-  </div>
-                <div className="buttons">
-                  <AlgorandWalletConnector
-                    darkMode={true}
-                    address={address}
-                    sessionWallet={sessionWallet}
-                    accts={accts}
-                    connected={connected}
-                    onChange={updateWallet}
-                  />
-                     
-                </div>
-                </div>
-              </div>
+    <header className="MuiPaper-root MuiAppBar-root jss2 MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4">
+      <div className="MuiContainer-root jss1 MuiContainer-maxWidthLg">
+        <div className="jss3">
+          <a className="logo-nav" href="/">
+            <Logo></Logo>
+          </a>
+          <div className="jss5">
+            <div>
+              <NavLinks></NavLinks>
             </div>
-          </header>
-
+            <div className="buttons">
+              <AlgorandWalletConnector
+                darkMode={true}
+                address={address}
+                sessionWallet={sessionWallet}
+                accts={accts}
+                connected={connected}
+                onChange={updateWallet}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }
 

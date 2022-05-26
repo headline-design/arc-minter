@@ -44,12 +44,13 @@ class NftFetch extends Component {
   };
 
   render() {
-    return <div>
-      <input type="number" defaultValue={752823772} id="assetIndex"></input>
-      <button
+    return <div className="jss16">
+      <label for="assetIndex">Asset Index</label>
+      <input className="metadata-object" type="number" defaultValue={752823772} id="assetIndex"></input>
+      <button className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
         onClick={this.asaToIpfsJSON}
-      >Do Black Magic</button>
-      <img width="40px" height="40px" alt="your NFT here" src={this.state.src}></img>
+      >Fetch Metadata</button>
+      <img style={{display:"none"}} width="40px" height="40px" alt="your NFT here" src={this.state.src}></img>
     </div>;
   }
 }
