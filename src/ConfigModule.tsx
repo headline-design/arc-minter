@@ -14,6 +14,8 @@ import NftFetch from "./NftFetch.js";
 
 import Preview from "./preview";
 
+let flipped = true
+
 const prevResponse = [{ hash: "none yet" }];
 
 const asaData = {
@@ -71,7 +73,13 @@ function ConfigModule() {
   const [isDisabled5, setIsDisabled5] = useState(true);
   const [isDisabled6, setIsDisabled6] = useState(true);
   const [jss6, setJss6] = useState("block");
-  const [jss7, setJss7] = useState("none");
+
+  React.useEffect(() => {
+    if (Pipeline.address !== "" ) {
+      document.getElementById("not-connected").style.display = "none"
+      document.getElementById("connected").style.display = "block"
+    }
+  },[] )
 
   const handleClick = () => {
     setIsDisabled(!isDisabled);
@@ -130,15 +138,56 @@ function ConfigModule() {
     }
     checkForAddress();
   }
-
+  
   function updateJSON(event) {
-    let key = event.target.id;
     let value = event.target.value;
-    window.defaultJSON[key] = value;
-    document.getElementById("preview").innerText = JSON.stringify(
-      window.defaultJSON
-    );
+    let key = event.target.id;
+    switch (key) {
+      case "name":
+        if (value.length <= 32) {
+          proceed();
+        } else {
+          failed("Asset Name Max size is 32 characters");
+        }
+        break
+        case "unitName":
+          if (value.length <= 8) {
+            proceed();
+          } else {
+            failed("Asset Unit Name can not exceed 8 letters");
+          }
+          break
+          case "decimals":
+          if (value <= 19) {
+            proceed();
+          } else {
+            failed("Asset decimals can not exceed 19");
+          }
+          break
+      default:
+        break;
+    }
+    function proceed() {
+        window.defaultJSON[key] = value;
+        document.getElementById("preview").innerText = JSON.stringify(
+          window.defaultJSON
+        );
+
+    }
+    function failed(message) {
+      let former = document.getElementById ("miniMessage")
+      if (former != null ) {former.remove() }
+      miniAlerts(event.target, message);
+      event.target.value = "";
+    }
   }
+
+  function miniAlerts (parent, miniMessage) {
+    //let Alert = document.createElement("p")
+    //Alert = miniMessage
+    parent.insertAdjacentHTML("afterend", '<div id="miniMessage">' + miniMessage + "</div>" )
+  }
+
 
   async function createAsa() {
     asaData.amount = parseInt(document.getElementById("input-amount").value);
@@ -163,7 +212,7 @@ function ConfigModule() {
       1000,
       params.firstRound,
       params.lastRound,
-      undefined,
+      new Uint8Array(Buffer.from(asaData.note)),
       params.genesisHash,
       params.genesisID,
       parseInt(document.getElementById("assetIndex").value),
@@ -200,14 +249,17 @@ function ConfigModule() {
   }
 
   function toggle19() {
-    if (jss6 === "block") {
-      setJss7("block");
+    if (flipped) {
       setJss6("none");
+      document.getElementById("fetchButton").style.display = "none"
+
     } else {
       setJss6("block");
-      setJss7("none");
+      document.getElementById("fetchButton").style.display = "block"
     }
+    flipped = !flipped
   }
+
 
   return (
     <div className="App" style={{ background: "#000" }}>
@@ -253,6 +305,7 @@ function ConfigModule() {
                         </label>
                       </div>
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+                        
                         <NftFetch />
                         <div className="jss16" style={{ display: jss6 }}>
                           <label htmlFor="name">Asset Name</label>
@@ -375,8 +428,8 @@ function ConfigModule() {
                             </div>
                           </div>
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                            <div className="jss16">
-                              <div style={{ display: jss6 }}>
+                            <div className="jss16"  style={{ display: jss6 }}>
+                              <div>
                                 <HexToAlgo hash={hash}></HexToAlgo>
                               </div>
                               <JSONer
@@ -388,9 +441,9 @@ function ConfigModule() {
                                 object={myJSON}
                               ></JSONer>
                             </div>
-                            <div className="jss16">
+                            <div className="jss16"  style={{ display: jss6 }}>
                               <label className="">JSON Object</label>
-                              <p id="preview" className="metadata-object">
+                              <p id="preview" className="metadata-object" >
                                 {JSON.stringify(window.defaultJSON)}
                               </p>
                               <div style={{ display: jss6 }}>
@@ -480,7 +533,7 @@ function ConfigModule() {
                             Reserve Address is invalid
                           </div>
                         </div>
-                        <div className="jss16" style={{ display: jss6 }}>
+                        <div className="jss16" >
                           <div className="label-switch">
                             <label htmlFor="frozen-dropdown" className="">
                               Note
@@ -681,7 +734,7 @@ function ConfigModule() {
                           </div>
                         </div>
                       </div>
-                      <div className="jss16">
+                      <div className="jss16" style={{ display: jss6 }}>
                         <label htmlFor="description">Description</label>
                         <textarea
                           type="text"

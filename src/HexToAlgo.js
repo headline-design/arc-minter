@@ -56,7 +56,6 @@ class HexToAlgo extends React.Component{
   handleClickConvert(ipfshash) {
     const { url, reserveAddress } = this.cidToReserveURL(ipfshash);
     document.getElementById("input-reserve").value = reserveAddress
-    document.getElementById("input-asset-url").value = url
 
     this.setState({
       url,

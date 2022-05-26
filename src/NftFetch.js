@@ -12,6 +12,8 @@ class NftFetch extends Component {
   }
 
   asaToIpfsJSON = async () => {
+    let parent = document.getElementById ("imageParent")
+    parent.innerHTML = ""
     let assetId = parseInt(document.getElementById("assetIndex").value)
 
     let asaData = await fetch(
@@ -39,7 +41,11 @@ class NftFetch extends Component {
     window.defaultJson = myJsonParsed
     let jsonString = JSON.stringify(myJsonParsed)
     document.getElementById("preview").innerText = jsonString
-    this.setState({src:myJsonParsed.image.replace("ipfs://","https://ipfs.io/ipfs/")})
+    let child = document.createElement("img")
+    child.style.width = "40px"
+    child.style.height = "40px"
+    child.src = myJsonParsed.image.replace("ipfs://","https://ipfs.io/ipfs/")
+    parent.appendChild(child)
     alert(jsonString)
   };
 
@@ -47,10 +53,12 @@ class NftFetch extends Component {
     return <div className="jss16">
       <label for="assetIndex">Asset Index</label>
       <input className="metadata-object" type="number" defaultValue={752823772} id="assetIndex"></input>
-      <button className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
+      <div id="fetchButton">
+      <button  className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
         onClick={this.asaToIpfsJSON}
       >Fetch Metadata</button>
-      <img style={{display:"none"}} width="40px" height="40px" alt="your NFT here" src={this.state.src}></img>
+      </div>
+     <div id="imageParent"></div>
     </div>;
   }
 }

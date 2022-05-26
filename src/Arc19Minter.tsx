@@ -15,6 +15,8 @@ import CID from "cids";
 
 import Preview from "./preview";
 
+let flipped = false;
+
 const prevResponse = [{ hash: "none yet" }];
 
 var cid = "";
@@ -27,6 +29,26 @@ const asaData = {
   assetName: "1NFT",
   unitName: "1NFT",
 };
+
+const default69 = `{
+  "standard": "arc69",
+  "description": null,
+  "external_url": "https://algoastros.com/portfolio-item/astro-1/",
+  "mime_type": "image/png",
+  "properties": {
+    "Chest Logo": "None",
+    "Visor": "Yes",
+    "Helmet": "Square",
+    "Creature": "None",
+    "Background": "Space",
+    "Glitch": "No",
+    "Oxygen Tube": "None",
+    "Headlamps": "Yes",
+    "Made by": "Aaron"
+  }
+}`;
+
+let arc19 = true;
 
 const MetaDataProps = (props) => {
   let properties = Object.keys(props.object);
@@ -105,7 +127,14 @@ function Arc19Minter() {
   const [isDisabled5, setIsDisabled5] = useState(true);
   const [isDisabled6, setIsDisabled6] = useState(true);
   const [jss6, setJss6] = useState("block");
-  const [jss7, setJss7] = useState("none");
+  const [progress, setProgress] = useState(0.02);
+
+  React.useEffect(() => {
+    if (Pipeline.address !== "") {
+      document.getElementById("not-connected").style.display = "none";
+      document.getElementById("connected").style.display = "block";
+    }
+  }, []);
 
   const [initial, setInitial] = React.useState(true);
 
@@ -162,18 +191,39 @@ function Arc19Minter() {
   }
 
   function toggle19() {
-    if (jss7 === "block") {
-      setJss7("none");
+    let arc19Placeholder =
+      "template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}";
+    arc19 = !arc19;
+    if (!arc19) {
+      document.getElementById("input-asset-url").value = "";
+      document.getElementById("input-asset-url").placeholder =
+        "https://headline.dev";
+      document.getElementById("toggleInputAssetURLSwitch").checked = true;
+      document.getElementById("input-note").value = default69;
+
+      setIsDisabled5(false);
+    } else {
+      document.getElementById("input-note").value = "";
+      document.getElementById("toggleInputAssetURLSwitch").checked = false;
+      document.getElementById("input-asset-url").value = arc19Placeholder;
+      document.getElementById("input-asset-url").placeholder = arc19Placeholder;
+      setIsDisabled5(true);
+    }
+    if (flipped) {
       setJss6("block");
     } else {
       setJss6("none");
-      setJss7("block");
     }
+    flipped = !flipped;
   }
 
   function checkforResponse() {
     let length = window.response1234.length - 1;
     if (prevResponse[0].hash !== window.response1234[length].hash) {
+      if (!arc19) {
+        document.getElementById("input-asset-url").value =
+          "ipfs://" + window.response1234[length].hash;
+      }
       prevResponse[0].hash = window.response1234[length].hash;
       setUrlHash(window.response1234[0].hash);
       let cidWorking = new CID(window.response1234[0].hash).toV1();
@@ -189,12 +239,44 @@ function Arc19Minter() {
   }
 
   function updateJSON(event) {
-    let key = event.target.id;
     let value = event.target.value;
-    window.defaultJSON[key] = value;
-    document.getElementById("preview").innerText = JSON.stringify(
-      window.defaultJSON
-    );
+    let key = event.target.id;
+    switch (key) {
+      case "name":
+        if (value.length <= 32) {
+          proceed();
+        } else {
+          failed("Asset Name Max size is 32 characters");
+        }
+        break
+        case "unitName":
+          if (value.length <= 8) {
+            proceed();
+          } else {
+            failed("Asset Unit Name can not exceed 8 letters");
+          }
+          break
+          case "decimals":
+          if (value <= 19) {
+            proceed();
+          } else {
+            failed("Asset decimals can not exceed 19");
+          }
+          break
+      default:
+        break;
+    }
+    function proceed() {
+        window.defaultJSON[key] = value;
+        document.getElementById("preview").innerText = JSON.stringify(
+          window.defaultJSON
+        );
+
+    }
+    function failed(message) {
+      alert(message);
+      event.target.value = "";
+    }
   }
 
   function updateWallet(address) {
@@ -204,21 +286,28 @@ function Arc19Minter() {
   }
 
   async function createAsa() {
+    setProgress(0.1);
     asaData.amount = parseInt(document.getElementById("input-amount").value);
     asaData.assetName = document.getElementById("name").value;
     asaData.creator = document.getElementById("input-manager").value;
-    asaData.decimals = parseInt(document.getElementById("decimals").value);
+    asaData.decimals = arc19
+      ? parseInt(document.getElementById("decimals").value)
+      : 0;
     asaData.note = document.getElementById("input-note").value;
     asaData.assetURL = document.getElementById("input-asset-url").value;
     asaData.unitName = document.getElementById("unitName").value;
-    asaData.reserve = document.getElementById("input-reserve").value;
+    asaData.reserve = arc19
+      ? document.getElementById("input-reserve").value
+      : Pipeline.address;
     asaData.manager = document.getElementById("input-manager").value;
     // asaData.clawback = document.getElementById("input-clawback").value
     // asaData.freeze = document.getElementById("input-freeze").value
     asaData.assetMetadataHash = document.getElementById(
       "input-assetMetadataHash"
     ).value;
-
+    setInterval(() => {
+      setProgress(progress + 0.02);
+    }, 1000);
     let asaId = await Pipeline.createAsa(asaData);
     return asaId;
   }
@@ -411,6 +500,11 @@ function Arc19Minter() {
                   <h6 className="MuiTypography-root jss11 MuiTypography-subtitle1">
                     Mint ARC19 and ARC69 NFTs on Algorand at supersonic speed!
                   </h6>
+                  <ProgressBar
+                    animate={true}
+                    intent="success"
+                    value={progress}
+                  />
                 </div>
               </div>
             </div>
@@ -487,7 +581,7 @@ function Arc19Minter() {
                             </div>
                           </div>
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                            <div className="jss16">
+                            <div className="jss16" style={{ display: jss6 }}>
                               <label htmlFor="description">Description</label>
                               <textarea
                                 type="text"
@@ -543,7 +637,7 @@ function Arc19Minter() {
                               <input
                                 type="number"
                                 placeholder="0"
-                                defaultValue=""
+                                defaultValue={0}
                                 onChange={updateJSON}
                                 pattern=""
                                 id="decimals"
@@ -605,7 +699,7 @@ function Arc19Minter() {
                     </div>
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        <div className="jss16" style={{ display: jss6 }}>
+                        <div className="jss16">
                           <div className="label-switch">
                             <label className="">Asset URL</label>
                             <div className="permitted">
@@ -916,6 +1010,7 @@ function Arc19Minter() {
                           style={{ marginBottom: 30 }}
                         >
                           <span className="MuiButton-label">Mint NFT</span>
+                          <span id="countdown"></span>
                         </button>
                         <Preview name={asa} url={asa} imgUrl={urlHash} />
                       </div>
@@ -1027,102 +1122,6 @@ function Arc19Minter() {
 
       <div className="container body-2"></div>
     </div>
-  );
-}
-
-interface ClaimDialogProps {
-  open: boolean;
-  signed: boolean;
-  triggerHelp(): void;
-}
-
-function ClaimDialog(props: ClaimDialogProps) {
-  const [isOpen, setIsOpen] = React.useState(props.open);
-  const [signed, setSigned] = React.useState(props.signed);
-  const [progress, setProgress] = React.useState(0);
-
-  const handleClose = React.useCallback(() => setIsOpen(false), []);
-
-  useEffect(() => {
-    setIsOpen(props.open);
-    setSigned(props.signed);
-  }, [props]);
-
-  useEffect(() => {
-    let p = 0;
-    if (!signed || progress > 0 || progress >= 1.0) return;
-
-    // "fake" timer just to give enough time to submit txn and
-    // have it confirmed on the network, then load the NFT details
-    const step = 100 / (6 * 1000);
-    const interval = setInterval(() => {
-      p += step;
-      if (p > 1.0) {
-        clearInterval(interval);
-        setProgress(1.0);
-        return;
-      }
-      setProgress(p);
-    }, 100);
-  }, [signed, progress]);
-
-  return (
-    <Dialog
-      isOpen={isOpen}
-      onClose={handleClose}
-      style={{ background: "lightgray" }}
-    >
-      <div
-        className={Classes.DIALOG_BODY}
-        style={{
-          backgroundColor: "#171717",
-          boxShadow:
-            "rgb(0 0 0 / 50%) 0px 20px 25px -5px, rgb(0 0 0 / 25%) 0px 10px 10px -5px, rgb(255 255 255 / 10%) 0px 0px 0px 1px inset",
-          borderRadius: "11px",
-        }}
-      >
-        {!signed ? (
-          <div className="container">
-            <div className="container">
-              <p>
-                <b style={{ color: "#f0f0f0" }}>
-                  Please Approve the transaction in your Algo wallet.{" "}
-                </b>
-              </p>
-              <MobileView>
-                <AnchorButton
-                  style={{ borderRadius: "8px", margin: "20px 0px -30px" }}
-                  text="Take me there"
-                  href={
-                    isIOS
-                      ? "algorand-wc://wc?uri=wc:00e46b69-d0cc-4b3e-b6a2-cee442f97188@1"
-                      : "wc:00e46b69-d0cc-4b3e-b6a2-cee442f97188@1"
-                  }
-                  intent="success"
-                  large={true}
-                  minimal={true}
-                  outlined={true}
-                  rightIcon="double-chevron-right"
-                />
-              </MobileView>
-            </div>
-            <div className="container">
-              <button
-                style={{ borderRadius: "4px" }}
-                className="warning-btn"
-                minimal={true}
-                outlined={true}
-                onClick={props.triggerHelp}
-                intent="warning"
-                text="Having Issues?"
-              />
-            </div>
-          </div>
-        ) : (
-          <ProgressBar animate={true} intent="success" value={progress} />
-        )}
-      </div>
-    </Dialog>
   );
 }
 

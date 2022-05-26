@@ -8,6 +8,7 @@ import { IconName } from "@blueprintjs/icons";
 import Pipeline from "@pipeline-ui-2/pipeline";
 import { WalletConnectLogo } from "./images/walletconnect-logo";
 import { MyAlgoLogo } from "./images/MyAlgo-logo";
+import { pipeline } from "stream";
 
 const wallet = Pipeline.init();
 
@@ -18,6 +19,7 @@ export default function AlgorandWalletConnector(props) {
   const { sessionWallet, updateWallet } = props;
   React.useEffect(() => {
     if (sessionWallet.connected()) return;
+    
 
     let interval: any;
     sessionWallet.connect().then((success) => {
