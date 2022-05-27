@@ -1,0 +1,5 @@
+[[redirects]]
+from = "https://www.arcminter.daotools.org/*"
+to = "https://arcminter.daotools.org/:splat"
+status = 301
+force = true
