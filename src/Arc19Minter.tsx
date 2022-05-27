@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { SessionWallet } from "algorand-session-wallet";
 import IpfsUpload from "./IpfsUpload";
 import HexToAlgo from "./HexToAlgo";
-import { AnchorButton, ProgressBar } from "@blueprintjs/core";
+import { AnchorButton, ProgressBar, Button } from "@blueprintjs/core";
 import { conf, collect, sendWait, getAsaId, getNFT } from "./lib/algorand";
 import { Classes, Dialog } from "@blueprintjs/core";
 import { BrowserView, MobileView, isIOS } from "react-device-detect";
@@ -498,11 +498,17 @@ function Arc19Minter() {
                           <div onClick={toggle19}>ARC69</div>
                         </label>
                       </div>
+                   
                       <div className="jss27">
-                        <label className="jss17" htmlFor="upload-file">
+                      <div class="label-switch help-switch">
+                        <label className="jss17" htmlFor="upload-file" style={{marginRight:".3rem"}}>
                           Upload
                         </label>
+                        <HelpDropdown />
+                        </div>
                         <IpfsUpload />
+                        
+                       
                         <div>
                           <input
                             type="file"
@@ -1130,6 +1136,137 @@ function Arc19Minter() {
       </div>
 
       <div className="container body-2"></div>
+    </div>
+  );
+}
+
+function HelpDropdown() {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  return (
+    <div > 
+      <svg onClick={() => setIsOpen(true)} class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiBox-root css-1om0hkc help-svg" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="HelpIcon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"></path></svg>
+     
+      <Dialog
+        isOpen={isOpen}
+        className="dialoguez"
+        canEscapeKeyClose={true}
+        canOutsideClickClose={true}
+        isCloseButtonShown={true}
+        onClose={() => setIsOpen(false)}
+      >
+        <div className="bp3-dialog-header">
+          <h4 id="title-bp-dialog-1" className="bp3-heading">
+            Overview
+          </h4>
+          <button
+            type="button"
+            aria-label="Close"
+            className="bp3-button bp3-minimal bp3-dialog-close-button"
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
+            <span aria-hidden="true" className="bp3-icon bp3-icon-small-cross">
+              <svg
+                data-icon="small-cross"
+                id="small-cross"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M11.41 10l3.29-3.29c.19-.18.3-.43.3-.71a1.003 1.003 0 00-1.71-.71L10 8.59l-3.29-3.3a1.003 1.003 0 00-1.42 1.42L8.59 10 5.3 13.29c-.19.18-.3.43-.3.71a1.003 1.003 0 001.71.71l3.29-3.3 3.29 3.29c.18.19.43.3.71.3a1.003 1.003 0 00.71-1.71L11.41 10z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div className="container help-container-2">
+
+          <div className="help-text">
+            <p style={{ color: "#000 !important" }}>
+              <h3>⚠️🚧ARC Minter is an EXPERIMENTAL Dapp</h3>
+
+              <p>
+                The ARC Minter NFT minter from HEADLINE is in active development.
+                User experience may vary dramatically as features are added.  
+                It's also recommended that users look into pinning images on IPFS (we use the public gateway).
+                Although rare, images can be dropped from IPFS if not pinned.
+                With that being said ARC Minter is <b>100% free</b> to use and experiment with. 
+                We welcome feedback!
+              </p>
+
+              <p>
+                Please exercise caution when using the app. Make sure to follow the minting steps in order when possible.
+              </p>
+
+        
+                <ul>
+                  <li>
+                  Upload image or file to IPFS.
+                  </li>
+                  <li>
+                   
+Choose an Asset Name for your NFT.
+
+                  </li>
+                  <li>
+                    
+Choose a Unit Name for your NFT.
+
+                  </li>
+                  <li>
+
+                  Write a solid description of your NFT.
+
+                  </li>
+                  <li>
+
+                  Choose how many decimals you want for your NFT<br></br> (0 is the recommended number).
+                  </li>
+                  <li>
+                  6. Change the Image Mimetype if you are inclined.
+
+Use the Advanced JSON Editor to add additional properties to your NFT’s JSON object.
+
+                  </li>
+                  <li>
+                    
+Upload the JSON object to IPFS.
+
+                  </li>
+                  <li>
+                    
+Add an additional note field if you are so inclined.
+
+                  </li>
+                  <li>
+                 At this point, you must sign in with your Algorand wallet if you have not already. Perra Wallet and MyAlgo are both supported at launch.
+
+                  </li>
+                  <li>
+                    
+Sign the Asset creation transaction.
+
+                  </li>
+                  <li>
+                    
+Wait approximately 15 seconds for your asset number to be returned.
+
+                  </li>
+                  <li>
+                    
+Review the NFT details via NFTExplorer, ARC3.xyz, or any other provider that supports ARC19 NFTs.
+                  </li>
+                </ul>
+       
+
+            </p>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 }

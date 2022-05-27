@@ -158,10 +158,29 @@ function DocsModule() {
                         existing ASAs."
                         <br />
                         <br />
-                        You agree that any information uploaded to ARC Minter
-                        will not contain material subject to copyright or other
-                        proprietary rights, unless you have necessary permission
-                        or are otherwise legally entitled to post the material.
+                        Here are the steps to mint/configure ARC69 NFTs with ARC Minter:
+                        <p>
+ Mint ARC69
+ </p>
+ <p>
+ 1. Upload image or file to IPFS
+ </p>
+ <p>
+ 2. Set Asset Name
+ </p>
+ 3. Set Unit Name
+ <p>
+ 4. Choose an asset URL
+ </p>
+ <p>
+ 5. In the note field, you can choose to add your metadata at mint or configure at a later date.
+ </p>
+ <p>
+ 6. Choose the quantity of NFTs per ASA.
+ </p>
+ <p>
+ 7. Connect Wallet and sign Asset Creation Transaction
+ </p>
                       </p>
                     </div>
 
@@ -232,13 +251,24 @@ function DocsModule() {
                         className="jss36"
                         style={{ display: jss7 }}
                       >
-                        Once your NFT is minted on the Algorand blockchain, you
-                        will not be able to edit or update any of its
-                        information unless you minted the NFT wtih ARC19. If you
-                        minted the NFT with ARC19, you may update the NFT's
-                        information with an "asset config" transaction.
+                       
+ Modify ARC69
+ <p>
+  1. Paste your NFT’s ASA number in the Asset Index field.
+  </p> 
+  <p> 
+  2. Fetch Metadata to pre-populate some fields.
+  </p> 
+  3. You can choose an alternate image Mimetype
+  <p> 
+  4. Paste your metadata JSON Object in the note field.
+  </p> 
+  <p> 
+  5. Connect Wallet and sign Asset Config Transaction
+  </p> 
                         <br />
-                        <br />
+                       
+                        And just a reminder!
                         You agree that any information uploaded to ARC Minter
                         will not contain material subject to copyright or other
                         proprietary rights, unless you have necessary permission
