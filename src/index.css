@@ -2703,6 +2703,10 @@ input#hex:disabled {
    color: #d3cfcf!important
 }
 
+.jss69.w-50 {
+   width: 50%;
+}
+
 .footer-flex {
    display: flex;
    justify-content: space-between;
@@ -2711,4 +2715,8 @@ input#hex:disabled {
 
 .footer-right {
    display: flex
+}
+
+li#preview2 {
+   font-size: 1.4rem;
 }

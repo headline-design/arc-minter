@@ -437,50 +437,6 @@ function Arc19Minter() {
         </AnchorButton>
       </div>
     );
-
-    if (nft.id < 420800534) {
-      message = (
-        <div>
-          <h3> Congrats on successfully minting your Algorand NFT!</h3>
-          <p>
-            Please make sure the NFT is live on Algorand mainnet and all content
-            has been uploaded to IPFS.
-          </p>
-          <p>
-            <b>Note: </b>If the asset information for your NFT isn't appearing
-            on NFTExplorer yet, give it up to 24 hours, it might be shy.
-          </p>
-        </div>
-      );
-    } else {
-      message = (
-        <div>
-          <h3> Congrats on successfully collecting your HashLock NFT! </h3>
-          <p>
-            <MetaDataProps object={metaData2}></MetaDataProps>
-            <p> {metaData}</p>
-          </p>
-          <p></p>
-          <p>
-            Treasure it as an ultra-rare HashLock NFT that you've earned by
-            being a valuable part of the HEADLINE community. See you on Discord
-            in the exclusive
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://discord.gg/xRBEZB5j"
-            >
-              HashLocks
-            </a>
-            channel!
-          </p>
-          <p>
-            <b>Note: </b>If the image of your HashLock isn't appearing yet, give
-            it a moment, it might be shy
-          </p>
-        </div>
-      );
-    }
   }
 
   return (
@@ -500,11 +456,6 @@ function Arc19Minter() {
                   <h6 className="MuiTypography-root jss11 MuiTypography-subtitle1">
                     Mint ARC19 and ARC69 NFTs on Algorand at supersonic speed!
                   </h6>
-                  <ProgressBar
-                    animate={true}
-                    intent="success"
-                    value={progress}
-                  />
                 </div>
               </div>
             </div>
@@ -1030,7 +981,7 @@ function Arc19Minter() {
                 className="MuiGrid-root MuiGrid-container"
                 style={{ position: "relative", zIndex: 2 }}
               >
-                <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
+                <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6" style={{width:"100%", maxWidth: "100%", flexBasis: "100%"}}>
                   <div className="footer-flex">
                     <div className="footer-left">
                       <img
@@ -1108,16 +1059,7 @@ function Arc19Minter() {
           </p>
         </next-route-announcer>
         <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
-        <div id="WEB3_CONNECT_MODAL_ID" />
+
       </div>
 
       <div className="container body-2"></div>

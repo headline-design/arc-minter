@@ -811,7 +811,7 @@ function ConfigModule() {
                 className="MuiGrid-root MuiGrid-container"
                 style={{ position: "relative", zIndex: 2 }}
               >
-                <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6">
+                <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6" style={{width:"100%", maxWidth: "100%", flexBasis: "100%"}}>
                   <div className="footer-flex">
                     <div className="footer-left">
                       <img

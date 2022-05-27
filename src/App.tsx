@@ -5,6 +5,7 @@ import Arc19Minter from "./Arc19Minter";
 import ConfigModule from "./ConfigModule";
 import DocsModule from "./DocsModule";
 import Header from "./Header";
+import AccountModule from "./AccountModule"
 
 function App() {
   const [HeaderPromo, setHeaderPromo] = useState("true");
@@ -29,7 +30,7 @@ function App() {
       rel="noreferrer"
       className="p-2 px-4 bg-white text-black label-sm rounded-full"
     >
-      Learn More
+      Learn More 
     </a>
     <button
     type="button"
@@ -70,6 +71,9 @@ function App() {
         <Route exact strict path="/docs">
           <DocsModule />
         </Route>
+        <Route exact strict path="/account">
+          <AccountModule />
+          </Route>
       </Route>
     </Switch>
   </HashRouter>

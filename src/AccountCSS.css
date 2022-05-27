@@ -1,0 +1,95 @@
+.jss69,.jss70 {
+    overflow: hidden;
+    border-radius: 10px
+}
+
+.jss69 {
+    width: 100%;
+    border: .5px solid #e8e8e8;
+    cursor: pointer;
+    height: 100%;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgb(0 0 0/10%);
+    background-color: #fff
+}
+
+.jss69:hover img {
+    transform: scale(1.1);
+    transition: all .3s ease
+}
+
+.jss70 {
+    position: relative;
+    margin-bottom: 12px
+}
+
+.jss71 {
+    width: 100%;
+    padding-bottom: 100%
+}
+
+.jss72 {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+    position: absolute;
+    transform: scale(1);
+    object-fit: cover;
+    transition: all .3s ease;
+    background-color: #edf0f7
+}
+
+.jss73 {
+    padding: 0 2px
+}
+
+.jss74 {
+    margin: 0 0 4px;
+    font-size: 17px;
+    text-transform: capitalize
+}
+
+.jss75 {
+    color: #515c72;
+    display: flex;
+    font-size: 14px;
+    font-weight: 600;
+    justify-content: space-between
+}
+
+.jss75 span {
+    text-transform: uppercase
+}
+/*! CSS Used from: Embedded */
+.jss57 {
+    margin: auto;
+    padding: 0;
+    max-width: 1080px
+}
+
+@media (max-width:1120px) {
+    .jss57 {
+        padding: 0 20px
+    }
+}
+
+@media (max-width:599px) {
+    .jss57 {
+        padding: 0 15px
+    }
+}
+
+.jss65 {
+    margin-top: 12px;
+    min-height: 430px;
+    padding-bottom: 70px;
+    background-color: #fff
+}
+
+.jss66 {
+    margin: 30px 0 10px;
+    font-weight: 700
+}

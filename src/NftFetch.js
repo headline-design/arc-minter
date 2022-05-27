@@ -40,10 +40,12 @@ class NftFetch extends Component {
     let myJsonParsed = await myJson.json();
     window.defaultJson = myJsonParsed
     let jsonString = JSON.stringify(myJsonParsed)
+    document.getElementById("preview0").style.display = "flex"
     document.getElementById("preview").innerText = jsonString
+    document.getElementById("preview2").innerText = myJsonParsed.name
     let child = document.createElement("img")
-    child.style.width = "40px"
-    child.style.height = "40px"
+    child.style.width = "auto"
+    child.style.height = "70px"
     child.src = myJsonParsed.image.replace("ipfs://","https://ipfs.io/ipfs/")
     parent.appendChild(child)
     alert(jsonString)
@@ -52,13 +54,25 @@ class NftFetch extends Component {
   render() {
     return <div className="jss16">
       <label for="assetIndex">Asset Index</label>
-      <input className="metadata-object" type="number" defaultValue={752823772} id="assetIndex"></input>
-      <div id="fetchButton">
+      <input className="metadata-object" type="number" style={{marginBottom:"unset"}} defaultValue={752823772} id="assetIndex"></input>
+      <div id="fetchButton" style={{marginTop:"1rem"}}>
       <button  className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
         onClick={this.asaToIpfsJSON}
       >Fetch Metadata</button>
       </div>
-     <div id="imageParent"></div>
+      <div id="preview0" style={{display:"none", marginTop:"2rem"}}>
+      <div id="list" style={{width:"100%"}}>
+         
+                <ul style={{display:"flex"}} className="jss29" id="img-preview-block">
+                           
+              <div src="img/post-add.svg" id="imageParent" width="auto" height="70px" alt="preview-img" />
+              <li id="preview2"><strong class="fileName"></strong><br/> </li>
+             </ul> 
+          
+              </div>
+              </div>
+      
+     <div ></div>
     </div>;
   }
 }
