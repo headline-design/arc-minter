@@ -59,7 +59,6 @@ const JSONer = (props) => {
         };
       } else {
         alert("Key already exists!");
-        return;
       }
     } else {
       alert("enter a key value knucklehead!");
@@ -113,11 +112,12 @@ const JSONer = (props) => {
          <button className={"MuiButton-root field-btn-change disabled-field"}>Change</button>
          <button className={"MuiButton-root field-btn-delete disabled-field"}>Delete</button>
          </div>
-        {Object.keys(props.object).map((key) => {
+        {Object.keys(props.object).map((key, index) => {
           return (
-            <div 
-            className="field-row"
-            id={"div" + key}>
+            <div
+                key={`FieldRowItemKey_${index}`}
+                className="field-row"
+                id={"div" + key}>
               
               <input value={key} disabled></input>
               <input id={"input" + key}></input>

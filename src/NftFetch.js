@@ -66,7 +66,7 @@ class NftFetch extends Component {
                 <ul style={{display:"flex"}} className="jss29" id="img-preview-block2">
                            
               <div src="img/post-add.svg" id="imageParent" width="auto" height="70px" alt="preview-img" />
-              <li id="preview2"><strong class="fileName"></strong><br/> </li>
+              <li id="preview2"><strong className="fileName"></strong><br/> </li>
              </ul> 
           
               </div>

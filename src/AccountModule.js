@@ -284,11 +284,11 @@ const AccountModule = (props) =>  {
   };
 
   return (
-    <main class="jss65" >
-      <div class="MuiContainer-root jss57 MuiContainer-maxWidthLg">
-        <div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
-          <div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-            <h1 id="connected" class="jss66">My account</h1>
+    <main className="jss65" >
+      <div className="MuiContainer-root jss57 MuiContainer-maxWidthLg">
+        <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
+          <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
+            <h1 id="connected" className="jss66">My account</h1>
             <div id="not-connected"></div>
           </div>
           <Grid item xs={12} sm={4} md={3}>

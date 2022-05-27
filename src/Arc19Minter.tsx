@@ -965,7 +965,7 @@ function Arc19Minter() {
                         tabIndex={-1}
                         id="not-connected"
                         type="submit"
-                        disabled=""
+                        disabled={false}
                         style={{ marginBottom: 30 }}
                       >
                         <span className="MuiButton-label">
@@ -1001,7 +1001,7 @@ function Arc19Minter() {
                             id={"connected3"}
                             type="submit"
                             style={{ marginBottom: 30 }}
-                            disabled=""
+                            disabled={false}
                           >
                             <span className="MuiButton-label">
                               minting...
@@ -1015,12 +1015,12 @@ function Arc19Minter() {
                                   viewBox="22 22 44 44"
                                 >
                                   <circle
-                                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-14891ef"
+                                    className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-14891ef"
                                     cx="44"
                                     cy="44"
                                     r="20.2"
                                     fill="none"
-                                    stroke-width="3.6"
+                                    strokeWidth="3.6"
                                   ></circle>
                                 </svg>
                               </div>
