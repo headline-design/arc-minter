@@ -1,5 +1,9 @@
 // @ts-nocheck
-import * as React from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState
+} from "react";
 
 import { SessionWallet, allowedWallets } from "algorand-session-wallet";
 
@@ -8,42 +12,86 @@ import { IconName } from "@blueprintjs/icons";
 import Pipeline from "@pipeline-ui-2/pipeline";
 import { WalletConnectLogo } from "./images/walletconnect-logo";
 import { MyAlgoLogo } from "./images/MyAlgo-logo";
-import { pipeline } from "stream";
+import { useDispatch, useSelector } from 'react-redux';
+import authActions from './redux/auth/authActions';
+import algorandGlobalActions from './redux/algorand/global/globalActions';
+import algorandGlobalSelectors from './redux/algorand/global/globalSelctors';
+import { algorandGlobalInitialData } from './redux/algorand/global/globalReducers';
+const _ = require('lodash');
 
 const wallet = Pipeline.init();
 
 export default function AlgorandWalletConnector(props) {
-  const [selectorOpen, setSelectorOpen] = React.useState(false);
-  const [address, setAddress] = React.useState("");
+  const { darkMode, address, sessionWallet, accts, connected, updateWallet } = props;
+  const dispatch = useDispatch();
+  const globalPipeState = useSelector(
+      algorandGlobalSelectors.selectPipeConnectState,
+  );
+  const [walletConnected, setWalletConnected] = useState(connected);
+  const [selectorOpen, setSelectorOpen] = useState(false);
+  const [pipeState, setPipeState] = useState({
+    myAddress: '',
+    walletBalance: '0',
+    checked: true,
+    labelNet: 'MainNet',
+  });
 
-  const { sessionWallet, updateWallet } = props;
-  React.useEffect(() => {
-    if (sessionWallet.connected()) return;
-    
+  const refresh = useCallback(() => {
+    if (Pipeline.pipeConnector && pipeState.myAddress && Pipeline.address !== '') {
+      updateWallet(sessionWallet);
+    }
+  }, [pipeState.myAddress, updateWallet]);
 
-    let interval: any;
-    sessionWallet.connect().then((success) => {
-      if (!success) return;
+  const startRefresh = useCallback(() => {
+    const interval = setInterval(refresh, 500);
+    return () => clearInterval(interval);
+  }, [refresh]);
 
-      // Check every 500ms to see if we've connected then kill the interval
-      // This is most useful in the case of walletconnect where it may be several
-      // seconds before the user connects
-      interval = setInterval(() => {
-        if (sessionWallet.connected()) {
-          clearInterval(interval);
-          updateWallet(sessionWallet);
-        }
-      }, 500);
+  useEffect(() => {
+    if (pipeState.myAddress) {
+      startRefresh();
+    }
+  }, [startRefresh]);
+
+  useEffect(() => {
+    if (globalPipeState) {
+      Pipeline.main = globalPipeState.mainNet;
+      Pipeline.pipeConnector = globalPipeState.provider;
+      Pipeline.address = globalPipeState.myAddress;
+      setPipeState((prevState) => ({
+        ...prevState,
+        myAddress: globalPipeState.myAddress,
+        walletBalance: globalPipeState.walletBalance,
+        checked: globalPipeState.mainNet,
+        labelNet: globalPipeState.mainNet
+            ? 'MainNet'
+            : 'TestNet',
+      }));
+      if (Pipeline.pipeConnector && Pipeline.address && Pipeline.address !== '') {
+        setWalletConnected(true);
+      } else {
+        setWalletConnected(false);
+      }
+    }
+  }, [globalPipeState]);
+
+  function globalPipeStateChanged(newData) {
+    let changed = false;
+    Object.entries(newData).forEach(([key, value]) => {
+      if (globalPipeState[key] !== value) {
+        changed = true;
+      }
     });
+    return changed;
+  }
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [sessionWallet, updateWallet]);
+  const getPrevGlobalPipeState = () =>
+      _.isEmpty(globalPipeState)
+          ? algorandGlobalInitialData.pipeConnectState
+          : globalPipeState;
 
   function disconnectWallet() {
-    localStorage.clear();
-    window.location.reload();
+    dispatch(authActions.doDisconnect())
   }
 
   function handleDisplayWalletSelection() {
@@ -54,14 +102,14 @@ export default function AlgorandWalletConnector(props) {
     const choice = e.currentTarget.id;
 
     if (!(choice in allowedWallets)) {
-      if (props.sessionWallet.wallet !== undefined)
-        props.sessionWallet.disconnect();
+      if (sessionWallet.wallet !== undefined)
+        sessionWallet.disconnect();
       return setSelectorOpen(false);
     }
 
     const sw = new SessionWallet(
-      props.sessionWallet.network,
-      props.sessionWallet.permissionCallback,
+      sessionWallet.network,
+      sessionWallet.permissionCallback,
       choice
     );
 
@@ -70,7 +118,7 @@ export default function AlgorandWalletConnector(props) {
     }
 
     const interval = setInterval(() => {
-      // If they've already connected, we wont get an on connect, have to check here
+      // If they've already walletConnected, we wont get an on connect, have to check here
       const wc = localStorage.getItem("walletconnect");
       if (wc === null || wc === undefined || wc === "") return;
 
@@ -79,20 +127,20 @@ export default function AlgorandWalletConnector(props) {
       if (accounts.length > 0) {
         clearInterval(interval);
         sw.setAccountList(wcObj.accounts);
-        props.updateWallet(
+        updateWallet(
           new SessionWallet(sw.network, sw.permissionCallback, choice)
         );
       }
     }, 250);
 
-    props.updateWallet(sw);
+    updateWallet(sw);
 
     setSelectorOpen(false);
   }
 
   function handleChangeAccount(e: any) {
-    props.sessionWallet.setAccountIndex(parseInt(e.target.value));
-    props.updateWallet(props.sessionWallet);
+    sessionWallet.setAccountIndex(parseInt(e.target.value));
+    updateWallet(sessionWallet);
   }
 
   const walletOptions = [];
@@ -119,8 +167,14 @@ export default function AlgorandWalletConnector(props) {
           onClick={async () => {
             Pipeline.pipeConnector = "WalletConnect";
             let address = await Pipeline.connect(wallet);
-            props.onChange(address);
-            setAddress(address);
+            updateWallet(address);
+            dispatch(
+                algorandGlobalActions.doPipeConnectChange({
+                  ...getPrevGlobalPipeState(),
+                  myAddress: address,
+                  provider: 'WalletConnect',
+                }),
+            );
           }}
         >
           <div className="wallet-option">
@@ -149,12 +203,14 @@ export default function AlgorandWalletConnector(props) {
             Pipeline.pipeConnector = "myAlgoWallet";
             let address = await Pipeline.connect(wallet);
             window.pipeAddress = address
-            props.onChange(address);
-            setAddress(address);
-            if ( address !== undefined && address !== "" ){
-              document.getElementById("not-connected").style.display = "none"
-              document.getElementById("connected").style.display = "block"
-            }
+            updateWallet(address);
+            dispatch(
+                algorandGlobalActions.doPipeConnectChange({
+                  ...getPrevGlobalPipeState(),
+                  myAddress: address,
+                  provider: 'myAlgoWallet',
+                }),
+            );
           }}
         >
           <div className="wallet-option">
@@ -169,7 +225,31 @@ export default function AlgorandWalletConnector(props) {
     );
   }
 
-  if (!props.connected)
+
+  const addr_list = accts.map((addr, idx) => {
+    return (
+        <option value={idx} key={idx}>
+
+          {addr.substr(0, 8)}...{" "}
+        </option>
+    );
+  });
+
+  const iconprops = {
+    icon: "symbol-circle" as IconName,
+    intent: "success" as Intent,
+  };
+
+  /**
+   * Shortens string to `XXXX...XXXX`, with `XXX` padding determined by optional `pad` parameter
+   */
+  function truncateString(str: string, pad = 6): string {
+    const { length } = str;
+    const start = str.substring(0, pad);
+    return `${start}...${str.substring(length - pad, length)}`;
+  }
+
+  if (!walletConnected) {
     return (
       <div >
         <Button
@@ -199,37 +279,22 @@ export default function AlgorandWalletConnector(props) {
         </Dialog>
       </div>
     );
-
-  const addr_list = props.accts.map((addr, idx) => {
+  } else {
     return (
-      <option value={idx} key={idx}>
-       
-        {addr.substr(0, 8)}...{" "}
-      </option>
+        <div className="button-connected">
+          <HTMLSelect
+              onChange={handleChangeAccount}
+              className="btn-selected"
+              minimal={true}
+              iconProps={iconprops}
+              defaultValue={sessionWallet.accountIndex()}
+          >
+            <option className="option">
+              {truncateString(pipeState.myAddress || '')}
+            </option>
+          </HTMLSelect>
+          <Button className="btn-selected-2" icon="log-out" minimal={true} onClick={disconnectWallet}></Button>
+        </div>
     );
-  });
-
-  const iconprops = {
-    icon: "symbol-circle" as IconName,
-    intent: "success" as Intent,
-  };
-
-  return (
-    <div className="button-connected">
-      <HTMLSelect
-        onChange={handleChangeAccount}
-        className="btn-selected"
-        minimal={true}
-        iconProps={iconprops}
-        defaultValue={props.sessionWallet.accountIndex()}
-      >
-        <option className="option">
-          {address.slice(0, 3) +
-            "..." +
-            address.slice(address.length - 3, address.length)}
-        </option>
-      </HTMLSelect>
-      <Button className="btn-selected-2" icon="log-out" minimal={true} onClick={disconnectWallet}></Button>
-    </div>
-  );
+  }
 }
