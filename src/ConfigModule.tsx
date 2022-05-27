@@ -835,12 +835,12 @@ function ConfigModule() {
                                   viewBox="22 22 44 44"
                                 >
                                   <circle
-                                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-14891ef"
+                                    className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-14891ef"
                                     cx="44"
                                     cy="44"
                                     r="20.2"
                                     fill="none"
-                                    stroke-width="3.6"
+                                    strokeWidth="3.6"
                                   ></circle>
                                 </svg>
                               </div>

@@ -7,7 +7,7 @@ class HexToAlgo extends React.Component{
     super(props)
     this.state = {
       address:"",
-     disabled: true 
+     disabled: true
     }
   }
 
@@ -109,15 +109,15 @@ class HexToAlgo extends React.Component{
   </div>
   
     <input  type="text"
-                              
-                                defaultValue=""
-                          
-                                pattern=""id="hex" value={this.props.hash} disabled = {(this.state.disabled)? "disabled" : ""}></input>
+
+    defaultValue={this.props.hash}
+
+    pattern="" id="hex" disabled = {!!(this.state.disabled)}/>
       <div
         className="alert alert-secondary alert-dismissible fade show"
         role="alert"
       >
-        URL: &nbsp; 
+        URL: &nbsp;
         { this.state.url}
       </div>
       <div
