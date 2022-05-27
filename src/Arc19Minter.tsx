@@ -978,6 +978,9 @@ function Arc19Minter() {
                           <button
                             hidden={true}
                             onClick={async () => {
+                              if (Pipeline.pipeConnector === "WalletConnect"){
+                                alert("Please close alert and sign transaction on mobile device")
+                              }
                               let asaId = await createAsa();
                               alert(asaId);
                               setAsa(

@@ -797,6 +797,9 @@ function ConfigModule() {
                           <button
                             hidden={true}
                             onClick={async () => {
+                              if (Pipeline.pipeConnector === "WalletConnect"){
+                                alert("Please close alert and sign transaction on mobile device")
+                              }
                               let asaId = await createAsa();
                               alert(asaId);
                               setAsa(
@@ -811,7 +814,6 @@ function ConfigModule() {
                             style={{ marginBottom: 30 }}
                           >
                             <span className="MuiButton-label">Modify NFT</span>
-                            <span id="countdown"></span>
                           </button>
                         </div>
                         <div id="connected4" style={{ display: "none" }}>
