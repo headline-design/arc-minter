@@ -1,25 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { CircularProgress, Container, Grid, Modal } from "@material-ui/core/";
-import { Close } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
-import NFTViewerShell from "./NFTViewerShell";
+import { Grid } from "@material-ui/core/";
 import { SessionWallet } from "algorand-session-wallet";
-import IpfsUpload from "./IpfsUpload";
-import HexToAlgo from "./HexToAlgo";
 import { conf } from "./lib/algorand";
 import Pipeline, { sendTxns } from "@pipeline-ui-2/pipeline";
-import JSONer from "./jsoner";
 import CID from "cids";
 import algosdk from "algosdk";
 import { configClient } from "../node_modules/@pipeline-ui-2/pipeline/utils";
 import NFTFetch2 from "./NFTFetch2";
-import Preview from "./preview";
 import NFTCard from "./NFTViewer";
-import "./AccountCSS.css"
 
 let flipped = true;
-
 
 const MetaDataProps = (props) => {
   let properties = Object.keys(props.object);
@@ -28,18 +18,18 @@ const MetaDataProps = (props) => {
       {properties.map((property) => {
         return (
           <div className="card-flex">
-            <label><b>{property}:  &nbsp;</b></label>
+            <label>
+              <b>{property}: &nbsp;</b>
+            </label>
             <p>{props.object[property]}</p>
           </div>
         );
       })}
     </div>
   );
-}; 
+};
 
-
-const AccountModule = (props) =>  {
-  const classes = useStyles();
+const AccountModule = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [modalImgProps, setModalImgProps] = useState({});
@@ -292,53 +282,16 @@ const AccountModule = (props) =>  {
             <div id="not-connected"></div>
           </div>
           <Grid item xs={12} sm={4} md={3}>
-          <NFTFetch2></NFTFetch2>
-       
-    
-         
-
-            
-        </Grid>
-        <NFTCard
-                setModalState={setModalState}
-                setModalImgProps={setModalImgProps}
-              />
+            <NFTFetch2></NFTFetch2>
+          </Grid>
+          <NFTCard
+            setModalState={setModalState}
+            setModalImgProps={setModalImgProps}
+          />
         </div>
       </div>
     </main>
   );
 };
-
-
-const useStyles = makeStyles((theme) => ({
-  
-  ...theme.overrides.mui,
-  ...theme.overrides.modalStyle,
-  main: {
-    backgroundColor: "white",
-    marginTop: "12px",
-    paddingBottom: "70px",
-    minHeight: "430px",
-  },
-  title: {
-    fontWeight: "bold",
-    margin: "30px 0 10px",
-  },
-  img: {
-    borderRadius: "5px",
-  },
-  portrait: {
-    "& .modal": {
-      width: 'auto',
-      height: '90%',
-
-      "& img": {
-        width: 'auto',
-        height: '100%',
-      }
-    }
-  }
-}));
-
 
 export default AccountModule;

@@ -758,6 +758,7 @@ function Arc19Minter() {
                           </div>
                           <textarea
                             name="note"
+                            type="text"
                             className="note-input-field form-control"
                             aria-invalid="false"
                             id="input-note"
