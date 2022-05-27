@@ -19,13 +19,38 @@ const Preview = (props) => {
       }
 
   return (
-    <div style={{display:"none"}}>
-      <div >
-      <img alt="NFT" className="hashlock" src={props.imgUrl} />
+    <div id="flex" style={{display:"none"}}>
+      <div className="flex">
+      <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-md-3 flex-grow" style={{maxWidth:"75%"}}>
+    <div className="jss69">
+      <div className="jss70">
+        <div className="jss71" />
+        <img alt="NFT" className="jss72" src={props.imgUrl} />
+      </div>
+      <div className="jss73">
+        <h3 id="preview" className="jss74">
+          Asset name
+        </h3>
+        <div className="jss75">
+          <span id="preview2">ARC Type</span>
+          <span />
+        </div>
+      </div>
+    </div>
+  </div>
+  
+      <div className="flex2">
+      <div className="flex3">
+        <h3> Congrats on successfully minting your ARC NFT!</h3>
+        <p>
+          <b>Note: </b>If the image of your ARC NFT isn't appearing yet, give
+          it a moment, it might be shy.
+        </p>
+      </div>
         <Button
           style={{
-            color: "#7b78ff",
-            borderColor: "#7b78ff",
+            color: "#9578ff",
+            borderColor: "#9578ff",
             borderRadius: "8px",
             margin: "8px",
           }}
@@ -59,14 +84,9 @@ const Preview = (props) => {
           NFT Explorer
         </AnchorButton>
       </div>
-      <div>
-        <h3> Congrats on successfully minting your ARC NFT!</h3>
-        <p>
-          <b>Note: </b>If the image of your ARC NFT isn't appearing yet, give
-          it a moment, it might be shy.
-        </p>
       </div>
-    </div>
+      </div>
+  
   );
 };
 

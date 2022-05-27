@@ -1,5 +1,35 @@
-::after,::before {
-   box-sizing: inherit
+@-webkit-keyframes animation-1p2h4ri {
+   0% {
+       stroke-dasharray: 1px,200px;
+       stroke-dashoffset: 0
+   }
+
+   50% {
+       stroke-dasharray: 100px,200px;
+       stroke-dashoffset: -15px
+   }
+
+   to {
+       stroke-dasharray: 100px,200px;
+       stroke-dashoffset: -125px
+   }
+}
+
+@keyframes animation-1p2h4ri {
+   0% {
+       stroke-dasharray: 1px,200px;
+       stroke-dashoffset: 0
+   }
+
+   50% {
+       stroke-dasharray: 100px,200px;
+       stroke-dashoffset: -15px
+   }
+
+   to {
+       stroke-dasharray: 100px,200px;
+       stroke-dashoffset: -125px
+   }
 }
 
 #fileDropBox,.box_icon {
@@ -149,7 +179,7 @@ spam#info {
    transition: .3s ease
 }
 
-.jss85:checked+label div:nth-child(2) {
+.jss35:checked+label div:nth-child(2),.jss85:checked+label div:nth-child(2) {
    color: #fff;
    transition: .3s ease
 }
@@ -164,11 +194,6 @@ spam#info {
    border-radius: 6px;
    margin-bottom: 30px;
    background-color: #fff
-}
-
-.jss35:checked+label div:nth-child(2) {
-   color: #fff;
-   transition: .3s ease
 }
 
 .MuiPaper-root,body {
@@ -768,9 +793,11 @@ body {
    color: #7533e2;
    display: block;
    font-size: 14px;
-   font-weight: 700;
-   margin-left: 3px;
-   margin-bottom: 4px
+   font-weight: 700
+}
+
+input#toggleImageMimetypeSwitch {
+   height: 20px!important
 }
 
 .jss16 label span {
@@ -802,20 +829,6 @@ body {
    margin: 0;
    font-size: 14px;
    font-weight: 700
-}
-
-.jss21 {
-   border: 1px solid #8247e5;
-   height: 44px;
-   display: inline-flex;
-   padding: 0 20px;
-   position: relative;
-   font-size: 16px;
-   transition: all .3s ease;
-   font-weight: 600;
-   line-height: 44px;
-   border-radius: 4px;
-   text-transform: capitalize
 }
 
 .jss21:hover {
@@ -1009,15 +1022,11 @@ body {
        width: 8.5vw;
        height: 8.5vw
    }
-}
 
-@media screen and (max-width:768px) {
    .bktcUM {
        font-size: 5vw
    }
-}
 
-@media screen and (max-width:768px) {
    .eFHlqH {
        font-size: 4vw
    }
@@ -1376,13 +1385,6 @@ button.bp3-button.bp3-minimal.btn-selected-2 {
    outline: 0!important
 }
 
-.MuiButton-label {
-   width: 100%;
-   display: inherit;
-   align-items: inherit;
-   justify-content: inherit
-}
-
 .jss31 {
    width: 50%;
    border: 0;
@@ -1708,7 +1710,8 @@ label.advanced-options {
 .custom-control-input:checked~.custom-control-label:before {
    background-color: #7533e2!important;
    cursor: pointer!important;
-   border-color: #7533e2!important
+   border-color: #7533e2!important;
+   color: #fff
 }
 
 .label-switch .permitted .big-switch {
@@ -1909,30 +1912,12 @@ svg {
    overflow: hidden
 }
 
-@media (prefers-reduced-motion:reduce) {
-   .form-control {
-       transition: none
-   }
-}
-
 textarea.form-control {
    height: auto
 }
 
-@media (prefers-reduced-motion:reduce) {
-   .btn {
-       transition: none
-   }
-}
-
 .btn-secondary:focus {
    box-shadow: 0 0 0 .2rem rgba(130,138,145,.5)
-}
-
-@media (prefers-reduced-motion:reduce) {
-   .custom-switch .custom-control-label:after {
-       transition: none
-   }
 }
 
 .custom-switch .custom-control-input:checked~.custom-control-label:after {
@@ -1943,12 +1928,6 @@ textarea.form-control {
 
 .custom-switch .custom-control-input:disabled:checked~.custom-control-label:before {
    background-color: rgba(36,94,199,.5)
-}
-
-@media (prefers-reduced-motion:reduce) {
-   .custom-control-label:before {
-       transition: none
-   }
 }
 
 @media print {
@@ -2153,7 +2132,7 @@ label {
    color: #d6d5d5
 }
 
-*,:after,:before {
+:after,:before {
    box-sizing: border-box
 }
 
@@ -2219,12 +2198,6 @@ textarea {
    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out
 }
 
-@media (prefers-reduced-motion:reduce) {
-   .form-control {
-       transition: none
-   }
-}
-
 .form-control::-ms-expand {
    background-color: transparent;
    border: 0
@@ -2280,12 +2253,6 @@ textarea {
    line-height: 1.5;
    border-radius: .25rem;
    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
-}
-
-@media (prefers-reduced-motion:reduce) {
-   .btn {
-       transition: none
-   }
 }
 
 .btn:hover {
@@ -2460,10 +2427,6 @@ button#wallet-connect:focus {
    opacity: 0
 }
 
-.custom-control-input:checked~.custom-control-label:before {
-   color: #fff
-}
-
 .custom-control-input:disabled~.custom-control-label {
    color: #95a5a6
 }
@@ -2520,20 +2483,8 @@ button#wallet-connect:focus {
    transition: transform .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-transform .15s ease-in-out
 }
 
-@media (prefers-reduced-motion:reduce) {
-   .custom-switch .custom-control-label:after {
-       transition: none
-   }
-}
-
 .custom-control-label:before {
    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
-}
-
-@media (prefers-reduced-motion:reduce) {
-   .custom-control-label:before {
-       transition: none
-   }
 }
 
 .mb-0 {
@@ -2704,7 +2655,7 @@ input#hex:disabled {
 }
 
 .jss69.w-50 {
-   width: 50%;
+   width: 50%
 }
 
 .footer-flex {
@@ -2718,5 +2669,138 @@ input#hex:disabled {
 }
 
 li#preview2 {
-   font-size: 1.4rem;
+   font-size: 1.4rem
+}
+
+a.bp3-button.bp3-large.bp3-minimal.bp3-outlined.bp3-intent-success {
+   background-color: #8247e5
+}
+
+a.bp3-button.bp3-large.bp3-minimal.bp3-outlined.bp3-intent-success:hover {
+   background-color: #935af3!important
+}
+
+a.bp3-button.bp3-large.bp3-minimal.bp3-outlined.bp3-intent-success:focus {
+   color: #fff!important;
+   border-color: unset!important
+}
+
+a.bp3-button.bp3-large.bp3-minimal.bp3-outlined.bp3-intent-success:active {
+   border-color: unset!important
+}
+
+.flex {
+   display: flex;
+   align-items: flex-start;
+   grid-gap: 1rem
+}
+
+.flex2 {
+   flex-wrap: nowrap;
+   flex-direction: column;
+   width: 75%
+}
+
+.flex3 {
+   padding: 10px
+}
+
+button.bp3-button.bp3-outlined.bp3-intent-success:hover {
+   background: rgb(130 71 229/15%)!important;
+   color: rgb(117 51 226)!important;
+   border-color: #7533e2!important
+}
+
+.bp3-button.bp3-outlined.bp3-intent-success:active,button.bp3-button.bp3-outlined.bp3-intent-success:focus {
+   background: rgb(130 71 229/25%)!important;
+   color: rgb(117 51 226)!important;
+   border-color: #7533e2!important
+}
+
+@media (max-width:550px) {
+   .flex {
+       display: block;
+       align-items: flex-start;
+       grid-gap: 1rem;
+       flex-direction: column
+   }
+
+   .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-4.MuiGrid-grid-md-3.flex-grow {
+       max-width: 100%!important
+   }
+
+   .flex2 {
+       width: unset
+   }
+}
+
+.jss24 {
+   left: 10px;
+   color: #7533e2;
+   margin: auto;
+   display: block;
+   position: absolute
+}
+
+.jss21 {
+   border: 1px solid #8247e5;
+   height: 44px;
+   display: inline-flex;
+   padding: 0 20px;
+   position: relative;
+   font-size: 16px;
+   transition: all .3s ease;
+   font-weight: 600;
+   line-height: 44px;
+   border-radius: 4px;
+   text-transform: capitalize
+}
+
+button.MuiButtonBase-root.MuiButton-root.MuiButton-text.jss21.jss23.jss22.Mui-disabled.Mui-disabled {
+   cursor: default;
+   pointer-events: none;
+   padding-left: 2.7rem
+}
+
+.MuiButton-label {
+   width: 100%;
+   display: inherit;
+   align-items: inherit;
+   justify-content: inherit
+}
+
+.MuiCircularProgress-circleIndeterminate {
+   animation: MuiCircularProgress-keyframes-circular-dash 1.4s ease-in-out infinite;
+   stroke-dasharray: 80px,200px;
+   stroke-dashoffset: 0
+}
+
+.MuiCircularProgress-colorPrimary {
+   color: #7167d9
+}
+
+.MuiCircularProgress-indeterminate {
+   animation: MuiCircularProgress-keyframes-circular-rotate 1.4s linear infinite
+}
+
+*,::after,::before {
+   box-sizing: inherit
+}
+
+.css-13o7eu2 {
+   display: block
+}
+
+.css-14891ef {
+   stroke: currentColor;
+   stroke-dasharray: 80px,200px;
+   stroke-dashoffset: 0;
+   -webkit-animation: animation-1p2h4ri 1.4s ease-in-out infinite;
+   animation: animation-1p2h4ri 1.4s ease-in-out infinite
+}
+
+#list2 ul {
+   margin: 0;
+   padding: 10px;
+   list-style-type: none
 }

@@ -76,11 +76,11 @@ const myJSON = {
 window.defaultJSON = {
   name: "Astro #220",
   description: "Algo Astros, An NFT Collection from the HEADLINE Team.",
-  image: "ipfs://QmPntG5UdzPifpDaxMAwi1Fdh4e9Nr6jeeHApLSsrV7LJo",
+  image: "ipfs://QmQxyz7KEHaDoGUE2z5DxvFwLYXFC21uD4dpxAqFUsG6Ks",
   decimals: 0,
   unitName: "ASTRO220",
   image_integrity:
-    "(sha256-18C15D17D33E6AA1C8579F740F9684C069F56C5F8750745C157F79FA528AC997",
+    "sha256-2706140d2327ee37d13112cf7123beb28253132af94a1af323caa3b25486bdd2",
   image_mimetype: "image/jpeg",
   properties: undefined,
 };
@@ -127,7 +127,6 @@ function Arc19Minter() {
   const [isDisabled5, setIsDisabled5] = useState(true);
   const [isDisabled6, setIsDisabled6] = useState(true);
   const [jss6, setJss6] = useState("block");
-  const [progress, setProgress] = useState(0.02);
 
   React.useEffect(() => {
     if (Pipeline.address !== "") {
@@ -248,35 +247,54 @@ function Arc19Minter() {
         } else {
           failed("Asset Name Max size is 32 characters");
         }
-        break
-        case "unitName":
-          if (value.length <= 8) {
-            proceed();
-          } else {
-            failed("Asset Unit Name can not exceed 8 letters");
-          }
-          break
-          case "decimals":
-          if (value <= 19) {
-            proceed();
-          } else {
-            failed("Asset decimals can not exceed 19");
-          }
-          break
+        break;
+      case "unitName":
+        if (value.length <= 8) {
+          proceed();
+        } else {
+          failed("Asset Unit Name can not exceed 8 letters");
+        }
+        break;
+      case "decimals":
+        if (value <= 19) {
+          proceed();
+        } else {
+          failed("Asset decimals can not exceed 19");
+        }
+        break;
+      case "description":
+        if (value.length <= 1000) {
+          proceed();
+        } else {
+          failed("Asset description can not exceed 1000 characters");
+        }
+        break;
       default:
         break;
     }
     function proceed() {
-        window.defaultJSON[key] = value;
-        document.getElementById("preview").innerText = JSON.stringify(
-          window.defaultJSON
-        );
-
+      window.defaultJSON[key] = value;
+      document.getElementById("preview").innerText = JSON.stringify(
+        window.defaultJSON
+      );
     }
     function failed(message) {
-      alert(message);
+      let former = document.getElementById("miniMessage");
+      if (former != null) {
+        former.remove();
+      }
+      miniAlerts(event.target, message);
       event.target.value = "";
     }
+  }
+
+  function miniAlerts(parent, miniMessage) {
+    //let Alert = document.createElement("p")
+    //Alert = miniMessage
+    parent.insertAdjacentHTML(
+      "afterend",
+      '<div id="miniMessage">' + miniMessage + "</div>"
+    );
   }
 
   function updateWallet(address) {
@@ -286,7 +304,8 @@ function Arc19Minter() {
   }
 
   async function createAsa() {
-    setProgress(0.1);
+    document.getElementById("connected2").style.display = "none";
+    document.getElementById("connected4").style.display = "flex";
     asaData.amount = parseInt(document.getElementById("input-amount").value);
     asaData.assetName = document.getElementById("name").value;
     asaData.creator = document.getElementById("input-manager").value;
@@ -305,10 +324,11 @@ function Arc19Minter() {
     asaData.assetMetadataHash = document.getElementById(
       "input-assetMetadataHash"
     ).value;
-    setInterval(() => {
-      setProgress(progress + 0.02);
-    }, 1000);
     let asaId = await Pipeline.createAsa(asaData);
+    document.getElementById("flex").style.display = "flex";
+    document.getElementById("flex-hr").style.display = "flex";
+    document.getElementById("connected2").style.display = "none";
+    document.getElementById("connected4").style.display = "none";
     return asaId;
   }
 
@@ -498,7 +518,14 @@ function Arc19Minter() {
                           <br />
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                             <div className="jss16">
-                              <label htmlFor="name">Asset Name</label>
+                              <label htmlFor="name">
+                                <span className="unit-name-label">
+                                  Asset Name{" "}
+                                </span>
+                                <small className="asset-description">
+                                  What is the name of your NFT?
+                                </small>
+                              </label>
                               <input
                                 type="text"
                                 defaultValue=""
@@ -585,14 +612,16 @@ function Arc19Minter() {
                               </div>
                             </div>
                             <div className="total-supply-container">
-                              <input
-                                type="number"
-                                placeholder="0"
-                                defaultValue={0}
-                                onChange={updateJSON}
-                                pattern=""
-                                id="decimals"
-                              />
+                              <div>
+                                <input
+                                  type="number"
+                                  placeholder="0"
+                                  defaultValue={0}
+                                  onChange={updateJSON}
+                                  pattern=""
+                                  id="decimals"
+                                />
+                              </div>
                               <input
                                 type="text"
                                 placeholder="image/jpeg"
@@ -944,25 +973,61 @@ function Arc19Minter() {
                         </span>
                       </button>
                       <div id="connected" style={{ display: "none" }}>
-                        <button
-                          hidden={true}
-                          onClick={async () => {
-                            let asaId = await createAsa();
-                            alert(asaId);
-                            setAsa(
-                              "https://www.nftexplorer.app/asset/" + asaId
-                            );
-                            let prevHash = urlHash;
-                            setUrlHash("https://ipfs.io/ipfs/" + prevHash);
-                            setAsaId(asaId);
-                          }}
-                          className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
-                          tabIndex={-1}
-                          style={{ marginBottom: 30 }}
-                        >
-                          <span className="MuiButton-label">Mint NFT</span>
-                          <span id="countdown"></span>
-                        </button>
+                        <div id={"connected2"}>
+                          <button
+                            hidden={true}
+                            onClick={async () => {
+                              let asaId = await createAsa();
+                              alert(asaId);
+                              setAsa(
+                                "https://www.nftexplorer.app/asset/" + asaId
+                              );
+                              let prevHash = urlHash;
+                              setUrlHash("https://ipfs.io/ipfs/" + prevHash);
+                              setAsaId(asaId);
+                            }}
+                            className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
+                            tabIndex={-1}
+                            style={{ marginBottom: 30 }}
+                          >
+                            <span className="MuiButton-label">Mint NFT</span>
+                            <span id="countdown"></span>
+                          </button>
+                        </div>
+                        <div id="connected4" style={{ display: "none" }}>
+                          <button
+                            className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 jss22 Mui-disabled Mui-disabled"
+                            tabIndex={-1}
+                            id={"connected3"}
+                            type="submit"
+                            style={{ marginBottom: 30 }}
+                            disabled=""
+                          >
+                            <span className="MuiButton-label">
+                              minting...
+                              <div
+                                className="MuiCircularProgress-root jss24 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                                role="progressbar"
+                                style={{ width: 24, height: 24 }}
+                              >
+                                <svg
+                                  className="MuiCircularProgress-svg css-13o7eu2"
+                                  viewBox="22 22 44 44"
+                                >
+                                  <circle
+                                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-14891ef"
+                                    cx="44"
+                                    cy="44"
+                                    r="20.2"
+                                    fill="none"
+                                    stroke-width="3.6"
+                                  ></circle>
+                                </svg>
+                              </div>
+                            </span>
+                          </button>
+                        </div>
+                        <hr id="flex-hr" style={{ display: "none" }} />
                         <Preview name={asa} url={asa} imgUrl={urlHash} />
                       </div>
                     </div>
@@ -981,7 +1046,10 @@ function Arc19Minter() {
                 className="MuiGrid-root MuiGrid-container"
                 style={{ position: "relative", zIndex: 2 }}
               >
-                <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6" style={{width:"100%", maxWidth: "100%", flexBasis: "100%"}}>
+                <div
+                  className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+                  style={{ width: "100%", maxWidth: "100%", flexBasis: "100%" }}
+                >
                   <div className="footer-flex">
                     <div className="footer-left">
                       <img
@@ -1059,7 +1127,6 @@ function Arc19Minter() {
           </p>
         </next-route-announcer>
         <div id="WEB3_CONNECT_MODAL_ID" />
-
       </div>
 
       <div className="container body-2"></div>

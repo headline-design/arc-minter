@@ -14,7 +14,7 @@ import NftFetch from "./NftFetch.js";
 
 import Preview from "./preview";
 
-let flipped = true
+let flipped = true;
 
 const prevResponse = [{ hash: "none yet" }];
 
@@ -75,11 +75,11 @@ function ConfigModule() {
   const [jss6, setJss6] = useState("block");
 
   React.useEffect(() => {
-    if (Pipeline.address !== "" ) {
-      document.getElementById("not-connected").style.display = "none"
-      document.getElementById("connected").style.display = "block"
+    if (Pipeline.address !== "") {
+      document.getElementById("not-connected").style.display = "none";
+      document.getElementById("connected").style.display = "block";
     }
-  },[] )
+  }, []);
 
   const handleClick = () => {
     setIsDisabled(!isDisabled);
@@ -138,7 +138,7 @@ function ConfigModule() {
     }
     checkForAddress();
   }
-  
+
   function updateJSON(event) {
     let value = event.target.value;
     let key = event.target.id;
@@ -149,47 +149,59 @@ function ConfigModule() {
         } else {
           failed("Asset Name Max size is 32 characters");
         }
-        break
-        case "unitName":
-          if (value.length <= 8) {
-            proceed();
-          } else {
-            failed("Asset Unit Name can not exceed 8 letters");
-          }
-          break
-          case "decimals":
-          if (value <= 19) {
-            proceed();
-          } else {
-            failed("Asset decimals can not exceed 19");
-          }
-          break
+        break;
+      case "unitName":
+        if (value.length <= 8) {
+          proceed();
+        } else {
+          failed("Asset Unit Name can not exceed 8 letters");
+        }
+        break;
+      case "decimals":
+        if (value <= 19) {
+          proceed();
+        } else {
+          failed("Asset decimals can not exceed 19");
+        }
+        break;
+      case "description":
+        if (value.length <= 1000) {
+          proceed();
+        } else {
+          failed("Asset description can not exceed 1000 characters");
+        }
+        break;
       default:
         break;
     }
     function proceed() {
-        window.defaultJSON[key] = value;
-        document.getElementById("preview").innerText = JSON.stringify(
-          window.defaultJSON
-        );
-
+      window.defaultJSON[key] = value;
+      document.getElementById("preview").innerText = JSON.stringify(
+        window.defaultJSON
+      );
     }
     function failed(message) {
-      let former = document.getElementById ("miniMessage")
-      if (former != null ) {former.remove() }
+      let former = document.getElementById("miniMessage");
+      if (former != null) {
+        former.remove();
+      }
       miniAlerts(event.target, message);
       event.target.value = "";
     }
   }
 
-  function miniAlerts (parent, miniMessage) {
+  function miniAlerts(parent, miniMessage) {
     //let Alert = document.createElement("p")
     //Alert = miniMessage
-    parent.insertAdjacentHTML("afterend", '<div id="miniMessage">' + miniMessage + "</div>" )
+    parent.insertAdjacentHTML(
+      "afterend",
+      '<div id="miniMessage">' + miniMessage + "</div>"
+    );
   }
 
-
   async function createAsa() {
+    document.getElementById("connected2").style.display = "none";
+    document.getElementById("connected4").style.display = "flex";
     asaData.amount = parseInt(document.getElementById("input-amount").value);
     asaData.assetName = document.getElementById("name").value;
     asaData.creator = document.getElementById("input-manager").value;
@@ -242,6 +254,10 @@ function ConfigModule() {
         Pipeline.alerts
       );
       console.log(response);
+      document.getElementById("flex").style.display = "flex";
+      document.getElementById("flex-hr").style.display = "block";
+      document.getElementById("connected2").style.display = "none";
+      document.getElementById("connected4").style.display = "none";
       return response;
     } catch (error) {
       console.log(error);
@@ -251,15 +267,13 @@ function ConfigModule() {
   function toggle19() {
     if (flipped) {
       setJss6("none");
-      document.getElementById("fetchButton").style.display = "none"
-
+      document.getElementById("fetchButton").style.display = "none";
     } else {
       setJss6("block");
-      document.getElementById("fetchButton").style.display = "block"
+      document.getElementById("fetchButton").style.display = "block";
     }
-    flipped = !flipped
+    flipped = !flipped;
   }
-
 
   return (
     <div className="App" style={{ background: "#000" }}>
@@ -305,10 +319,14 @@ function ConfigModule() {
                         </label>
                       </div>
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        
                         <NftFetch />
                         <div className="jss16" style={{ display: jss6 }}>
-                          <label htmlFor="name">Asset Name</label>
+                          <label htmlFor="name">
+                            <span className="unit-name-label">Asset Name </span>
+                            <small className="asset-description">
+                              What is the name of your NFT?
+                            </small>
+                          </label>
                           <input
                             type="text"
                             defaultValue=""
@@ -427,8 +445,20 @@ function ConfigModule() {
                               />
                             </div>
                           </div>
+                          <div className="jss16" style={{ display: jss6 }}>
+                            <label htmlFor="description">Description</label>
+                            <textarea
+                              type="text"
+                              style={{ minHeight: 100 }}
+                              id="description"
+                              spellCheck="false"
+                              onChange={updateJSON}
+                              required={true}
+                              defaultValue={""}
+                            />
+                          </div>
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                            <div className="jss16"  style={{ display: jss6 }}>
+                            <div className="jss16" style={{ display: jss6 }}>
                               <div>
                                 <HexToAlgo hash={hash}></HexToAlgo>
                               </div>
@@ -441,9 +471,9 @@ function ConfigModule() {
                                 object={myJSON}
                               ></JSONer>
                             </div>
-                            <div className="jss16"  style={{ display: jss6 }}>
+                            <div className="jss16" style={{ display: jss6 }}>
                               <label className="">JSON Object</label>
-                              <p id="preview" className="metadata-object" >
+                              <p id="preview" className="metadata-object">
                                 {JSON.stringify(window.defaultJSON)}
                               </p>
                               <div style={{ display: jss6 }}>
@@ -533,7 +563,7 @@ function ConfigModule() {
                             Reserve Address is invalid
                           </div>
                         </div>
-                        <div className="jss16" >
+                        <div className="jss16">
                           <div className="label-switch">
                             <label htmlFor="frozen-dropdown" className="">
                               Note
@@ -734,18 +764,7 @@ function ConfigModule() {
                           </div>
                         </div>
                       </div>
-                      <div className="jss16" style={{ display: jss6 }}>
-                        <label htmlFor="description">Description</label>
-                        <textarea
-                          type="text"
-                          style={{ minHeight: 100 }}
-                          id="description"
-                          spellCheck="false"
-                          onChange={updateJSON}
-                          required={true}
-                          defaultValue={""}
-                        />
-                      </div>
+
                       <p className="jss36">
                         Once your NFT is minted on the Algorand blockchain, you
                         will not be able to edit or update any of its
@@ -774,24 +793,61 @@ function ConfigModule() {
                       </button>
 
                       <div id="connected" style={{ display: "none" }}>
-                        <button
-                          hidden={true}
-                          onClick={async () => {
-                            let asaId = await createAsa();
-                            alert(asaId);
-                            setAsa(
-                              "https://www.nftexplorer.app/asset/" + asaId
-                            );
-                            let prevHash = urlHash;
-                            setUrlHash("https://ipfs.io/ipfs/" + prevHash);
-                            setAsaId(asaId);
-                          }}
-                          className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
-                          tabIndex={-1}
-                          style={{ marginBottom: 30 }}
-                        >
-                          <span className="MuiButton-label">Modify NFT</span>
-                        </button>
+                        <div id={"connected2"}>
+                          <button
+                            hidden={true}
+                            onClick={async () => {
+                              let asaId = await createAsa();
+                              alert(asaId);
+                              setAsa(
+                                "https://www.nftexplorer.app/asset/" + asaId
+                              );
+                              let prevHash = urlHash;
+                              setUrlHash("https://ipfs.io/ipfs/" + prevHash);
+                              setAsaId(asaId);
+                            }}
+                            className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
+                            tabIndex={-1}
+                            style={{ marginBottom: 30 }}
+                          >
+                            <span className="MuiButton-label">Modify NFT</span>
+                            <span id="countdown"></span>
+                          </button>
+                        </div>
+                        <div id="connected4" style={{ display: "none" }}>
+                          <button
+                            className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 jss22 Mui-disabled Mui-disabled"
+                            tabIndex={-1}
+                            id={"connected3"}
+                            type="submit"
+                            style={{ marginBottom: 30 }}
+                            disabled=""
+                          >
+                            <span className="MuiButton-label">
+                              updating...
+                              <div
+                                className="MuiCircularProgress-root jss24 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                                role="progressbar"
+                                style={{ width: 24, height: 24 }}
+                              >
+                                <svg
+                                  className="MuiCircularProgress-svg css-13o7eu2"
+                                  viewBox="22 22 44 44"
+                                >
+                                  <circle
+                                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-14891ef"
+                                    cx="44"
+                                    cy="44"
+                                    r="20.2"
+                                    fill="none"
+                                    stroke-width="3.6"
+                                  ></circle>
+                                </svg>
+                              </div>
+                            </span>
+                          </button>
+                        </div>
+                        <hr id="flex-hr" style={{ display: "none" }} />
 
                         <Preview name={asa} url={asa} imgUrl={urlHash} />
                       </div>
@@ -811,7 +867,10 @@ function ConfigModule() {
                 className="MuiGrid-root MuiGrid-container"
                 style={{ position: "relative", zIndex: 2 }}
               >
-                <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6" style={{width:"100%", maxWidth: "100%", flexBasis: "100%"}}>
+                <div
+                  className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+                  style={{ width: "100%", maxWidth: "100%", flexBasis: "100%" }}
+                >
                   <div className="footer-flex">
                     <div className="footer-left">
                       <img
