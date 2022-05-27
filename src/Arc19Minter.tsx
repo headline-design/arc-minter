@@ -509,13 +509,7 @@ function Arc19Minter() {
                         <IpfsUpload />
                         
                        
-                        <div>
-                          <input
-                            type="file"
-                            accept="audio/*, video/*, image/*, .html, .pdf"
-                            id="upload-file"
-                            hidden={true}
-                          />
+                      <div>
 
                           <br />
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
