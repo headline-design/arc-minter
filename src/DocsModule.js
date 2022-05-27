@@ -2,14 +2,15 @@
 
 import React, { useState } from "react";
 
+
 window.defaultJSON = {
-  name: "Astro #220",
-  description: "Algo Astros, An NFT Collection from the HEADLINE Team.",
-  image: "ipfs://QmPntG5UdzPifpDaxMAwi1Fdh4e9Nr6jeeHApLSsrV7LJo",
+  name: "ARC Logo",
+  description: "ARC Logo for ARC Minter by HEADLINE",
+  image: "ipfs://QmeuYSs7pgRLB27q5HQdaUpgLGMuERbqScBSrxtQfvXbQD",
   decimals: 0,
-  unitName: "ASTRO220",
+  unitName: "ARC",
   image_integrity:
-    "(sha256-18C15D17D33E6AA1C8579F740F9684C069F56C5F8750745C157F79FA528AC997",
+    "sha256-f628137f76d4dac60eb79325ca1bb4d9bd9d569c2648c4e4ea3c0a025d259b0a",
   image_mimetype: "image/jpeg",
   properties: undefined,
 };
@@ -130,10 +131,15 @@ function DocsModule() {
                         substituted by a client, providing a mutable URL".
                         <br />
                         <br />
-                        You agree that any information uploaded to ARC Minter
-                        will not contain material subject to copyright or other
-                        proprietary rights, unless you have necessary permission
-                        or are otherwise legally entitled to post the material.
+<p>
+ ARC Minter was constructed modularly so that users can enter and exit at different points in the minting process. For example, if someone has already uploaded an image to IPFS, uploaded a JSON object, etc they could use ARC Minter with ease. 
+ </p>
+ <p>
+ With that in mind, we still encourage users to approach the minter with the intention of using the minter from beginning to end, starting with uploading an image or file to IPFS, then entering JSON properties. Much of the complexity of ARC19 minting is automated. So users can create programmable/upgradeable NFTs without having to deal with hashing hexs and the like. 
+ </p>
+ <p>
+ The ARC minter is a highly-experimental application and should be used with caution. 
+ </p>
                       </p>
                       <p
                         id="arc69-1"
@@ -167,17 +173,59 @@ function DocsModule() {
                         className="jss36"
                         style={{ display: jss6 }}
                       >
-                        Once your NFT is minted on the Algorand blockchain, you
-                        will not be able to edit or update any of its
-                        information unless you minted the NFT wtih ARC19. If you
-                        minted the NFT with ARC19, you may update the NFT's
-                        information with an "asset config" transaction.
+                        ARC19 Mint
+ <p>
+ 1. Upload image or file to IPFS.
+ </p>
+ <p>
+ 2. Choose an Asset Name for your NFT.
+ </p>
+ <p>
+ 3. Choose a Unit Name for your NFT.
+ </p>
+ <p>
+ 4. Write a solid description of your NFT.
+ </p>
+ <p>
+ 5. Choose how many decimals you want for your NFT (0 is the recommended number).
+ </p>
+ <p>
+ 6. Change the Image Mimetype if you are inclined. 
+ </p>
+ <p>
+ 7. Use the Advanced JSON Editor to add additional properties to your NFT’s JSON object. 
+ </p>
+ <p>
+ 8. Upload the JSON object to IPFS.
+ </p>
+ 9. Add an additional note field if you are so inclined.
+ <p>
+ 10. At this point, you must sign in with your Algorand wallet if you have not already. Perra Wallet and MyAlgo are both supported at launch. 
+ </p>
+ <p>
+ 11. Sign the Asset creation transaction.
+ </p>
+ <p>
+ 12. Wait approximately 15 seconds for your asset number to be returned. 
+ </p>
+ <p>
+ 13. Review the NFT details via NFTExplorer, ARC3.xyz, or any other provider that supports ARC19 NFTs. 
+ </p>
                         <br />
-                        <br />
-                        You agree that any information uploaded to ARC Minter
-                        will not contain material subject to copyright or other
-                        proprietary rights, unless you have necessary permission
-                        or are otherwise legally entitled to post the material.
+
+                        ARC19 Config
+ <p>
+ 1. Paste your asset ID into the Asset Index field. Click “Fetch Metadata” to pre-populate fields with your latest JSON object.
+ </p>
+ <p> 
+ 2. Modify your new JSON object with the decimals, image mimetype, unit name, description, and advanced editor fields.
+ </p>
+ <p>
+ 3. Upload your new JSON object to IPFS. 
+ </p>
+ <p>
+ 4. Complete any additional asset config fields if you are so inclined. Sign the asset config transaction. You have now minted and modified an ARC19 NFT!
+ chain.  </p>
                       </p>
                       <p
                         id="arc69-2"

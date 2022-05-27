@@ -32,14 +32,15 @@ const myJSON = {
   Background: "Code",
 };
 
+
 window.defaultJSON = {
-  name: "Astro #220",
-  description: "Algo Astros, An NFT Collection from the HEADLINE Team.",
-  image: "ipfs://QmPntG5UdzPifpDaxMAwi1Fdh4e9Nr6jeeHApLSsrV7LJo",
+  name: "ARC Logo",
+  description: "ARC Logo for ARC Minter by HEADLINE",
+  image: "ipfs://QmeuYSs7pgRLB27q5HQdaUpgLGMuERbqScBSrxtQfvXbQD",
   decimals: 0,
-  unitName: "ASTRO220",
+  unitName: "ARC",
   image_integrity:
-    "(sha256-18C15D17D33E6AA1C8579F740F9684C069F56C5F8750745C157F79FA528AC997",
+    "sha256-f628137f76d4dac60eb79325ca1bb4d9bd9d569c2648c4e4ea3c0a025d259b0a",
   image_mimetype: "image/jpeg",
   properties: undefined,
 };

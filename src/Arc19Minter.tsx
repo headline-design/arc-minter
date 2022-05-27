@@ -32,19 +32,15 @@ const asaData = {
 
 const default69 = `{
   "standard": "arc69",
-  "description": null,
-  "external_url": "https://algoastros.com/portfolio-item/astro-1/",
+  "description": ARC Logo for ARC Minter,
+  "external_url": "https://arcminter.daotools.org",
   "mime_type": "image/png",
   "properties": {
-    "Chest Logo": "None",
-    "Visor": "Yes",
-    "Helmet": "Square",
-    "Creature": "None",
-    "Background": "Space",
-    "Glitch": "No",
-    "Oxygen Tube": "None",
-    "Headlamps": "Yes",
-    "Made by": "Aaron"
+    "Logo": "ARC",
+    "Background": "White",
+    "Colors": "2",
+    "Letters": "3",
+    "Made by": "HEADLINE"
   }
 }`;
 
