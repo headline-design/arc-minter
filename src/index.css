@@ -1592,9 +1592,41 @@ button#wallet-connect:hover {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
     max-width: 500px;
-    min-width: fit-content;
     max-height: 100%;
     overflow: auto
+}
+
+.bp3-dialog.dialoguez {
+    color: #6E798F;
+    font-weight: 600;
+    width: 500px;
+    display: flex;
+    outline: none;
+    padding: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 16px;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.jss43 .iconContainer {
+    top: -40px;
+    left: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    margin: auto;
+    position: absolute;
+}
+
+.jss43 {
+    height: 94px;
+    position: relative;
+    margin-top: 40px;
+    border-radius: 8px;
+    background-color: #E3DEFF;
 }
 
 .wallet-option-list {
@@ -2899,4 +2931,42 @@ button.MuiButtonBase-root.MuiButton-root.MuiButton-text.jss21.jss23.jss22.Mui-di
 .jss66 {
     margin: 30px 0 10px;
     font-weight: 700
+}
+
+svg.question-modal {
+    width: 30px;
+    height: 30px;
+}
+
+button#help-text {
+    color: #fff;
+    height: 20px;
+    width: 20px;
+    z-index: 1;
+    border-width: 0;
+    transition: .3s ease;
+    border-radius: 30px;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.help-svg {
+    fill: #939bba;
+    width: 0.7em;
+    height: 0.7em;
+    display: flex;
+    font-size: 1.5rem;
+    transition: fill 200ms cubic-bezier(.4,0,.2,1) 0ms;
+    flex-shrink: 0;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.label-switch.help-switch {
+    display: flex;
+    justify-content: flex-start;
 }

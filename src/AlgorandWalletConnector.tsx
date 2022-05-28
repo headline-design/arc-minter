@@ -1,43 +1,43 @@
 // @ts-nocheck
-import React, {
-  useCallback,
-  useEffect,
-  useState
-} from "react";
-
-import { SessionWallet, allowedWallets } from "algorand-session-wallet";
-
-import { Dialog, Button, Classes, HTMLSelect, Intent } from "@blueprintjs/core";
+import { Button, Classes, Dialog, HTMLSelect, Intent } from "@blueprintjs/core";
 import { IconName } from "@blueprintjs/icons";
 import Pipeline from "@pipeline-ui-2/pipeline";
-import { WalletConnectLogo } from "./images/walletconnect-logo";
+import { allowedWallets, SessionWallet } from "algorand-session-wallet";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { MyAlgoLogo } from "./images/MyAlgo-logo";
-import { useDispatch, useSelector } from 'react-redux';
-import authActions from './redux/auth/authActions';
-import algorandGlobalActions from './redux/algorand/global/globalActions';
-import algorandGlobalSelectors from './redux/algorand/global/globalSelctors';
-import { algorandGlobalInitialData } from './redux/algorand/global/globalReducers';
-const _ = require('lodash');
+import { WalletConnectLogo } from "./images/walletconnect-logo";
+import algorandGlobalActions from "./redux/algorand/global/globalActions";
+import { algorandGlobalInitialData } from "./redux/algorand/global/globalReducers";
+import algorandGlobalSelectors from "./redux/algorand/global/globalSelctors";
+import authActions from "./redux/auth/authActions";
+
+const _ = require("lodash");
 
 const wallet = Pipeline.init();
 
 export default function AlgorandWalletConnector(props) {
-  const { darkMode, address, sessionWallet, accts, connected, updateWallet } = props;
+  const { darkMode, address, sessionWallet, accts, connected, updateWallet } =
+    props;
   const dispatch = useDispatch();
   const globalPipeState = useSelector(
-      algorandGlobalSelectors.selectPipeConnectState,
+    algorandGlobalSelectors.selectPipeConnectState
   );
   const [walletConnected, setWalletConnected] = useState(connected);
   const [selectorOpen, setSelectorOpen] = useState(false);
   const [pipeState, setPipeState] = useState({
-    myAddress: '',
-    walletBalance: '0',
+    myAddress: "",
+    walletBalance: "0",
     checked: true,
-    labelNet: 'MainNet',
+    labelNet: "MainNet",
   });
 
   const refresh = useCallback(() => {
-    if (Pipeline.pipeConnector && pipeState.myAddress && Pipeline.address !== '') {
+    if (
+      Pipeline.pipeConnector &&
+      pipeState.myAddress &&
+      Pipeline.address !== ""
+    ) {
       updateWallet(sessionWallet);
     }
   }, [pipeState.myAddress, updateWallet]);
@@ -63,11 +63,13 @@ export default function AlgorandWalletConnector(props) {
         myAddress: globalPipeState.myAddress,
         walletBalance: globalPipeState.walletBalance,
         checked: globalPipeState.mainNet,
-        labelNet: globalPipeState.mainNet
-            ? 'MainNet'
-            : 'TestNet',
+        labelNet: globalPipeState.mainNet ? "MainNet" : "TestNet",
       }));
-      if (Pipeline.pipeConnector && Pipeline.address && Pipeline.address !== '') {
+      if (
+        Pipeline.pipeConnector &&
+        Pipeline.address &&
+        Pipeline.address !== ""
+      ) {
         setWalletConnected(true);
       } else {
         setWalletConnected(false);
@@ -86,12 +88,12 @@ export default function AlgorandWalletConnector(props) {
   }
 
   const getPrevGlobalPipeState = () =>
-      _.isEmpty(globalPipeState)
-          ? algorandGlobalInitialData.pipeConnectState
-          : globalPipeState;
+    _.isEmpty(globalPipeState)
+      ? algorandGlobalInitialData.pipeConnectState
+      : globalPipeState;
 
   function disconnectWallet() {
-    dispatch(authActions.doDisconnect())
+    dispatch(authActions.doDisconnect());
   }
 
   function handleDisplayWalletSelection() {
@@ -102,8 +104,7 @@ export default function AlgorandWalletConnector(props) {
     const choice = e.currentTarget.id;
 
     if (!(choice in allowedWallets)) {
-      if (sessionWallet.wallet !== undefined)
-        sessionWallet.disconnect();
+      if (sessionWallet.wallet !== undefined) sessionWallet.disconnect();
       return setSelectorOpen(false);
     }
 
@@ -151,87 +152,88 @@ export default function AlgorandWalletConnector(props) {
     walletOptions.push(
       <li key={k}>
         <div className="sc-eCApGN cjAFRf web3modal-provider-wrapper">
-        <Button
-          minimal={true}
-          style={{
-            color: "rgb(255 255 255 / 90%)",
+          <Button
+            minimal={true}
+            style={{
+              color: "rgb(255 255 255 / 90%)",
               border: "1px solid rgb(88 91 96)",
-            borderRadius: '12px',
-          }}
-          intent="warning"
-          id={k}
-          large={true}
-          fill={true}
-          className="wallet-btn"
-          outlined={true}
-          onClick={async () => {
-            Pipeline.pipeConnector = "WalletConnect";
-            let address = await Pipeline.connect(wallet);
-            updateWallet(address);
-            dispatch(
+              borderRadius: "12px",
+            }}
+            intent="warning"
+            id={k}
+            large={true}
+            fill={true}
+            className="wallet-btn"
+            outlined={true}
+            onClick={async () => {
+              Pipeline.pipeConnector = "WalletConnect";
+              let address = await Pipeline.connect(wallet);
+              window.pipeAddress = address;
+              updateWallet(address);
+              dispatch(
                 algorandGlobalActions.doPipeConnectChange({
                   ...getPrevGlobalPipeState(),
                   myAddress: address,
-                  provider: 'WalletConnect',
-                }),
-            );
-          }}
-        >
-          <div className="wallet-option">
-          <WalletConnectLogo></WalletConnectLogo>
-            <h3 className="wallet-con bktcUM">WalletConnect</h3>
-            <div className="sc-dlnjPT eFHlqH web3modal-provider-description">Scan with WalletConnect to connect</div>
-            
-          </div>
-        </Button>
+                  provider: "WalletConnect",
+                })
+              );
+            }}
+          >
+            <div className="wallet-option">
+              <WalletConnectLogo></WalletConnectLogo>
+              <h3 className="wallet-con bktcUM">WalletConnect</h3>
+              <div className="sc-dlnjPT eFHlqH web3modal-provider-description">
+                Scan with WalletConnect to connect
+              </div>
+            </div>
+          </Button>
         </div>
         <div className="sc-eCApGN cjAFRf web3modal-provider-wrapper">
-        <Button
-          id={k}
-          style={{
-            color: "rgb(255 255 255 / 90%)",
+          <Button
+            id={k}
+            style={{
+              color: "rgb(255 255 255 / 90%)",
               border: "1px solid rgb(88 91 96)",
-            borderRadius: '12px',
-          }}
-          intent="warning"
-          large={true}
-          fill={true}
-          minimal={true}
-          className="wallet-btn"
-          outlined={true}
-          onClick={async () => {
-            Pipeline.pipeConnector = "myAlgoWallet";
-            let address = await Pipeline.connect(wallet);
-            window.pipeAddress = address
-            updateWallet(address);
-            dispatch(
+              borderRadius: "12px",
+            }}
+            intent="warning"
+            large={true}
+            fill={true}
+            minimal={true}
+            className="wallet-btn"
+            outlined={true}
+            onClick={async () => {
+              Pipeline.pipeConnector = "myAlgoWallet";
+              let address = await Pipeline.connect(wallet);
+              window.pipeAddress = address;
+              updateWallet(address);
+              dispatch(
                 algorandGlobalActions.doPipeConnectChange({
                   ...getPrevGlobalPipeState(),
                   myAddress: address,
-                  provider: 'myAlgoWallet',
-                }),
-            );
-          }}
-        >
-          <div className="wallet-option">
-          <MyAlgoLogo></MyAlgoLogo>
-            <h3 className="wallet-con bktcUM">MyAlgo Wallet</h3>
-            <div className="sc-dlnjPT eFHlqH web3modal-provider-description">Connect to your MyAlgo Wallet</div>
-
-          </div>
-        </Button>
+                  provider: "myAlgoWallet",
+                })
+              );
+            }}
+          >
+            <div className="wallet-option">
+              <MyAlgoLogo></MyAlgoLogo>
+              <h3 className="wallet-con bktcUM">MyAlgo Wallet</h3>
+              <div className="sc-dlnjPT eFHlqH web3modal-provider-description">
+                Connect to your MyAlgo Wallet
+              </div>
+            </div>
+          </Button>
         </div>
       </li>
     );
   }
 
-
   const addr_list = accts.map((addr, idx) => {
     return (
-        <option value={idx} key={idx}>
-
-          {addr.substr(0, 8)}...{" "}
-        </option>
+      <option value={idx} key={idx}>
+        {addr.substr(0, 8)}...{" "}
+      </option>
     );
   });
 
@@ -251,7 +253,7 @@ export default function AlgorandWalletConnector(props) {
 
   if (!walletConnected) {
     return (
-      <div >
+      <div>
         <Button
           minimal={true}
           style={{
@@ -281,20 +283,25 @@ export default function AlgorandWalletConnector(props) {
     );
   } else {
     return (
-        <div className="button-connected">
-          <HTMLSelect
-              onChange={handleChangeAccount}
-              className="btn-selected"
-              minimal={true}
-              iconProps={iconprops}
-              defaultValue={sessionWallet.accountIndex()}
-          >
-            <option className="option">
-              {truncateString(pipeState.myAddress || '')}
-            </option>
-          </HTMLSelect>
-          <Button className="btn-selected-2" icon="log-out" minimal={true} onClick={disconnectWallet}></Button>
-        </div>
+      <div className="button-connected">
+        <HTMLSelect
+          onChange={handleChangeAccount}
+          className="btn-selected"
+          minimal={true}
+          iconProps={iconprops}
+          defaultValue={sessionWallet.accountIndex()}
+        >
+          <option className="option">
+            {truncateString(pipeState.myAddress || "")}
+          </option>
+        </HTMLSelect>
+        <Button
+          className="btn-selected-2"
+          icon="log-out"
+          minimal={true}
+          onClick={disconnectWallet}
+        ></Button>
+      </div>
     );
   }
 }
