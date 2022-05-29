@@ -3,7 +3,7 @@ import { Button, Classes, Dialog, HTMLSelect, Intent } from "@blueprintjs/core";
 import { IconName } from "@blueprintjs/icons";
 import Pipeline from "@pipeline-ui-2/pipeline";
 import { allowedWallets, SessionWallet } from "algorand-session-wallet";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MyAlgoLogo } from "./images/MyAlgo-logo";
 import { WalletConnectLogo } from "./images/walletconnect-logo";
@@ -32,7 +32,7 @@ export default function AlgorandWalletConnector(props) {
     labelNet: "MainNet",
   });
 
-  const refresh = useCallback(() => {
+  const refresh = () => {
     if (
       Pipeline.pipeConnector &&
       pipeState.myAddress &&
@@ -40,18 +40,14 @@ export default function AlgorandWalletConnector(props) {
     ) {
       updateWallet(sessionWallet);
     }
-  }, [pipeState.myAddress, updateWallet]);
-
-  const startRefresh = useCallback(() => {
-    const interval = setInterval(refresh, 500);
-    return () => clearInterval(interval);
-  }, [refresh]);
+  }
 
   useEffect(() => {
     if (pipeState.myAddress) {
-      startRefresh();
+      const interval = setInterval(refresh, 500);
+      return () => clearInterval(interval);
     }
-  }, [startRefresh]);
+  }, [pipeState]);
 
   useEffect(() => {
     if (globalPipeState) {
