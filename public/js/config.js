@@ -77869,7 +77869,7 @@ function upload() {
             document.querySelector("#response").innerText = JSON.stringify(response, null, 2)
             updateList(fileChecksum(file), data[0].hash)
             uploadCount++
-            if (uploadCount == filesOk.length) {
+            if (uploadCount === filesOk.length) {
               document.querySelector('.min-loading.blue').classList.add('loading-hidden');  //stop loading event
               document.querySelector('button#buttonRemote').removeAttribute('disabled', '')
               document.querySelector('button#buttonLocal').removeAttribute('disabled', '')

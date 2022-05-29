@@ -530,8 +530,8 @@ function Arc19Minter() {
                           Upload
                         </label>
                         <HelpDropdown />
-                        </div>
-                        <IpfsUpload />
+                      </div>
+                      <IpfsUpload />
                         
                        
                       <div>
@@ -550,7 +550,7 @@ function Arc19Minter() {
                               <input
                                 type="text"
                                 id="name"
-                                value={preview}
+                                defaultValue=""
                                 onChange={updateJSON}
                                 required={true}
                               />
@@ -573,7 +573,7 @@ function Arc19Minter() {
                                 type="text"
                                 placeholder="NFT1"
                                 pattern=""
-                                value={preview}
+                                defaultValue=""
                                 onChange={updateJSON}
                                 id="unitName"
                               />
@@ -586,7 +586,7 @@ function Arc19Minter() {
                                 style={{ minHeight: 100 }}
                                 id="description"
                                 spellCheck="false"
-                                value={preview}
+                                defaultValue=""
                                 onChange={updateJSON}
                                 required={true}
                               />
@@ -634,7 +634,7 @@ function Arc19Minter() {
                                 <input
                                   type="number"
                                   placeholder="0"
-                                  value={preview}
+                                  defaultValue={0}
                                   onChange={updateJSON}
                                   pattern=""
                                   id="decimals"
@@ -643,7 +643,7 @@ function Arc19Minter() {
                               <input
                                 type="text"
                                 placeholder="image/jpeg"
-                                value={preview}
+                                defaultValue=""
                                 onChange={updateJSON}
                                 pattern=""
                                 id="image_mimetype"
