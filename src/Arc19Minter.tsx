@@ -1,14 +1,16 @@
-import React, {useEffect, useState} from "react";
-import {SessionWallet} from "algorand-session-wallet";
-import IpfsUpload from "./IpfsUpload";
-import HexToAlgo from "./HexToAlgo";
-import {AnchorButton, Dialog} from "@blueprintjs/core";
-import {collect, conf, getAsaId, getNFT, sendWait} from "./lib/algorand";
+import { AnchorButton, Dialog } from "@blueprintjs/core";
 import Pipeline from "@pipeline-ui-2/pipeline";
-import getNFTInfo from "./lib/getnft";
-import JSONer from "./jsoner";
+import { SessionWallet } from "algorand-session-wallet";
 import CID from "cids";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import HexToAlgo from "./HexToAlgo";
+import IpfsUpload from "./IpfsUpload";
+import JSONer from "./jsoner";
+import { collect, conf, getAsaId, getNFT, sendWait } from "./lib/algorand";
+import getNFTInfo from "./lib/getnft";
 import Preview from "./preview";
+import algorandGlobalSelectors from "./redux/algorand/global/globalSelctors";
 
 let flipped = false;
 
@@ -80,6 +82,9 @@ window.defaultJSON = {
 };
 
 function Arc19Minter() {
+  const globalPipeState = useSelector(
+    algorandGlobalSelectors.selectPipeConnectState
+  );
   const sw = new SessionWallet(conf.network);
 
   function checkForAddress() {
@@ -122,19 +127,6 @@ function Arc19Minter() {
   const [isDisabled6, setIsDisabled6] = useState(true);
   const [jss6, setJss6] = useState("block");
 
-  useEffect(() => {
-    if (Pipeline.address !== "") {
-      const notConnected = document.getElementById("not-connected");
-      if (notConnected) {
-        notConnected.style.display = "none";
-      }
-      const connected = document.getElementById("connected");
-      if (connected) {
-        connected.style.display = "block";
-      }
-    }
-  }, []);
-
   const [initial, setInitial] = useState(true);
 
   const handleClick = () => {
@@ -171,6 +163,20 @@ function Arc19Minter() {
     }
     toggler = !toggler;
   }
+
+  useEffect(() => {
+    if (globalPipeState) {
+      if (
+        Pipeline.pipeConnector &&
+        Pipeline.address &&
+        Pipeline.address !== ""
+      ) {
+        setConnected(true);
+      } else {
+        setConnected(false);
+      }
+    }
+  }, [globalPipeState]);
 
   useEffect(() => {
     setClaimable(secret !== null && addr !== null && escrow !== null);
@@ -301,11 +307,6 @@ function Arc19Minter() {
       "afterend",
       '<div id="miniMessage">' + miniMessage + "</div>"
     );
-  }
-
-  function updateWallet(address: string) {
-    setAddress(address);
-    setConnected(true);
   }
 
   async function createAsa() {
@@ -479,7 +480,7 @@ function Arc19Minter() {
       </div>
     );
   }
-
+  
   return (
     <div className="App" style={{ background: "#000" }}>
       <div className="container body-1">
@@ -976,7 +977,7 @@ function Arc19Minter() {
                         proprietary rights, unless you have necessary permission
                         or are otherwise legally entitled to post the material.
                       </p>
-                      <button
+                      {!connected && <button
                         className=" Mui-not-btn MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
                         tabIndex={-1}
                         id="not-connected"
@@ -987,8 +988,8 @@ function Arc19Minter() {
                         <span className="MuiButton-label">
                           Wallet not connected
                         </span>
-                      </button>
-                      <div id="connected" style={{ display: "none" }}>
+                      </button>}
+                      {connected && <div id="connected" >
                         <div id={"connected2"}>
                           <button
                             hidden={true}
@@ -1047,7 +1048,7 @@ function Arc19Minter() {
                         </div>
                         <hr id="flex-hr" style={{ display: "none" }} />
                         <Preview name={asa} url={asa} imgUrl={urlHash} />
-                      </div>
+                      </div>}
                     </div>
                   </div>
                 </div>
