@@ -8,6 +8,7 @@ import Pipeline from '@pipeline-ui-2/pipeline'
 
 
 import escrow_template from './contracts/escrow.tmpl.teal'
+import {SessionWallet} from "algorand-session-wallet";
 
 const wallet = Pipeline.init()
 
@@ -34,7 +35,7 @@ export interface NFT {
     name: string
 }
 
-export async function collect(sw: "fu", asaId: number, escrow: string, addr: string, secret: string): Promise<SignedTxn[]> {
+export async function collect(sw: SessionWallet, asaId: number, escrow: string, addr: string, secret: string): Promise<SignedTxn[]> {
 
     const claimer = Pipeline.address
 
