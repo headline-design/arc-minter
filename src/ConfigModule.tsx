@@ -1,18 +1,20 @@
 // @ts-nocheck
 
-import React, { useEffect, useState } from "react";
-import { SessionWallet } from "algorand-session-wallet";
-import IpfsUpload from "./IpfsUpload";
-import HexToAlgo from "./HexToAlgo";
-import { conf } from "./lib/algorand";
 import Pipeline, { sendTxns } from "@pipeline-ui-2/pipeline";
-import JSONer from "./jsoner";
-import CID from "cids";
+import { SessionWallet } from "algorand-session-wallet";
 import algosdk from "algosdk";
+import CID from "cids";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { configClient } from "../node_modules/@pipeline-ui-2/pipeline/utils";
+import HexToAlgo from "./HexToAlgo";
+import IpfsUpload from "./IpfsUpload";
+import JSONer from "./jsoner";
+import { conf } from "./lib/algorand";
 import NftFetch from "./NftFetch.js";
-
 import Preview from "./preview";
+import algorandGlobalSelectors from "./redux/algorand/global/globalSelctors";
+
 
 let flipped = true;
 
@@ -46,8 +48,10 @@ window.defaultJSON = {
 };
 
 function ConfigModule() {
+  const globalPipeState = useSelector(
+    algorandGlobalSelectors.selectPipeConnectState
+  );
   const sw = new SessionWallet(conf.network);
-  const [sessionWallet] = React.useState(sw);
 
   function checkForAddress() {
     if (address !== window.pipeAddress) {
@@ -63,6 +67,7 @@ function ConfigModule() {
   const escrow = params.get("escrow");
   const addr = params.get("addr");
   const secret = params.get("secret");
+  const [connected, setConnected] = useState(sw.connected());
   const [hash, setHash] = React.useState("");
   const [asa, setAsa] = React.useState("");
   const [asaId, setAsaId] = React.useState("");
@@ -75,12 +80,19 @@ function ConfigModule() {
   const [isDisabled6, setIsDisabled6] = useState(true);
   const [jss6, setJss6] = useState("block");
 
-  React.useEffect(() => {
-    if (Pipeline.address !== "") {
-      document.getElementById("not-connected").style.display = "none";
-      document.getElementById("connected").style.display = "block";
+  useEffect(() => {
+    if (globalPipeState) {
+      if (
+        Pipeline.pipeConnector &&
+        Pipeline.address &&
+        Pipeline.address !== ""
+      ) {
+        setConnected(true);
+      } else {
+        setConnected(false);
+      }
     }
-  }, []);
+  }, [globalPipeState]);
 
   const handleClick = () => {
     setIsDisabled(!isDisabled);
@@ -780,7 +792,7 @@ function ConfigModule() {
                         or are otherwise legally entitled to post the material.
                       </p>
 
-                      <button
+                      {!connected && <button
                         className=" Mui-not-btn MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false Mui-disabled Mui-disabled"
                         tabIndex={-1}
                         id="not-connected"
@@ -791,9 +803,9 @@ function ConfigModule() {
                         <span className="MuiButton-label">
                           Wallet not connected
                         </span>
-                      </button>
+                      </button>}
 
-                      <div id="connected" style={{ display: "none" }}>
+                      {connected && <div id="connected">
                         <div id={"connected2"}>
                           <button
                             hidden={true}
@@ -853,7 +865,7 @@ function ConfigModule() {
                         <hr id="flex-hr" style={{ display: "none" }} />
 
                         <Preview name={asa} url={asa} imgUrl={urlHash} />
-                      </div>
+                      </div>}
                     </div>
                   </div>
                 </div>
