@@ -197,7 +197,7 @@ function Header() {
                 sessionWallet={sessionWallet}
                 accts={accts}
                 connected={connected}
-                onChange={updateWallet}
+                updateWallet={updateWallet}
               />
             </div>
           </div>

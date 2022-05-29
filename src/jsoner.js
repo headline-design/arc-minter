@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 const JSONer = (props) => {
   const [advancedOptions, setAdvancedOptions] = useState("none");
@@ -34,21 +34,19 @@ const JSONer = (props) => {
         options.push(key);
         props.callBack(props.object);
         let child = document.createElement("div");
-        let html =
-          '<div class="field-row" id="div' +
-          key +
-          '"><input disabled value="' +
-          key +
-          '"></input><input id="input' +
-          key +
-          '"></input><button class="MuiButton-root field-btn-change plus-circle-icon" id="' +
-          key +
-          '"></button><button class="MuiButton-root field-btn-delete delete-icon" name="' +
-          key +
-          '" id="delete' +
-          key +
-          '"></button></div>';
-        child.innerHTML = html;
+          child.innerHTML = '<div class="field-row" id="div' +
+            key +
+            '"><input disabled value="' +
+            key +
+            '"><input id="input' +
+            key +
+            '"><button class="MuiButton-root field-btn-change plus-circle-icon" id="' +
+            key +
+            '"></button><button class="MuiButton-root field-btn-delete delete-icon" name="' +
+            key +
+            '" id="delete' +
+            key +
+            '"></button></div>';
         let parent = document.getElementById("options");
         parent.appendChild(child);
         document.getElementById(key).onclick = function (event) {
