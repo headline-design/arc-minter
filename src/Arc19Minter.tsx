@@ -127,10 +127,10 @@ function Arc19Minter() {
   const [isDisabled6, setIsDisabled6] = useState(true);
   const [connected2, setConnected2] = useState(true);
   const [connected4, setConnected4] = useState(false);
-  const [inputAmount, setInputAmount] = useState("");
+  const [inputAmount, setInputAmount] = useState("1");
   const [name, setName] = useState("");
   const [inputManager, setInputManager] = useState("");
-  const [decimals, setDecimals] = useState("");
+  const [decimals, setDecimals] = useState("0");
   const [description, setDescription] = useState("");
   const [inputNote, setInputNote] = useState("");
   const [inputAssetUrl, setInputAssetUrl] = useState("template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}");
@@ -138,6 +138,7 @@ function Arc19Minter() {
   const [unitName, setUnitName] = useState("");
   const [inputReserve, setInputReserve] = useState("55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4");
   const [inputAssetMetadataHash, setInputAssetMetadataHash] = useState("");
+  const [flex, setFlex] = useState(false);
   const [flexHr, setFlexHr] = useState(false);
   const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
   const [jss6, setJss6] = useState("block");
@@ -206,6 +207,12 @@ function Arc19Minter() {
     const interval = setInterval(checkforResponse, 300);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (address) {
+      setInputManager(address)
+    }
+  }, [address]);
 
   function toggle() {
     if (advancedOptions === "none") {
@@ -325,7 +332,7 @@ function Arc19Minter() {
 
   async function createAsa() {
     setConnected2(false);
-    setConnected4(false);
+    setConnected4(true);
     asaData.amount = parseInt(inputAmount);
     asaData.assetName = name;
     asaData.creator = inputManager;
@@ -342,9 +349,18 @@ function Arc19Minter() {
     // asaData.clawback = inputClawback
     // asaData.freeze = inputFreeze
     asaData.assetMetadataHash = inputAssetMetadataHash;
-    let asaId = await Pipeline.createAsa(asaData);
-    setFlexHr(true);
-    return asaId;
+    try {
+      let asaId = await Pipeline.createAsa(asaData);
+      setConnected2(false);
+      setConnected4(false);
+      setFlex(true);
+      setFlexHr(true);
+      return asaId;
+    } catch(error) {
+      console.log(error);
+      setConnected2(true);
+      setConnected4(false);
+    }
   }
 
   async function handleDownload() {
@@ -539,7 +555,7 @@ function Arc19Minter() {
                               <input
                                 type="text"
                                 id="name"
-                                defaultValue=""
+                                value={name}
                                 onChange={updateJSON}
                                 required={true}
                               />
@@ -562,7 +578,7 @@ function Arc19Minter() {
                                 type="text"
                                 placeholder="NFT1"
                                 pattern=""
-                                defaultValue=""
+                                value={unitName}
                                 onChange={updateJSON}
                                 id="unitName"
                               />
@@ -623,7 +639,7 @@ function Arc19Minter() {
                                 <input
                                   type="number"
                                   placeholder="0"
-                                  defaultValue={0}
+                                  value={decimals}
                                   onChange={updateJSON}
                                   pattern=""
                                   id="decimals"
@@ -713,6 +729,7 @@ function Arc19Minter() {
                             type="text"
                             className="custom-input-size form-control"
                             aria-invalid="false"
+                            value={inputAssetUrl}
                             onChange={(event) => setInputAssetUrl(event.target.value)}
                             disabled={isDisabled5}
                           />
@@ -748,6 +765,7 @@ function Arc19Minter() {
                             disabled={isDisabled4}
                             className="custom-input-size form-control"
                             aria-invalid="false"
+                            value={inputReserve}
                             onChange={(event) => setInputReserve(event.target.value)}
                           />
                           <div className="invalid-feedback">
@@ -822,7 +840,7 @@ function Arc19Minter() {
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
                                     onChange={(event) => setInputAssetMetadataHash(event.target.value)}
-                                    defaultValue=""
+                                    value={inputAssetMetadataHash}
                                   />
                                   <div className="invalid-feedback">
                                     Asset Metadata Hash size should be 32
@@ -852,7 +870,7 @@ function Arc19Minter() {
                                   </div>
                                   <input
                                     name="assetManager"
-                                    value={address}
+                                    value={inputManager}
                                     placeholder="Manager address"
                                     id="input-manager"
                                     type="text"
@@ -950,7 +968,7 @@ function Arc19Minter() {
                               className="custom-input-size form-control  "
                               placeholder={"1"}
                               type="text"
-                              defaultValue={1}
+                              value={inputAmount}
                               onChange={(event) => setInputAmount(event.target.value)}
                               inputMode="numeric"
                             />
@@ -1040,7 +1058,7 @@ function Arc19Minter() {
                           </button>
                         </div>}
                         {flexHr && <hr id="flex-hr" style={{display: "flex"}}/>}
-                        <Preview name={asa} url={asa} imgUrl={urlHash} />
+                        <Preview flex={flex} name={asa} url={asa} imgUrl={urlHash} />
                       </div>}
                     </div>
                   </div>

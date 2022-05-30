@@ -83,10 +83,10 @@ function ConfigModule() {
   const [isDisabled6, setIsDisabled6] = useState(true);
   const [connected2, setConnected2] = useState(true);
   const [connected4, setConnected4] = useState(false);
-  const [inputAmount, setInputAmount] = useState("");
+  const [inputAmount, setInputAmount] = useState("1");
   const [name, setName] = useState("");
   const [inputManager, setInputManager] = useState("");
-  const [decimals, setDecimals] = useState("");
+  const [decimals, setDecimals] = useState("0");
   const [description, setDescription] = useState("");
   const [inputNote, setInputNote] = useState("");
   const [inputAssetUrl, setInputAssetUrl] = useState("template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}");
@@ -94,6 +94,7 @@ function ConfigModule() {
   const [unitName, setUnitName] = useState("");
   const [inputReserve, setInputReserve] = useState("55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4");
   const [inputAssetMetadataHash, setInputAssetMetadataHash] = useState("");
+  const [flex, setFlex] = useState(false);
   const [flexHr, setFlexHr] = useState(false);
   const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
   const [fetchButtonVisible, setFetchButtonVisible] = useState(false);
@@ -116,6 +117,12 @@ function ConfigModule() {
       }
     }
   }, [globalPipeState]);
+
+  useEffect(() => {
+    if (address) {
+      setInputManager(address)
+    }
+  }, [address]);
 
   const handleClick = () => {
     setIsDisabled(!isDisabled);
@@ -241,6 +248,8 @@ function ConfigModule() {
   }
 
   async function createAsa() {
+    setConnected2(false);
+    setConnected4(true);
     asaData.amount = parseInt(inputAmount);
     asaData.assetName = name;
     asaData.creator = inputManager;
@@ -292,12 +301,15 @@ function ConfigModule() {
             Pipeline.alerts
         );
         console.log(response);
-        setFlexHr(true);
         setConnected2(false);
         setConnected4(false);
+        setFlex(true);
+        setFlexHr(true);
         return response;
       } catch (error) {
         console.log(error);
+        setConnected2(true);
+        setConnected4(false);
       }
     }
   }
@@ -367,7 +379,7 @@ function ConfigModule() {
                           </label>
                           <input
                             type="text"
-                            defaultValue=""
+                            value={name}
                             id="name"
                             onChange={updateJSON}
                             required={true}
@@ -475,7 +487,7 @@ function ConfigModule() {
                               <input
                                 type="text"
                                 placeholder="NFT1"
-                                defaultValue=""
+                                value={unitName}
                                 pattern=""
                                 onChange={updateJSON}
                                 id="unitName"
@@ -558,6 +570,7 @@ function ConfigModule() {
                             type="text"
                             className="custom-input-size form-control"
                             aria-invalid="false"
+                            value={inputAssetUrl}
                             onChange={(event) => setInputAssetUrl(event.target.value)}
                             disabled={isDisabled5}
                           />
@@ -593,6 +606,7 @@ function ConfigModule() {
                             disabled={isDisabled4}
                             className="custom-input-size form-control"
                             aria-invalid="false"
+                            value={inputReserve}
                             onChange={(event) => setInputReserve(event.target.value)}
                           />
                           <div className="invalid-feedback">
@@ -665,7 +679,7 @@ function ConfigModule() {
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
                                     onChange={(event) => setInputAssetMetadataHash(event.target.value)}
-                                    defaultValue=""
+                                    value={inputAssetMetadataHash}
                                   />
                                   <div className="invalid-feedback">
                                     Asset Metadata Hash size should be 32
@@ -695,7 +709,7 @@ function ConfigModule() {
                                   </div>
                                   <input
                                     name="assetManager"
-                                    value={address}
+                                    value={inputManager}
                                     placeholder="Manager address"
                                     id="input-manager"
                                     type="text"
@@ -796,7 +810,7 @@ function ConfigModule() {
                               className="custom-input-size form-control  "
                               placeholder={"1"}
                               type="text"
-                              defaultValue={1}
+                              value={inputAmount}
                               onChange={(event) => setInputAmount(event.target.value)}
                               inputMode="numeric"
                             />
@@ -888,7 +902,7 @@ function ConfigModule() {
                           </button>
                         </div>}
                         {flexHr && <hr id="flex-hr" style={{display: "flex"}}/>}
-                        <Preview name={asa} url={asa} imgUrl={urlHash} />
+                        <Preview flex={flex} name={asa} url={asa} imgUrl={urlHash} />
                       </div>}
                     </div>
                   </div>
