@@ -125,6 +125,21 @@ function Arc19Minter() {
   const [isDisabled4, setIsDisabled4] = useState(true);
   const [isDisabled5, setIsDisabled5] = useState(true);
   const [isDisabled6, setIsDisabled6] = useState(true);
+  const [connected2, setConnected2] = useState(true);
+  const [connected4, setConnected4] = useState(false);
+  const [inputAmount, setInputAmount] = useState("");
+  const [name, setName] = useState("");
+  const [inputManager, setInputManager] = useState("");
+  const [decimals, setDecimals] = useState("");
+  const [description, setDescription] = useState("");
+  const [inputNote, setInputNote] = useState("");
+  const [inputAssetUrl, setInputAssetUrl] = useState("");
+  const [inputAssetUrlPlaceholder, setInputAssetUrlPlaceholder] = useState("template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}");
+  const [unitName, setUnitName] = useState("");
+  const [inputReserve, setInputReserve] = useState("");
+  const [inputAssetMetadataHash, setInputAssetMetadataHash] = useState("");
+  const [flexHr, setFlexHr] = useState(false);
+  const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
   const [jss6, setJss6] = useState("block");
 
   const [initial, setInitial] = useState(true);
@@ -171,8 +186,12 @@ function Arc19Minter() {
         Pipeline.address &&
         Pipeline.address !== ""
       ) {
+        window.pipeAddress = Pipeline.address;
+        setAddress(Pipeline.address);
         setConnected(true);
       } else {
+        window.pipeAddress = ""
+        setAddress("");
         setConnected(false);
       }
     }
@@ -184,7 +203,8 @@ function Arc19Minter() {
 
   useEffect(() => {
     window.response1234 = [{ hash: "none yet" }];
-    setInterval(checkforResponse, 300);
+    const interval = setInterval(checkforResponse, 300);
+    return () => clearInterval(interval);
   }, []);
 
   function toggle() {
@@ -199,42 +219,32 @@ function Arc19Minter() {
     let arc19Placeholder =
       "template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}";
     arc19 = !arc19;
-    const inputAssetUrl = document.getElementById("input-asset-url");
-    const toggleInputAssetURLSwitch = document.getElementById("toggleInputAssetURLSwitch");
-    const inputNote = document.getElementById("input-note");
-    if(inputAssetUrl instanceof HTMLInputElement && toggleInputAssetURLSwitch instanceof HTMLInputElement && inputNote instanceof HTMLInputElement) {
-      if (!arc19) {
-        inputAssetUrl.value = "";
-        inputAssetUrl.placeholder =
-            "https://headline.dev";
-        toggleInputAssetURLSwitch.checked = true;
-        inputNote.value = default69;
-        setIsDisabled5(false);
-      } else {
-        inputNote.value = "";
-        toggleInputAssetURLSwitch.checked = false;
-        inputAssetUrl.value = arc19Placeholder;
-        inputAssetUrl.placeholder = arc19Placeholder;
-        setIsDisabled5(true);
-      }
-      if (flipped) {
-        setJss6("block");
-      } else {
-        setJss6("none");
-      }
-      flipped = !flipped;
+    if (!arc19) {
+      setInputAssetUrl("");
+      setInputAssetUrlPlaceholder("https://headline.dev");
+      setToggleInputAssetURLSwitch(true);
+      setInputNote(default69);
+      setIsDisabled5(false);
+    } else {
+      setInputNote("");
+      setToggleInputAssetURLSwitch(false);
+      setInputAssetUrl(arc19Placeholder);
+      setInputAssetUrlPlaceholder(arc19Placeholder);
+      setIsDisabled5(true);
     }
+    if (flipped) {
+      setJss6("block");
+    } else {
+      setJss6("none");
+    }
+    flipped = !flipped;
   }
 
   function checkforResponse() {
     let length = window.response1234.length - 1;
     if (prevResponse[0].hash !== window.response1234[length].hash) {
       if (!arc19) {
-        const inputAssetUrl = document.getElementById("input-asset-url");
-        if(inputAssetUrl instanceof HTMLInputElement) {
-          inputAssetUrl.value =
-              "ipfs://" + window.response1234[length].hash;
-        }
+        setInputAssetUrl("ipfs://" + window.response1234[length].hash);
       }
       prevResponse[0].hash = window.response1234[length].hash;
       setUrlHash(window.response1234[0].hash);
@@ -255,6 +265,7 @@ function Arc19Minter() {
     switch (key) {
       case "name":
         if (value.length <= 32) {
+          setName(value)
           proceed();
         } else {
           failed("Asset Name Max size is 32 characters");
@@ -262,6 +273,7 @@ function Arc19Minter() {
         break;
       case "unitName":
         if (value.length <= 8) {
+          setUnitName(value)
           proceed();
         } else {
           failed("Asset Unit Name can not exceed 8 letters");
@@ -269,6 +281,7 @@ function Arc19Minter() {
         break;
       case "decimals":
         if (value <= 19) {
+          setDecimals(value)
           proceed();
         } else {
           failed("Asset decimals can not exceed 19");
@@ -276,6 +289,7 @@ function Arc19Minter() {
         break;
       case "description":
         if (value.length <= 1000) {
+          setDescription(value)
           proceed();
         } else {
           failed("Asset description can not exceed 1000 characters");
@@ -310,53 +324,27 @@ function Arc19Minter() {
   }
 
   async function createAsa() {
-    const connected2 = document.getElementById("connected2");
-    const connected4 = document.getElementById("connected4");
-    const inputAmount = document.getElementById("input-amount");
-    const name = document.getElementById("name");
-    const inputManager = document.getElementById("input-manager");
-    const decimals = document.getElementById("decimals");
-    const inputNote = document.getElementById("input-note");
-    const inputAssetUrl = document.getElementById("input-asset-url");
-    const unitName = document.getElementById("unitName");
-    const inputReserve = document.getElementById("input-reserve");
-    const inputAssetMetadataHash = document.getElementById("input-assetMetadataHash");
-    const flex = document.getElementById("flex");
-    const flexHr = document.getElementById("flex-hr");
-
-    if(connected2 instanceof HTMLInputElement && connected4 instanceof HTMLInputElement &&
-        inputAmount instanceof HTMLInputElement && name instanceof HTMLInputElement &&
-        inputManager instanceof HTMLInputElement && decimals instanceof HTMLInputElement &&
-        inputNote instanceof HTMLInputElement && inputAssetUrl instanceof HTMLInputElement &&
-        unitName instanceof HTMLInputElement && inputReserve instanceof HTMLInputElement &&
-        inputAssetMetadataHash instanceof HTMLInputElement && flex instanceof HTMLInputElement &&
-        flexHr instanceof HTMLInputElement) {
-
-      connected2.style.display = "none";
-      connected4.style.display = "flex";
-      asaData.amount = parseInt(inputAmount.value);
-      asaData.assetName = name.value;
-      asaData.creator = inputManager.value;
-      asaData.decimals = arc19
-          ? parseInt(decimals.value)
-          : 0;
-      asaData.note = inputNote.value;
-      asaData.assetURL = inputAssetUrl.value;
-      asaData.unitName = unitName.value;
-      asaData.reserve = arc19
-          ? inputReserve.value
-          : Pipeline.address;
-      asaData.manager = inputManager.value;
-      // asaData.clawback = document.getElementById("input-clawback").value
-      // asaData.freeze = document.getElementById("input-freeze").value
-      asaData.assetMetadataHash = inputAssetMetadataHash.value;
-      let asaId = await Pipeline.createAsa(asaData);
-      flex.style.display = "flex";
-      flexHr.style.display = "flex";
-      connected2.style.display = "none";
-      connected4.style.display = "none";
-      return asaId;
-    }
+    setConnected2(false);
+    setConnected4(false);
+    asaData.amount = parseInt(inputAmount);
+    asaData.assetName = name;
+    asaData.creator = inputManager;
+    asaData.decimals = arc19
+        ? parseInt(decimals)
+        : 0;
+    asaData.note = inputNote;
+    asaData.assetURL = inputAssetUrl;
+    asaData.unitName = unitName;
+    asaData.reserve = arc19
+        ? inputReserve
+        : Pipeline.address;
+    asaData.manager = inputManager;
+    // asaData.clawback = input-clawback
+    // asaData.freeze = inputFreeze
+    asaData.assetMetadataHash = inputAssetMetadataHash;
+    let asaId = await Pipeline.createAsa(asaData);
+    setFlexHr(true);
+    return asaId;
   }
 
   async function handleDownload() {
@@ -707,8 +695,9 @@ function Arc19Minter() {
                                   id="toggleInputAssetURLSwitch"
                                   name="toggleInputAssetURL"
                                   onClick={handleClick5}
+                                  onChange={(event) => setToggleInputAssetURLSwitch(event.target.checked)}
                                   className="custom-control-input"
-                                  defaultChecked={false}
+                                  checked={toggleInputAssetURLSwitch}
                                 />
                                 <label
                                   className="custom-control-label"
@@ -720,10 +709,11 @@ function Arc19Minter() {
                           <input
                             id="input-asset-url"
                             name="assetURL"
-                            placeholder="template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}"
+                            placeholder={inputAssetUrlPlaceholder}
                             type="text"
                             className="custom-input-size form-control"
                             aria-invalid="false"
+                            onChange={(event) => setInputAssetUrl(event.target.value)}
                             defaultValue="template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}"
                             disabled={isDisabled5}
                           />
@@ -759,6 +749,7 @@ function Arc19Minter() {
                             disabled={isDisabled4}
                             className="custom-input-size form-control"
                             aria-invalid="false"
+                            onChange={(event) => setInputReserve(event.target.value)}
                             defaultValue="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
                           />
                           <div className="invalid-feedback">
@@ -779,6 +770,7 @@ function Arc19Minter() {
                             className="note-input-field form-control"
                             aria-invalid="false"
                             id="input-note"
+                            onChange={(event) => setInputNote(event.target.value)}
                             defaultValue={""}
                           />
                           <div className="invalid-feedback">
@@ -831,6 +823,7 @@ function Arc19Minter() {
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
+                                    onChange={(event) => setInputAssetMetadataHash(event.target.value)}
                                     defaultValue=""
                                   />
                                   <div className="invalid-feedback">
@@ -867,6 +860,7 @@ function Arc19Minter() {
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
+                                    onChange={(event) => setInputManager(event.target.value)}
                                     disabled={isDisabled3}
                                   />
                                   <div className="invalid-feedback">
@@ -959,6 +953,7 @@ function Arc19Minter() {
                               placeholder={"1"}
                               type="text"
                               defaultValue={1}
+                              onChange={(event) => setInputAmount(event.target.value)}
                               inputMode="numeric"
                             />
                           </div>
@@ -989,64 +984,64 @@ function Arc19Minter() {
                           Wallet not connected
                         </span>
                       </button>}
-                      {connected && <div id="connected" >
-                        <div id={"connected2"}>
+                      {connected && <div id="connected" style={{display: "flex"}}>
+                        {connected2 && <div id={"connected2"} style={{display: "flex"}}>
                           <button
-                            hidden={true}
-                            onClick={async () => {
-                              if (Pipeline.pipeConnector === "WalletConnect"){
-                                alert("Please close alert and sign transaction on mobile device")
-                              }
-                              let asaId = await createAsa();
-                              alert(asaId);
-                              setAsa(
-                                "https://www.nftexplorer.app/asset/" + asaId
-                              );
-                              setUrlHash("https://ipfs.io/ipfs/" + urlHash);
-                              setAsaId(asaId);
-                            }}
-                            className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
-                            tabIndex={-1}
-                            style={{ marginBottom: 30 }}
+                              hidden={true}
+                              onClick={async () => {
+                                if (Pipeline.pipeConnector === "WalletConnect") {
+                                  alert("Please close alert and sign transaction on mobile device")
+                                }
+                                let asaId = await createAsa();
+                                alert(asaId);
+                                setAsa(
+                                    "https://www.nftexplorer.app/asset/" + asaId
+                                );
+                                setUrlHash("https://ipfs.io/ipfs/" + urlHash);
+                                setAsaId(asaId);
+                              }}
+                              className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
+                              tabIndex={-1}
+                              style={{marginBottom: 30}}
                           >
                             <span className="MuiButton-label">Mint NFT</span>
                             <span id="countdown"></span>
                           </button>
-                        </div>
-                        <div id="connected4" style={{ display: "none" }}>
+                        </div>}
+                        {connected4 && <div id="connected4" style={{display: "flex"}}>
                           <button
-                            className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 jss22 Mui-disabled Mui-disabled"
-                            tabIndex={-1}
-                            id={"connected3"}
-                            type="submit"
-                            style={{ marginBottom: 30 }}
-                            disabled={false}
+                              className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 jss22 Mui-disabled Mui-disabled"
+                              tabIndex={-1}
+                              id={"connected3"}
+                              type="submit"
+                              style={{marginBottom: 30}}
+                              disabled={false}
                           >
                             <span className="MuiButton-label">
                               minting...
                               <div
-                                className="MuiCircularProgress-root jss24 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
-                                role="progressbar"
-                                style={{ width: 24, height: 24 }}
+                                  className="MuiCircularProgress-root jss24 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                                  role="progressbar"
+                                  style={{width: 24, height: 24}}
                               >
                                 <svg
-                                  className="MuiCircularProgress-svg css-13o7eu2"
-                                  viewBox="22 22 44 44"
+                                    className="MuiCircularProgress-svg css-13o7eu2"
+                                    viewBox="22 22 44 44"
                                 >
                                   <circle
-                                    className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-14891ef"
-                                    cx="44"
-                                    cy="44"
-                                    r="20.2"
-                                    fill="none"
-                                    strokeWidth="3.6"
+                                      className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-14891ef"
+                                      cx="44"
+                                      cy="44"
+                                      r="20.2"
+                                      fill="none"
+                                      strokeWidth="3.6"
                                   ></circle>
                                 </svg>
                               </div>
                             </span>
                           </button>
-                        </div>
-                        <hr id="flex-hr" style={{ display: "none" }} />
+                        </div>}
+                        {flexHr && <hr id="flex-hr" style={{display: "flex"}}/>}
                         <Preview name={asa} url={asa} imgUrl={urlHash} />
                       </div>}
                     </div>

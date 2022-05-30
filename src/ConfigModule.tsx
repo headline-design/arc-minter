@@ -1,16 +1,14 @@
-// @ts-nocheck
-
-import Pipeline, { sendTxns } from "@pipeline-ui-2/pipeline";
-import { SessionWallet } from "algorand-session-wallet";
+import Pipeline, {sendTxns} from "@pipeline-ui-2/pipeline";
+import {SessionWallet} from "algorand-session-wallet";
 import algosdk from "algosdk";
 import CID from "cids";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { configClient } from "../node_modules/@pipeline-ui-2/pipeline/utils";
+import React, {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {configClient} from "@pipeline-ui-2/pipeline/utils";
 import HexToAlgo from "./HexToAlgo";
 import IpfsUpload from "./IpfsUpload";
 import JSONer from "./jsoner";
-import { conf } from "./lib/algorand";
+import {conf} from "./lib/algorand";
 import NftFetch from "./NftFetch.js";
 import Preview from "./preview";
 import algorandGlobalSelectors from "./redux/algorand/global/globalSelctors";
@@ -27,6 +25,11 @@ const asaData = {
   decimals: 0,
   assetName: "1NFT",
   unitName: "1NFT",
+  asset: "",
+  assetURL: "",
+  assetMetadataHash: "",
+  reserve: "",
+  manager: ""
 };
 
 const myJSON = {
@@ -67,6 +70,7 @@ function ConfigModule() {
   const escrow = params.get("escrow");
   const addr = params.get("addr");
   const secret = params.get("secret");
+  const [preview, setPreview] = useState("");
   const [connected, setConnected] = useState(sw.connected());
   const [hash, setHash] = React.useState("");
   const [asa, setAsa] = React.useState("");
@@ -124,7 +128,8 @@ function ConfigModule() {
 
   useEffect(() => {
     window.response1234 = [{ hash: "none yet" }];
-    setInterval(checkforResponse, 300);
+    const interval = setInterval(checkforResponse, 300);
+    return () => clearInterval(interval);
   }, []);
 
   function toggle() {
@@ -143,16 +148,16 @@ function ConfigModule() {
       let cidWorking = new CID(window.response1234[0].hash).toV1();
       let cidConverted = "sha256-" + cidWorking.toString("base16").substring(9);
       window.defaultJSON["image_integrity"] = cidConverted;
-      document.getElementById("preview").innerText = JSON.stringify(
-        window.defaultJSON
-      );
+      setPreview(JSON.stringify(
+          window.defaultJSON
+      ));
       let thisHash = window.response1234[length].hash;
       setHash(thisHash);
     }
     checkForAddress();
   }
 
-  function updateJSON(event) {
+  function updateJSON(event: any) {
     let value = event.target.value;
     let key = event.target.id;
     switch (key) {
@@ -189,11 +194,11 @@ function ConfigModule() {
     }
     function proceed() {
       window.defaultJSON[key] = value;
-      document.getElementById("preview").innerText = JSON.stringify(
-        window.defaultJSON
-      );
+      setPreview(JSON.stringify(
+          window.defaultJSON
+      ));
     }
-    function failed(message) {
+    function failed(message: string) {
       let former = document.getElementById("miniMessage");
       if (former != null) {
         former.remove();
@@ -203,7 +208,7 @@ function ConfigModule() {
     }
   }
 
-  function miniAlerts(parent, miniMessage) {
+  function miniAlerts(parent: any, miniMessage: string) {
     //let Alert = document.createElement("p")
     //Alert = miniMessage
     parent.insertAdjacentHTML(
@@ -213,79 +218,103 @@ function ConfigModule() {
   }
 
   async function createAsa() {
-    document.getElementById("connected2").style.display = "none";
-    document.getElementById("connected4").style.display = "flex";
-    asaData.amount = parseInt(document.getElementById("input-amount").value);
-    asaData.assetName = document.getElementById("name").value;
-    asaData.creator = document.getElementById("input-manager").value;
-    asaData.decimals = parseInt(document.getElementById("decimals").value);
-    asaData.note = document.getElementById("input-note").value;
-    asaData.assetURL = document.getElementById("input-asset-url").value;
-    asaData.unitName = document.getElementById("unitName").value;
-    asaData.reserve = document.getElementById("input-reserve").value;
-    asaData.manager = document.getElementById("input-manager").value;
-    // asaData.clawback = document.getElementById("input-clawback").value
-    // asaData.freeze = document.getElementById("input-freeze").value
-    asaData.assetMetadataHash = document.getElementById(
-      "input-assetMetadataHash"
-    ).value;
+    const connected2 = document.getElementById("connected2");
+    const connected4 = document.getElementById("connected4");
+    const inputAmount = document.getElementById("input-amount");
+    const name = document.getElementById("name");
+    const decimals = document.getElementById("decimals");
+    const inputNote = document.getElementById("input-note");
+    const inputAssetUrl = document.getElementById("input-asset-url");
+    const unitName = document.getElementById("unitName");
+    const inputReserve = document.getElementById("input-reserve");
+    const inputManager = document.getElementById("input-manager");
+    const inputAssetMetadataHash = document.getElementById("input-assetMetadataHash");
+    const flex = document.getElementById("flex");
+    const flexHr = document.getElementById("flex-hr");
+    const assetIndex = document.getElementById("assetIndex");
 
-    let params = await Pipeline.getParams();
+    if(connected2 instanceof HTMLInputElement && connected4 instanceof HTMLInputElement &&
+        inputAmount instanceof HTMLInputElement && name instanceof HTMLInputElement &&
+        inputManager instanceof HTMLInputElement && decimals instanceof HTMLInputElement &&
+        inputNote instanceof HTMLInputElement && inputAssetUrl instanceof HTMLInputElement &&
+        unitName instanceof HTMLInputElement && inputReserve instanceof HTMLInputElement &&
+        inputManager instanceof HTMLInputElement && inputAssetMetadataHash instanceof HTMLInputElement &&
+        flex instanceof HTMLInputElement && flexHr instanceof HTMLInputElement && assetIndex instanceof HTMLInputElement) {
+      connected2.style.display = "none";
+      connected4.style.display = "flex";
+      asaData.amount = parseInt(inputAmount.value);
+      asaData.assetName = name.value;
+      asaData.creator = inputManager.value;
+      asaData.decimals = parseInt(decimals.value);
+      asaData.note = inputNote.value;
+      asaData.assetURL = inputAssetUrl.value;
+      asaData.unitName = unitName.value;
+      asaData.reserve = inputReserve.value;
+      asaData.manager = inputManager.value;
+      // asaData.clawback = document.getElementById("input-clawback").value
+      // asaData.freeze = document.getElementById("input-freeze").value
+      asaData.assetMetadataHash = inputAssetMetadataHash.value;
 
-    let txn = algosdk.makeAssetConfigTxn(
-      Pipeline.address,
-      1000,
-      params.firstRound,
-      params.lastRound,
-      new Uint8Array(Buffer.from(asaData.note)),
-      params.genesisHash,
-      params.genesisID,
-      parseInt(document.getElementById("assetIndex").value),
-      asaData.manager,
-      asaData.reserve,
-      undefined,
-      undefined,
-      false
-    );
-    txn.fee = 1000;
+      let params = await Pipeline.getParams();
 
-    let signedTxn = await Pipeline.sign(txn);
-
-    let clientb = await configClient(
-      Pipeline.main,
-      Pipeline.EnableDeveloperAPI,
-      Pipeline
-    );
-    let transServer = clientb.tranServer;
-
-    try {
-      let response = await sendTxns(
-        signedTxn,
-        transServer,
-        Pipeline.EnableDeveloperAPI,
-        Pipeline.token,
-        Pipeline.alerts
+      let txn = algosdk.makeAssetConfigTxn(
+          Pipeline.address,
+          1000,
+          params.firstRound,
+          params.lastRound,
+          new Uint8Array(Buffer.from(asaData.note)),
+          params.genesisHash,
+          params.genesisID,
+          parseInt(assetIndex.value),
+          asaData.manager,
+          asaData.reserve,
+          undefined,
+          undefined,
+          false
       );
-      console.log(response);
-      document.getElementById("flex").style.display = "flex";
-      document.getElementById("flex-hr").style.display = "block";
-      document.getElementById("connected2").style.display = "none";
-      document.getElementById("connected4").style.display = "none";
-      return response;
-    } catch (error) {
-      console.log(error);
+      txn.fee = 1000;
+
+      let signedTxn = await Pipeline.sign(txn);
+
+      let clientb = await configClient(
+          Pipeline.main,
+          Pipeline.EnableDeveloperAPI,
+          Pipeline
+      );
+      let transServer = clientb.tranServer;
+
+      try {
+        let response = await sendTxns(
+            signedTxn,
+            transServer,
+            Pipeline.EnableDeveloperAPI,
+            Pipeline.token,
+            Pipeline.alerts
+        );
+        console.log(response);
+        flex.style.display = "flex";
+        flexHr.style.display = "block";
+        connected2.style.display = "none";
+        connected4.style.display = "none";
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
   function toggle19() {
-    if (flipped) {
-      setJss6("none");
-      document.getElementById("fetchButton").style.display = "none";
-    } else {
-      setJss6("block");
-      document.getElementById("fetchButton").style.display = "block";
+    const fetchButton = document.getElementById("fetchButton");
+    if(fetchButton instanceof HTMLInputElement) {
+      if (flipped) {
+        setJss6("none");
+        fetchButton.style.display = "none";
+      } else {
+        setJss6("block");
+        fetchButton.style.display = "block";
+      }
+      flipped = !flipped;
     }
-    flipped = !flipped;
   }
 
   return (
@@ -370,7 +399,6 @@ function ConfigModule() {
                           <br />
 
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"></div>
-                          <div container spacing={2}></div>
 
                           <div className="jss16">
                             <div className="total-supply-label-container">
@@ -397,7 +425,7 @@ function ConfigModule() {
                                     name="toggleInputAssetURL"
                                     onClick={handleClick6}
                                     className="custom-control-input"
-                                    defaultChecked=""
+                                    defaultChecked={false}
                                   />
                                   <label
                                     className="custom-control-label"
@@ -461,7 +489,6 @@ function ConfigModule() {
                           <div className="jss16" style={{ display: jss6 }}>
                             <label htmlFor="description">Description</label>
                             <textarea
-                              type="text"
                               style={{ minHeight: 100 }}
                               id="description"
                               spellCheck="false"
@@ -476,10 +503,9 @@ function ConfigModule() {
                                 <HexToAlgo hash={hash}></HexToAlgo>
                               </div>
                               <JSONer
-                                callBack={function (data) {
+                                callBack={function (data: any) {
                                   window.defaultJSON.properties = data;
-                                  document.getElementById("preview").innerText =
-                                    JSON.stringify(window.defaultJSON);
+                                  setPreview(JSON.stringify(window.defaultJSON));
                                 }}
                                 object={myJSON}
                               ></JSONer>
@@ -487,7 +513,7 @@ function ConfigModule() {
                             <div className="jss16" style={{ display: jss6 }}>
                               <label className="">JSON Object</label>
                               <p id="preview" className="metadata-object">
-                                {JSON.stringify(window.defaultJSON)}
+                                {preview}
                               </p>
                               <div style={{ display: jss6 }}>
                                 <button
@@ -519,7 +545,7 @@ function ConfigModule() {
                                   name="toggleInputAssetURL"
                                   onClick={handleClick5}
                                   className="custom-control-input"
-                                  defaultChecked=""
+                                  defaultChecked={false}
                                 />
                                 <label
                                   className="custom-control-label"
@@ -553,7 +579,7 @@ function ConfigModule() {
                                   name="toggleReserve"
                                   onClick={handleClick4}
                                   className="custom-control-input"
-                                  defaultChecked=""
+                                  defaultChecked={false}
                                 />
                                 <label
                                   className="custom-control-label"
@@ -659,7 +685,7 @@ function ConfigModule() {
                                           name="toggleManager"
                                           onClick={handleClick3}
                                           className="custom-control-input"
-                                          defaultChecked=""
+                                          defaultChecked={false}
                                         />
                                         <label
                                           className="custom-control-label"
@@ -693,7 +719,7 @@ function ConfigModule() {
                                           name="toggleFreeze"
                                           onClick={handleClick2}
                                           className="custom-control-input"
-                                          defaultChecked=""
+                                          defaultChecked={false}
                                         />
                                         <label
                                           className="custom-control-label"
@@ -728,7 +754,7 @@ function ConfigModule() {
                                           name="toggleClawback"
                                           onClick={handleClick}
                                           className="custom-control-input"
-                                          defaultChecked=""
+                                          defaultChecked={false}
                                         />
                                         <label
                                           className="custom-control-label"
@@ -757,7 +783,6 @@ function ConfigModule() {
                         </div>
                       </div>
 
-                      <div container spacing={2}></div>
                       <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2">
                         <div
                           className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
@@ -769,7 +794,7 @@ function ConfigModule() {
                               id="input-amount"
                               name="assetTotal"
                               className="custom-input-size form-control  "
-                              placeholder={1}
+                              placeholder={"1"}
                               type="text"
                               defaultValue={1}
                               inputMode="numeric"
@@ -797,7 +822,7 @@ function ConfigModule() {
                         tabIndex={-1}
                         id="not-connected"
                         type="submit"
-                        disabled=""
+                        disabled={false}
                         style={{ marginBottom: 30 }}
                       >
                         <span className="MuiButton-label">
@@ -818,8 +843,7 @@ function ConfigModule() {
                               setAsa(
                                 "https://www.nftexplorer.app/asset/" + asaId
                               );
-                              let prevHash = urlHash;
-                              setUrlHash("https://ipfs.io/ipfs/" + prevHash);
+                              setUrlHash("https://ipfs.io/ipfs/" + urlHash);
                               setAsaId(asaId);
                             }}
                             className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
@@ -836,7 +860,7 @@ function ConfigModule() {
                             id={"connected3"}
                             type="submit"
                             style={{ marginBottom: 30 }}
-                            disabled=""
+                            disabled={false}
                           >
                             <span className="MuiButton-label">
                               updating...
