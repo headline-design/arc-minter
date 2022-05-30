@@ -97,7 +97,7 @@ function ConfigModule() {
   const [flex, setFlex] = useState(false);
   const [flexHr, setFlexHr] = useState(false);
   const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
-  const [fetchButtonVisible, setFetchButtonVisible] = useState(false);
+  const [fetchButtonVisible, setFetchButtonVisible] = useState(true);
   const [jss6, setJss6] = useState("block");
 
   useEffect(() => {

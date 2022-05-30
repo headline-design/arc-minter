@@ -14,7 +14,7 @@ const Preview = (props) => {
         a.click();
         document.body.removeChild(a);
       }
-console.log('props.flex: ', props.flex)
+
   return props.flex ?
     (<div id="flex" style={{display: "flex"}}>
         <div className="flex">
