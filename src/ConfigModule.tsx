@@ -13,7 +13,6 @@ import NftFetch from "./NftFetch.js";
 import Preview from "./preview";
 import algorandGlobalSelectors from "./redux/algorand/global/globalSelctors";
 
-
 let flipped = true;
 
 const prevResponse = [{ hash: "none yet" }];
@@ -82,6 +81,22 @@ function ConfigModule() {
   const [isDisabled4, setIsDisabled4] = useState(true);
   const [isDisabled5, setIsDisabled5] = useState(true);
   const [isDisabled6, setIsDisabled6] = useState(true);
+  const [connected2, setConnected2] = useState(true);
+  const [connected4, setConnected4] = useState(false);
+  const [inputAmount, setInputAmount] = useState("");
+  const [name, setName] = useState("");
+  const [inputManager, setInputManager] = useState("");
+  const [decimals, setDecimals] = useState("");
+  const [description, setDescription] = useState("");
+  const [inputNote, setInputNote] = useState("");
+  const [inputAssetUrl, setInputAssetUrl] = useState("template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}");
+  const [inputAssetUrlPlaceholder, setInputAssetUrlPlaceholder] = useState("template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}");
+  const [unitName, setUnitName] = useState("");
+  const [inputReserve, setInputReserve] = useState("55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4");
+  const [inputAssetMetadataHash, setInputAssetMetadataHash] = useState("");
+  const [flexHr, setFlexHr] = useState(false);
+  const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
+  const [fetchButtonVisible, setFetchButtonVisible] = useState(false);
   const [jss6, setJss6] = useState("block");
 
   useEffect(() => {
@@ -91,8 +106,12 @@ function ConfigModule() {
         Pipeline.address &&
         Pipeline.address !== ""
       ) {
+        window.pipeAddress = Pipeline.address;
+        setAddress(Pipeline.address);
         setConnected(true);
       } else {
+        window.pipeAddress = ""
+        setAddress("");
         setConnected(false);
       }
     }
@@ -163,6 +182,7 @@ function ConfigModule() {
     switch (key) {
       case "name":
         if (value.length <= 32) {
+          setName(value)
           proceed();
         } else {
           failed("Asset Name Max size is 32 characters");
@@ -170,6 +190,7 @@ function ConfigModule() {
         break;
       case "unitName":
         if (value.length <= 8) {
+          setUnitName(value)
           proceed();
         } else {
           failed("Asset Unit Name can not exceed 8 letters");
@@ -177,6 +198,7 @@ function ConfigModule() {
         break;
       case "decimals":
         if (value <= 19) {
+          setDecimals(value)
           proceed();
         } else {
           failed("Asset decimals can not exceed 19");
@@ -184,6 +206,7 @@ function ConfigModule() {
         break;
       case "description":
         if (value.length <= 1000) {
+          setDescription(value)
           proceed();
         } else {
           failed("Asset description can not exceed 1000 characters");
@@ -218,45 +241,22 @@ function ConfigModule() {
   }
 
   async function createAsa() {
-    const connected2 = document.getElementById("connected2");
-    const connected4 = document.getElementById("connected4");
-    const inputAmount = document.getElementById("input-amount");
-    const name = document.getElementById("name");
-    const decimals = document.getElementById("decimals");
-    const inputNote = document.getElementById("input-note");
-    const inputAssetUrl = document.getElementById("input-asset-url");
-    const unitName = document.getElementById("unitName");
-    const inputReserve = document.getElementById("input-reserve");
-    const inputManager = document.getElementById("input-manager");
-    const inputAssetMetadataHash = document.getElementById("input-assetMetadataHash");
-    const flex = document.getElementById("flex");
-    const flexHr = document.getElementById("flex-hr");
-    const assetIndex = document.getElementById("assetIndex");
+    asaData.amount = parseInt(inputAmount);
+    asaData.assetName = name;
+    asaData.creator = inputManager;
+    asaData.decimals = parseInt(decimals);
+    asaData.note = inputNote;
+    asaData.assetURL = inputAssetUrl;
+    asaData.unitName = unitName;
+    asaData.reserve = inputReserve;
+    asaData.manager = inputManager;
+    // asaData.clawback = inputClawback
+    // asaData.freeze = inputFreeze
+    asaData.assetMetadataHash = inputAssetMetadataHash;
 
-    if(connected2 instanceof HTMLInputElement && connected4 instanceof HTMLInputElement &&
-        inputAmount instanceof HTMLInputElement && name instanceof HTMLInputElement &&
-        inputManager instanceof HTMLInputElement && decimals instanceof HTMLInputElement &&
-        inputNote instanceof HTMLInputElement && inputAssetUrl instanceof HTMLInputElement &&
-        unitName instanceof HTMLInputElement && inputReserve instanceof HTMLInputElement &&
-        inputManager instanceof HTMLInputElement && inputAssetMetadataHash instanceof HTMLInputElement &&
-        flex instanceof HTMLInputElement && flexHr instanceof HTMLInputElement && assetIndex instanceof HTMLInputElement) {
-      connected2.style.display = "none";
-      connected4.style.display = "flex";
-      asaData.amount = parseInt(inputAmount.value);
-      asaData.assetName = name.value;
-      asaData.creator = inputManager.value;
-      asaData.decimals = parseInt(decimals.value);
-      asaData.note = inputNote.value;
-      asaData.assetURL = inputAssetUrl.value;
-      asaData.unitName = unitName.value;
-      asaData.reserve = inputReserve.value;
-      asaData.manager = inputManager.value;
-      // asaData.clawback = document.getElementById("input-clawback").value
-      // asaData.freeze = document.getElementById("input-freeze").value
-      asaData.assetMetadataHash = inputAssetMetadataHash.value;
-
-      let params = await Pipeline.getParams();
-
+    let params = await Pipeline.getParams();
+    const assetIndex = document.getElementById("assetIndex")
+    if(assetIndex instanceof HTMLInputElement) {
       let txn = algosdk.makeAssetConfigTxn(
           Pipeline.address,
           1000,
@@ -292,10 +292,9 @@ function ConfigModule() {
             Pipeline.alerts
         );
         console.log(response);
-        flex.style.display = "flex";
-        flexHr.style.display = "block";
-        connected2.style.display = "none";
-        connected4.style.display = "none";
+        setFlexHr(true);
+        setConnected2(false);
+        setConnected4(false);
         return response;
       } catch (error) {
         console.log(error);
@@ -304,17 +303,14 @@ function ConfigModule() {
   }
 
   function toggle19() {
-    const fetchButton = document.getElementById("fetchButton");
-    if(fetchButton instanceof HTMLInputElement) {
-      if (flipped) {
-        setJss6("none");
-        fetchButton.style.display = "none";
-      } else {
-        setJss6("block");
-        fetchButton.style.display = "block";
-      }
-      flipped = !flipped;
+    if (flipped) {
+      setJss6("none");
+      setFetchButtonVisible(false)
+    } else {
+      setJss6("block");
+      setFetchButtonVisible(true)
     }
+    flipped = !flipped;
   }
 
   return (
@@ -361,7 +357,7 @@ function ConfigModule() {
                         </label>
                       </div>
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
-                        <NftFetch />
+                        <NftFetch fetchButtonVisible={fetchButtonVisible} />
                         <div className="jss16" style={{ display: jss6 }}>
                           <label htmlFor="name">
                             <span className="unit-name-label">Asset Name </span>
@@ -439,7 +435,7 @@ function ConfigModule() {
                                 <input
                                   type="number"
                                   placeholder="0"
-                                  defaultValue=""
+                                  defaultValue={0}
                                   onChange={updateJSON}
                                   pattern=""
                                   id="decimals"
@@ -544,8 +540,9 @@ function ConfigModule() {
                                   id="toggleInputAssetURLSwitch"
                                   name="toggleInputAssetURL"
                                   onClick={handleClick5}
+                                  onChange={(event) => setToggleInputAssetURLSwitch(event.target.checked)}
                                   className="custom-control-input"
-                                  defaultChecked={false}
+                                  checked={toggleInputAssetURLSwitch}
                                 />
                                 <label
                                   className="custom-control-label"
@@ -557,11 +554,11 @@ function ConfigModule() {
                           <input
                             id="input-asset-url"
                             name="assetURL"
-                            placeholder="template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}"
+                            placeholder={inputAssetUrlPlaceholder}
                             type="text"
                             className="custom-input-size form-control"
                             aria-invalid="false"
-                            defaultValue="template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}"
+                            onChange={(event) => setInputAssetUrl(event.target.value)}
                             disabled={isDisabled5}
                           />
                           <div className="invalid-feedback">
@@ -596,7 +593,7 @@ function ConfigModule() {
                             disabled={isDisabled4}
                             className="custom-input-size form-control"
                             aria-invalid="false"
-                            defaultValue="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
+                            onChange={(event) => setInputReserve(event.target.value)}
                           />
                           <div className="invalid-feedback">
                             Reserve Address is invalid
@@ -614,6 +611,7 @@ function ConfigModule() {
                             className="note-input-field form-control"
                             aria-invalid="false"
                             id="input-note"
+                            onChange={(event) => setInputNote(event.target.value)}
                             defaultValue={""}
                           />
                           <div className="invalid-feedback">
@@ -666,6 +664,7 @@ function ConfigModule() {
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
+                                    onChange={(event) => setInputAssetMetadataHash(event.target.value)}
                                     defaultValue=""
                                   />
                                   <div className="invalid-feedback">
@@ -702,6 +701,7 @@ function ConfigModule() {
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
+                                    onChange={(event) => setInputManager(event.target.value)}
                                     disabled={isDisabled3}
                                   />
                                   <div className="invalid-feedback">
@@ -797,6 +797,7 @@ function ConfigModule() {
                               placeholder={"1"}
                               type="text"
                               defaultValue={1}
+                              onChange={(event) => setInputAmount(event.target.value)}
                               inputMode="numeric"
                             />
                           </div>
@@ -830,8 +831,8 @@ function ConfigModule() {
                         </span>
                       </button>}
 
-                      {connected && <div id="connected">
-                        <div id={"connected2"}>
+                      {connected && <div id="connected" style={{display: "flex"}}>
+                        {connected2 && <div id={"connected2"} style={{display: "flex"}}>
                           <button
                             hidden={true}
                             onClick={async () => {
@@ -852,8 +853,8 @@ function ConfigModule() {
                           >
                             <span className="MuiButton-label">Modify NFT</span>
                           </button>
-                        </div>
-                        <div id="connected4" style={{ display: "none" }}>
+                        </div>}
+                        {connected4 && <div id="connected4" style={{display: "flex"}}>
                           <button
                             className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 jss22 Mui-disabled Mui-disabled"
                             tabIndex={-1}
@@ -885,9 +886,8 @@ function ConfigModule() {
                               </div>
                             </span>
                           </button>
-                        </div>
-                        <hr id="flex-hr" style={{ display: "none" }} />
-
+                        </div>}
+                        {flexHr && <hr id="flex-hr" style={{display: "flex"}}/>}
                         <Preview name={asa} url={asa} imgUrl={urlHash} />
                       </div>}
                     </div>

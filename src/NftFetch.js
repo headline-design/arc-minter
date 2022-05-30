@@ -53,19 +53,23 @@ class NftFetch extends Component {
 
   render() {
     return <div className="jss16">
-      <label for="assetIndex">Asset Index</label>
+      <label htmlFor="assetIndex">Asset Index</label>
       <input className="metadata-object" type="number" style={{marginBottom:"unset"}} defaultValue={756312877} id="assetIndex"></input>
-      <div id="fetchButton" style={{marginTop:"1rem"}}>
-      <button  className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
-        onClick={this.asaToIpfsJSON}
-      >Fetch Metadata</button>
-      </div>
+      {this.props.fetchButtonVisible &&
+          <div id="fetchButton" style={{display: "block", marginTop: "1rem"}}>
+            <button className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
+                    onClick={this.asaToIpfsJSON}
+            >
+              Fetch Metadata
+            </button>
+          </div>
+      }
       <div id="preview0" style={{display:"none", marginTop:"2rem"}}>
       <div id="list2" style={{width:"100%"}}>
          
                 <ul style={{display:"flex"}} className="jss29" id="img-preview-block2">
                            
-              <div src="img/post-add.svg" id="imageParent" width="auto" height="70px" alt="preview-img" />
+              <img src="img/post-add.svg" id="imageParent" width="auto" height="70px" alt="preview-img" />
               <li id="preview2"><strong className="fileName"></strong><br/> </li>
              </ul> 
           

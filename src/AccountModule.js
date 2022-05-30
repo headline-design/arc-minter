@@ -33,9 +33,9 @@ const AccountModule = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [modalImgProps, setModalImgProps] = useState({});
-  const [address, setAddress] = React.useState("");
+  const [address, setAddress] = useState("");
   const sw = new SessionWallet(conf.network);
-  const [sessionWallet] = React.useState(sw);
+  const [sessionWallet] = useState(sw);
 
   function checkForAddress() {
     if (address !== window.pipeAddress) {
@@ -54,28 +54,28 @@ const AccountModule = (props) => {
     unitName: "1NFT",
   };
 
-  const [claimable, setClaimable] = React.useState(true);
+  const [claimable, setClaimable] = useState(true);
   const [advancedOptions, setAdvancedOptions] = useState("none");
 
   const params = new URLSearchParams(window.location.search);
   const escrow = params.get("escrow");
   const addr = params.get("addr");
   const secret = params.get("secret");
-  const [hash, setHash] = React.useState("");
-  const [asa, setAsa] = React.useState("");
-  const [asaId, setAsaId] = React.useState("");
-  const [urlHash, setUrlHash] = React.useState("");
+  const [hash, setHash] = useState("");
+  const [asa, setAsa] = useState("");
+  const [asaId, setAsaId] = useState("");
+  const [urlHash, setUrlHash] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [isDisabled2, setIsDisabled2] = useState(true);
   const [isDisabled3, setIsDisabled3] = useState(true);
   const [isDisabled4, setIsDisabled4] = useState(true);
   const [isDisabled5, setIsDisabled5] = useState(true);
   const [isDisabled6, setIsDisabled6] = useState(true);
-  const [metaData, setMetaData] = React.useState("");
-  const [metaData2, setMetaData2] = React.useState("");
+  const [metaData, setMetaData] = useState("");
+  const [metaData2, setMetaData2] = useState("");
   const [jss6, setJss6] = useState("block");
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (Pipeline.address !== "") {
       document.getElementById("not-connected").style.display = "none";
       document.getElementById("connected").style.display = "block";
@@ -282,7 +282,7 @@ const AccountModule = (props) => {
             <div id="not-connected"></div>
           </div>
           <Grid item xs={12} sm={4} md={3}>
-            <NFTFetch2></NFTFetch2>
+            <NFTFetch2/>
           </Grid>
           <NFTCard
             setModalState={setModalState}

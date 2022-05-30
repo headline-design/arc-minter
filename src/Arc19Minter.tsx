@@ -133,10 +133,10 @@ function Arc19Minter() {
   const [decimals, setDecimals] = useState("");
   const [description, setDescription] = useState("");
   const [inputNote, setInputNote] = useState("");
-  const [inputAssetUrl, setInputAssetUrl] = useState("");
+  const [inputAssetUrl, setInputAssetUrl] = useState("template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}");
   const [inputAssetUrlPlaceholder, setInputAssetUrlPlaceholder] = useState("template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}");
   const [unitName, setUnitName] = useState("");
-  const [inputReserve, setInputReserve] = useState("");
+  const [inputReserve, setInputReserve] = useState("55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4");
   const [inputAssetMetadataHash, setInputAssetMetadataHash] = useState("");
   const [flexHr, setFlexHr] = useState(false);
   const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
@@ -339,7 +339,7 @@ function Arc19Minter() {
         ? inputReserve
         : Pipeline.address;
     asaData.manager = inputManager;
-    // asaData.clawback = input-clawback
+    // asaData.clawback = inputClawback
     // asaData.freeze = inputFreeze
     asaData.assetMetadataHash = inputAssetMetadataHash;
     let asaId = await Pipeline.createAsa(asaData);
@@ -714,7 +714,6 @@ function Arc19Minter() {
                             className="custom-input-size form-control"
                             aria-invalid="false"
                             onChange={(event) => setInputAssetUrl(event.target.value)}
-                            defaultValue="template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}"
                             disabled={isDisabled5}
                           />
                           <div className="invalid-feedback">
@@ -750,7 +749,6 @@ function Arc19Minter() {
                             className="custom-input-size form-control"
                             aria-invalid="false"
                             onChange={(event) => setInputReserve(event.target.value)}
-                            defaultValue="55TOUZSM6AOK7PCUT7O5SWYSNUDDGTOEGQQBKZPX32I6RPAAW4KUSI56C4"
                           />
                           <div className="invalid-feedback">
                             Reserve Address is invalid
