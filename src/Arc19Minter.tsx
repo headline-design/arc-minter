@@ -82,39 +82,30 @@ window.defaultJSON = {
 };
 
 function Arc19Minter() {
-  const globalPipeState = useSelector(
-    algorandGlobalSelectors.selectPipeConnectState
-  );
-  const sw = new SessionWallet(conf.network);
-
-  function checkForAddress() {
-    if (address !== window.pipeAddress) {
-      setAddress(window.pipeAddress);
-    }
-  }
-
   const [nft, setNFT] = useState({
     id: 0,
     url: "pixel-astro.png",
     name: "TBD",
   });
+  const params = new URLSearchParams(window.location.search);
+  const escrow = params.get("escrow");
+  const addr = params.get("addr");
+  const secret = params.get("secret");
+  const sw = new SessionWallet(conf.network);
+  const globalPipeState = useSelector(
+    algorandGlobalSelectors.selectPipeConnectState
+  );
   const [preview, setPreview] = useState("");
   const [connected, setConnected] = useState(sw.connected());
   const [claimable, setClaimable] = useState(true);
   const [claimed, setClaimed] = useState(false);
   const [address, setAddress] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [signed, setSigned] = useState(false);
   const [open, setOpen] = useState(false);
   const [metaData, setMetaData] = useState("");
   const [metaData2, setMetaData2] = useState("");
   const [advancedOptions, setAdvancedOptions] = useState("none");
-
-  const params = new URLSearchParams(window.location.search);
-  const escrow = params.get("escrow");
-  const addr = params.get("addr");
-  const secret = params.get("secret");
   const [hash, setHash] = useState("");
   const [asa, setAsa] = useState("");
   const [asaId, setAsaId] = useState("");
@@ -141,9 +132,65 @@ function Arc19Minter() {
   const [flex, setFlex] = useState(false);
   const [flexHr, setFlexHr] = useState(false);
   const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
+  const [checkedA, setCheckedA] = useState(false);
+  const [imageMimetypeSwitch, setImageMimetypeSwitch] = useState(false);
+  const [imageMimetype, setImageMimetype] = useState("");
+  const [inputReserveSwitch, setInputReserveSwitch] = useState(false);
+  const [inputManagerSwitch, setInputManagerSwitch] = useState(false);
+  const [freezeSwitch, setFreezeSwitch] = useState(false);
+  const [clawbackSwitch, setClawbackSwitch] = useState(false);
+  const [freezeAddress, setFreezeAddress] = useState("");
+  const [clawbackAddress, setClawbackAddress] = useState("");
   const [jss6, setJss6] = useState("block");
-
   const [initial, setInitial] = useState(true);
+
+  useEffect(() => {
+    window.response1234 = [{ hash: "none yet" }];
+    const interval = setInterval(checkforResponse, 300);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (globalPipeState) {
+      if (
+          Pipeline.pipeConnector &&
+          Pipeline.address &&
+          Pipeline.address !== ""
+      ) {
+        window.pipeAddress = Pipeline.address;
+        setAddresses(Pipeline.address);
+        setConnected(true);
+      } else {
+        window.pipeAddress = ""
+        setAddresses("");
+        setConnected(false);
+      }
+    }
+  }, [globalPipeState]);
+
+  useEffect(() => {
+    if (address) {
+      setInputManager(address)
+    }
+  }, [address]);
+
+  useEffect(() => {
+    setClaimable(secret !== null && addr !== null && escrow !== null);
+  }, [escrow, addr, secret]);
+
+  const checkForAddress = () => {
+    if (address !== window.pipeAddress) {
+      setAddresses(window.pipeAddress);
+    }
+  }
+
+  const setAddresses = (connectedAddress: string) => {
+    if (connectedAddress) {
+      setAddress(connectedAddress);
+      setFreezeAddress(connectedAddress)
+      setClawbackAddress(connectedAddress)
+    }
+  }
 
   const handleClick = () => {
     setIsDisabled(!isDisabled);
@@ -179,40 +226,6 @@ function Arc19Minter() {
     }
     toggler = !toggler;
   }
-
-  useEffect(() => {
-    if (globalPipeState) {
-      if (
-        Pipeline.pipeConnector &&
-        Pipeline.address &&
-        Pipeline.address !== ""
-      ) {
-        window.pipeAddress = Pipeline.address;
-        setAddress(Pipeline.address);
-        setConnected(true);
-      } else {
-        window.pipeAddress = ""
-        setAddress("");
-        setConnected(false);
-      }
-    }
-  }, [globalPipeState]);
-
-  useEffect(() => {
-    setClaimable(secret !== null && addr !== null && escrow !== null);
-  }, [escrow, addr, secret]);
-
-  useEffect(() => {
-    window.response1234 = [{ hash: "none yet" }];
-    const interval = setInterval(checkforResponse, 300);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (address) {
-      setInputManager(address)
-    }
-  }, [address]);
 
   function toggle() {
     if (advancedOptions === "none") {
@@ -522,6 +535,8 @@ function Arc19Minter() {
                           id="checkedA"
                           hidden
                           className="jss35"
+                          checked={checkedA}
+                          onChange={(event) => setCheckedA(event.target.checked)}
                         />
                         <label htmlFor="checkedA" className="jss84">
                           <div onClick={toggle19}>ARC19</div>
@@ -625,7 +640,8 @@ function Arc19Minter() {
                                     name="toggleInputAssetURL"
                                     onClick={handleClick6}
                                     className="custom-control-input"
-                                    defaultChecked={false}
+                                    checked={imageMimetypeSwitch}
+                                    onChange={(event) => setImageMimetypeSwitch(event.target.checked)}
                                   />
                                   <label
                                     className="custom-control-label"
@@ -648,8 +664,13 @@ function Arc19Minter() {
                               <input
                                 type="text"
                                 placeholder="image/jpeg"
-                                defaultValue=""
-                                onChange={updateJSON}
+                                value={imageMimetype}
+                                onChange={
+                                  (event) => {
+                                    updateJSON(event)
+                                    setImageMimetype(event.target.value)
+                                  }
+                                }
                                 pattern=""
                                 id="image_mimetype"
                                 disabled={isDisabled6}
@@ -748,7 +769,8 @@ function Arc19Minter() {
                                   name="toggleReserve"
                                   onClick={handleClick4}
                                   className="custom-control-input"
-                                  defaultChecked={false}
+                                  checked={inputReserveSwitch}
+                                  onChange={(event) => setInputReserveSwitch(event.target.checked)}
                                 />
                                 <label
                                   className="custom-control-label"
@@ -787,7 +809,7 @@ function Arc19Minter() {
                             aria-invalid="false"
                             id="input-note"
                             onChange={(event) => setInputNote(event.target.value)}
-                            defaultValue={""}
+                            value={inputNote}
                           />
                           <div className="invalid-feedback">
                             Note can not exceed 1000 bytes.
@@ -859,7 +881,8 @@ function Arc19Minter() {
                                           name="toggleManager"
                                           onClick={handleClick3}
                                           className="custom-control-input"
-                                          defaultChecked={false}
+                                          checked={inputManagerSwitch}
+                                          onChange={(event) => setInputManagerSwitch(event.target.checked)}
                                         />
                                         <label
                                           className="custom-control-label"
@@ -894,7 +917,8 @@ function Arc19Minter() {
                                           name="toggleFreeze"
                                           onClick={handleClick2}
                                           className="custom-control-input"
-                                          defaultChecked={false}
+                                          checked={freezeSwitch}
+                                          onChange={(event) => setFreezeSwitch(event.target.checked)}
                                         />
                                         <label
                                           className="custom-control-label"
@@ -905,7 +929,8 @@ function Arc19Minter() {
                                   </div>
                                   <input
                                     name="assetFreeze"
-                                    value={address}
+                                    value={freezeAddress}
+                                    onChange={(event) => setFreezeAddress(event.target.value)}
                                     placeholder="Freeze Address"
                                     type="text"
                                     className="custom-input-size form-control"
@@ -929,7 +954,8 @@ function Arc19Minter() {
                                           name="toggleClawback"
                                           onClick={handleClick}
                                           className="custom-control-input"
-                                          defaultChecked={false}
+                                          checked={clawbackSwitch}
+                                          onChange={(event) => setClawbackSwitch(event.target.checked)}
                                         />
                                         <label
                                           className="custom-control-label"
@@ -941,7 +967,8 @@ function Arc19Minter() {
                                   <input
                                     name="assetClawback"
                                     id="assetClawback"
-                                    value={address}
+                                    value={clawbackAddress}
+                                    onChange={(event) => setClawbackAddress(event.target.value)}
                                     type="text"
                                     className="custom-input-size form-control"
                                     placeholder="Clawback address"

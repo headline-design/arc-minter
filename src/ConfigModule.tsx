@@ -50,31 +50,23 @@ window.defaultJSON = {
 };
 
 function ConfigModule() {
-  const globalPipeState = useSelector(
-    algorandGlobalSelectors.selectPipeConnectState
-  );
   const sw = new SessionWallet(conf.network);
-
-  function checkForAddress() {
-    if (address !== window.pipeAddress) {
-      setAddress(window.pipeAddress);
-    }
-  }
-
-  const [claimable, setClaimable] = React.useState(true);
-  const [address, setAddress] = React.useState("");
-  const [advancedOptions, setAdvancedOptions] = useState("none");
-
   const params = new URLSearchParams(window.location.search);
   const escrow = params.get("escrow");
   const addr = params.get("addr");
   const secret = params.get("secret");
+  const globalPipeState = useSelector(
+    algorandGlobalSelectors.selectPipeConnectState
+  );
+  const [claimable, setClaimable] = useState(true);
+  const [address, setAddress] = useState("");
+  const [advancedOptions, setAdvancedOptions] = useState("none");
   const [preview, setPreview] = useState("");
   const [connected, setConnected] = useState(sw.connected());
-  const [hash, setHash] = React.useState("");
-  const [asa, setAsa] = React.useState("");
-  const [asaId, setAsaId] = React.useState("");
-  const [urlHash, setUrlHash] = React.useState("");
+  const [hash, setHash] = useState("");
+  const [asa, setAsa] = useState("");
+  const [asaId, setAsaId] = useState("");
+  const [urlHash, setUrlHash] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [isDisabled2, setIsDisabled2] = useState(true);
   const [isDisabled3, setIsDisabled3] = useState(true);
@@ -98,7 +90,25 @@ function ConfigModule() {
   const [flexHr, setFlexHr] = useState(false);
   const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
   const [fetchButtonVisible, setFetchButtonVisible] = useState(true);
+  const [uploadFile, setUploadFile] = useState("");
+
+  const [checkedA, setCheckedA] = useState(false);
+  const [imageMimetypeSwitch, setImageMimetypeSwitch] = useState(false);
+  const [imageMimetype, setImageMimetype] = useState("");
+  const [inputReserveSwitch, setInputReserveSwitch] = useState(false);
+  const [inputManagerSwitch, setInputManagerSwitch] = useState(false);
+  const [freezeSwitch, setFreezeSwitch] = useState(false);
+  const [clawbackSwitch, setClawbackSwitch] = useState(false);
+  const [freezeAddress, setFreezeAddress] = useState("");
+  const [clawbackAddress, setClawbackAddress] = useState("");
+
   const [jss6, setJss6] = useState("block");
+
+  useEffect(() => {
+    window.response1234 = [{ hash: "none yet" }];
+    const interval = setInterval(checkforResponse, 300);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (globalPipeState) {
@@ -108,11 +118,11 @@ function ConfigModule() {
         Pipeline.address !== ""
       ) {
         window.pipeAddress = Pipeline.address;
-        setAddress(Pipeline.address);
+        setAddresses(Pipeline.address);
         setConnected(true);
       } else {
         window.pipeAddress = ""
-        setAddress("");
+        setAddresses("");
         setConnected(false);
       }
     }
@@ -123,6 +133,16 @@ function ConfigModule() {
       setInputManager(address)
     }
   }, [address]);
+
+  useEffect(() => {
+    setClaimable(secret !== null && addr !== null && escrow !== null);
+  }, [escrow, addr, secret]);
+
+  function checkForAddress() {
+    if (address !== window.pipeAddress) {
+      setAddresses(window.pipeAddress);
+    }
+  }
 
   const handleClick = () => {
     setIsDisabled(!isDisabled);
@@ -148,15 +168,13 @@ function ConfigModule() {
     setIsDisabled6(!isDisabled6);
   };
 
-  useEffect(() => {
-    setClaimable(secret !== null && addr !== null && escrow !== null);
-  }, [escrow, addr, secret]);
-
-  useEffect(() => {
-    window.response1234 = [{ hash: "none yet" }];
-    const interval = setInterval(checkforResponse, 300);
-    return () => clearInterval(interval);
-  }, []);
+  const setAddresses = (connectedAddress: string) => {
+    if (connectedAddress) {
+      setAddress(connectedAddress);
+      setFreezeAddress(connectedAddress)
+      setClawbackAddress(connectedAddress)
+    }
+  }
 
   function toggle() {
     if (advancedOptions === "none") {
@@ -362,6 +380,8 @@ function ConfigModule() {
                           id="checkedA"
                           hidden
                           className="jss35"
+                          checked={checkedA}
+                          onChange={(event) => setCheckedA(event.target.checked)}
                         />
                         <label htmlFor="checkedA" className="jss84">
                           <div onClick={toggle19}>ARC19</div>
@@ -402,6 +422,8 @@ function ConfigModule() {
                             accept="audio/*, video/*, image/*, .html, .pdf"
                             id="upload-file"
                             hidden={true}
+                            value={uploadFile}
+                            onChange={(event) => setUploadFile(event.target.value)}
                           />
 
                           <br />
@@ -433,7 +455,8 @@ function ConfigModule() {
                                     name="toggleInputAssetURL"
                                     onClick={handleClick6}
                                     className="custom-control-input"
-                                    defaultChecked={false}
+                                    checked={imageMimetypeSwitch}
+                                    onChange={(event) => setImageMimetypeSwitch(event.target.checked)}
                                   />
                                   <label
                                     className="custom-control-label"
@@ -447,7 +470,7 @@ function ConfigModule() {
                                 <input
                                   type="number"
                                   placeholder="0"
-                                  defaultValue={0}
+                                  value={decimals}
                                   onChange={updateJSON}
                                   pattern=""
                                   id="decimals"
@@ -456,8 +479,13 @@ function ConfigModule() {
                               <input
                                 type="text"
                                 placeholder="image/jpeg"
-                                defaultValue=""
-                                onChange={updateJSON}
+                                value={imageMimetype}
+                                onChange={
+                                  (event) => {
+                                    updateJSON(event)
+                                    setImageMimetype(event.target.value)
+                                  }
+                                }
                                 pattern=""
                                 id="image_mimetype"
                                 disabled={isDisabled6}
@@ -589,7 +617,8 @@ function ConfigModule() {
                                   name="toggleReserve"
                                   onClick={handleClick4}
                                   className="custom-control-input"
-                                  defaultChecked={false}
+                                  checked={inputReserveSwitch}
+                                  onChange={(event) => setInputReserveSwitch(event.target.checked)}
                                 />
                                 <label
                                   className="custom-control-label"
@@ -626,7 +655,7 @@ function ConfigModule() {
                             aria-invalid="false"
                             id="input-note"
                             onChange={(event) => setInputNote(event.target.value)}
-                            defaultValue={""}
+                            value={inputNote}
                           />
                           <div className="invalid-feedback">
                             Note can not exceed 1000 bytes.
@@ -698,7 +727,8 @@ function ConfigModule() {
                                           name="toggleManager"
                                           onClick={handleClick3}
                                           className="custom-control-input"
-                                          defaultChecked={false}
+                                          checked={inputManagerSwitch}
+                                          onChange={(event) => setInputManagerSwitch(event.target.checked)}
                                         />
                                         <label
                                           className="custom-control-label"
@@ -733,7 +763,8 @@ function ConfigModule() {
                                           name="toggleFreeze"
                                           onClick={handleClick2}
                                           className="custom-control-input"
-                                          defaultChecked={false}
+                                          checked={freezeSwitch}
+                                          onChange={(event) => setFreezeSwitch(event.target.checked)}
                                         />
                                         <label
                                           className="custom-control-label"
@@ -744,7 +775,8 @@ function ConfigModule() {
                                   </div>
                                   <input
                                     name="assetFreeze"
-                                    value={address}
+                                    value={freezeAddress}
+                                    onChange={(event) => setFreezeAddress(event.target.value)}
                                     placeholder="Freeze Address"
                                     type="text"
                                     className="custom-input-size form-control"
@@ -768,7 +800,8 @@ function ConfigModule() {
                                           name="toggleClawback"
                                           onClick={handleClick}
                                           className="custom-control-input"
-                                          defaultChecked={false}
+                                          checked={clawbackSwitch}
+                                          onChange={(event) => setClawbackSwitch(event.target.checked)}
                                         />
                                         <label
                                           className="custom-control-label"
@@ -780,7 +813,8 @@ function ConfigModule() {
                                   <input
                                     name="assetClawback"
                                     id="assetClawback"
-                                    value={address}
+                                    value={clawbackAddress}
+                                    onChange={(event) => setClawbackAddress(event.target.value)}
                                     type="text"
                                     className="custom-input-size form-control"
                                     placeholder="Clawback address"
