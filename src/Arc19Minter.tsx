@@ -141,6 +141,7 @@ function Arc19Minter() {
   const [clawbackSwitch, setClawbackSwitch] = useState(false);
   const [freezeAddress, setFreezeAddress] = useState("");
   const [clawbackAddress, setClawbackAddress] = useState("");
+  const [mintButtonDisabled, setMintButtonDisabled] = useState(true);
   const [jss6, setJss6] = useState("block");
   const [initial, setInitial] = useState(true);
 
@@ -175,10 +176,14 @@ function Arc19Minter() {
   }, [address]);
 
   useEffect(() => {
+    setMintButtonDisabled(requiredDataCheck())
+  }, [name, unitName]);
+
+  useEffect(() => {
     setClaimable(secret !== null && addr !== null && escrow !== null);
   }, [escrow, addr, secret]);
 
-  const checkForAddress = () => {
+  function checkForAddress() {
     if (address !== window.pipeAddress) {
       setAddresses(window.pipeAddress);
     }
@@ -497,7 +502,9 @@ function Arc19Minter() {
       </div>
     );
   }
-  
+
+  const requiredDataCheck = () => Boolean(!(name && name.length > 0 && name.length <= 32 && unitName && unitName.length > 0 && unitName.length <= 8))
+
   return (
     <div className="App" style={{ background: "#000" }}>
       <div className="container body-1">
@@ -1046,6 +1053,7 @@ function Arc19Minter() {
                               className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
                               tabIndex={-1}
                               style={{marginBottom: 30}}
+                              disabled={mintButtonDisabled}
                           >
                             <span className="MuiButton-label">Mint NFT</span>
                             <span id="countdown"></span>

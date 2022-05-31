@@ -91,7 +91,6 @@ function ConfigModule() {
   const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
   const [fetchButtonVisible, setFetchButtonVisible] = useState(true);
   const [uploadFile, setUploadFile] = useState("");
-
   const [checkedA, setCheckedA] = useState(false);
   const [imageMimetypeSwitch, setImageMimetypeSwitch] = useState(false);
   const [imageMimetype, setImageMimetype] = useState("");
@@ -101,7 +100,7 @@ function ConfigModule() {
   const [clawbackSwitch, setClawbackSwitch] = useState(false);
   const [freezeAddress, setFreezeAddress] = useState("");
   const [clawbackAddress, setClawbackAddress] = useState("");
-
+  const [mintButtonDisabled, setMintButtonDisabled] = useState(true);
   const [jss6, setJss6] = useState("block");
 
   useEffect(() => {
@@ -133,6 +132,10 @@ function ConfigModule() {
       setInputManager(address)
     }
   }, [address]);
+
+  useEffect(() => {
+    setMintButtonDisabled(requiredDataCheck())
+  }, [name, unitName]);
 
   useEffect(() => {
     setClaimable(secret !== null && addr !== null && escrow !== null);
@@ -342,6 +345,8 @@ function ConfigModule() {
     }
     flipped = !flipped;
   }
+
+  const requiredDataCheck = () => Boolean(!(name && name.length > 0 && name.length <= 32 && unitName && unitName.length > 0 && unitName.length <= 8))
 
   return (
     <div className="App" style={{ background: "#000" }}>
@@ -898,6 +903,7 @@ function ConfigModule() {
                             className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
                             tabIndex={-1}
                             style={{ marginBottom: 30 }}
+                            disabled={mintButtonDisabled}
                           >
                             <span className="MuiButton-label">Modify NFT</span>
                           </button>
