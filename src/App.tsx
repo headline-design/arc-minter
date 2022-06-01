@@ -1,24 +1,24 @@
 // @ts-nocheck
-import { Redirect, HashRouter, Route, Switch } from "react-router-dom";
-import React, { useState } from "react";
+import { Redirect, HashRouter, Route, Switch } from 'react-router-dom';
+import React, { useState } from 'react';
 import { configureReduxStores } from 'redux/store';
 import { Provider } from 'react-redux';
-import Arc19Minter from "./Arc19Minter";
-import ConfigModule from "./ConfigModule";
-import DocsModule from "./DocsModule";
-import Header from "./Header";
-import AccountModule from "./AccountModule";
+import Arc19Minter from './Arc19Minter';
+import ConfigModule from './ConfigModule';
+import DocsModule from './DocsModule';
+import Header from './Header';
+import AccountModule from './AccountModule';
 
 const store = configureReduxStores();
 
 function App() {
-  const [HeaderPromo, setHeaderPromo] = useState("true");
+  const [HeaderPromo, setHeaderPromo] = useState('true');
 
   function toggle() {
-    if (HeaderPromo === "none") {
-      setHeaderPromo("flex");
+    if (HeaderPromo === 'none') {
+      setHeaderPromo('flex');
     } else {
-      setHeaderPromo("none");
+      setHeaderPromo('none');
     }
   }
 

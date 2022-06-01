@@ -53,7 +53,8 @@ class IpfsUpload extends Component {
           
           <div id="upload_conf">
             <button type="button" className="box_button" id="buttonUpload">Upload<img
-              src="img/upload.png" /></button>
+              src="img/upload.png" />
+            </button>
 
               
             <div className="min-loading blue loading-hidden">
