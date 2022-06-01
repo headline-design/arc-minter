@@ -566,7 +566,10 @@ function ConfigModule() {
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                             <div className="jss16" style={{ display: jss6 }}>
                               <div>
-                                <HexToAlgo hash={hash}></HexToAlgo>
+                                <HexToAlgo
+                                  setInputReserve={setInputReserve}
+                                  hash={hash}
+                                ></HexToAlgo>
                               </div>
                               <JSONer
                                 callBack={function (data: any) {

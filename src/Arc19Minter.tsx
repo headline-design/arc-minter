@@ -729,7 +729,10 @@ function Arc19Minter() {
                             style={{ display: jss6 }}
                           >
                             <div className="jss16">
-                              <HexToAlgo hash={hash}></HexToAlgo>
+                              <HexToAlgo
+                                setInputReserve={setInputReserve}
+                                hash={hash}
+                              />
                               <JSONer
                                 callBack={function (data: any) {
                                   window.defaultJSON.properties = data;
