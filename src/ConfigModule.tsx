@@ -107,7 +107,7 @@ function ConfigModule() {
   const [clawbackSwitch, setClawbackSwitch] = useState(false);
   const [freezeAddress, setFreezeAddress] = useState('');
   const [clawbackAddress, setClawbackAddress] = useState('');
-  const [mintButtonDisabled, setMintButtonDisabled] = useState(true);
+  const [modifyButtonDisabled, setModifyButtonDisabled] = useState(true);
   const [jss6, setJss6] = useState('block');
 
   useEffect(() => {
@@ -141,7 +141,7 @@ function ConfigModule() {
   }, [address]);
 
   useEffect(() => {
-    setMintButtonDisabled(requiredDataCheck());
+    setModifyButtonDisabled(requiredDataCheck());
   }, [name, unitName]);
 
   useEffect(() => {
@@ -290,37 +290,36 @@ function ConfigModule() {
     // asaData.clawback = inputClawback
     // asaData.freeze = inputFreeze
     asaData.assetMetadataHash = inputAssetMetadataHash;
+    try {
+      let params = await Pipeline.getParams();
+      const assetIndex = document.getElementById('assetIndex');
+      if (assetIndex instanceof HTMLInputElement) {
+        let txn = algosdk.makeAssetConfigTxn(
+          Pipeline.address,
+          1000,
+          params.firstRound,
+          params.lastRound,
+          new Uint8Array(Buffer.from(asaData.note)),
+          params.genesisHash,
+          params.genesisID,
+          parseInt(assetIndex.value),
+          asaData.manager,
+          asaData.reserve,
+          undefined,
+          undefined,
+          false,
+        );
+        txn.fee = 1000;
 
-    let params = await Pipeline.getParams();
-    const assetIndex = document.getElementById('assetIndex');
-    if (assetIndex instanceof HTMLInputElement) {
-      let txn = algosdk.makeAssetConfigTxn(
-        Pipeline.address,
-        1000,
-        params.firstRound,
-        params.lastRound,
-        new Uint8Array(Buffer.from(asaData.note)),
-        params.genesisHash,
-        params.genesisID,
-        parseInt(assetIndex.value),
-        asaData.manager,
-        asaData.reserve,
-        undefined,
-        undefined,
-        false,
-      );
-      txn.fee = 1000;
+        let signedTxn = await Pipeline.sign(txn);
 
-      let signedTxn = await Pipeline.sign(txn);
+        let clientb = await configClient(
+          Pipeline.main,
+          Pipeline.EnableDeveloperAPI,
+          Pipeline,
+        );
+        let transServer = clientb.tranServer;
 
-      let clientb = await configClient(
-        Pipeline.main,
-        Pipeline.EnableDeveloperAPI,
-        Pipeline,
-      );
-      let transServer = clientb.tranServer;
-
-      try {
         let response = await sendTxns(
           signedTxn,
           transServer,
@@ -334,20 +333,22 @@ function ConfigModule() {
         setFlex(true);
         setFlexHr(true);
         return response;
-      } catch (error) {
-        console.log(error);
-        setConnected2(true);
-        setConnected4(false);
       }
+    } catch (error) {
+      console.log(error);
+      setConnected2(true);
+      setConnected4(false);
     }
   }
 
   function toggle19() {
     if (flipped) {
       setJss6('none');
+      setModifyButtonDisabled(false);
       setFetchButtonVisible(false);
     } else {
       setJss6('block');
+      setModifyButtonDisabled(true);
       setFetchButtonVisible(true);
     }
     flipped = !flipped;
@@ -982,7 +983,7 @@ function ConfigModule() {
                                 className="MuiButtonBase-root MuiButton-root MuiButton-text jss21 jss23 false"
                                 tabIndex={-1}
                                 style={{ marginBottom: 30 }}
-                                disabled={mintButtonDisabled}
+                                disabled={modifyButtonDisabled}
                               >
                                 <span className="MuiButton-label">
                                   Modify NFT
