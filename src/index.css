@@ -174,6 +174,48 @@ spam#info {
     margin-right: 5px
 }
 
+.networkToggleLabel {
+    border: 1px solid #c7cbd9;
+    cursor: pointer;
+    height: 40px;
+    width: 150px;
+    display: flex;
+    padding: 5px;
+    position: relative;
+    border-radius: 6px;
+    background-color: #fff
+}
+
+.jss34 div,.networkToggleLabel div {
+    color: #6e798f;
+    width: calc(50% - 2.5px);
+    z-index: 2;
+    position: relative;
+    font-size: 13px;
+    text-align: center;
+    transition: .3s ease;
+    font-weight: 600;
+    line-height: 30px;
+    border-radius: 5px
+}
+
+.jss34::after,.networkToggleLabel::after {
+    top: 4px;
+    left: 5px;
+    width: calc(50% - 7.5px);
+    height: 30px;
+    content: " ";
+    z-index: 1;
+    position: absolute;
+    transition: .3s ease;
+    border-radius: 5px;
+    background-color: #3e3b51
+}
+
+.networkToggleLabel div:first-child {
+    margin-right: 5px
+}
+
 .jss35:checked+label::after,.jss85:checked+label::after {
     left: calc(50% + 2.5px);
     transition: .3s ease
