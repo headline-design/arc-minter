@@ -77869,7 +77869,7 @@ function upload() {
             document.querySelector("#response").innerText = JSON.stringify(response, null, 2)
             updateList(fileChecksum(file), data[0].hash)
             uploadCount++
-            if (uploadCount == filesOk.length) {
+            if (uploadCount === filesOk.length) {
               document.querySelector('.min-loading.blue').classList.add('loading-hidden');  //stop loading event
               document.querySelector('button#buttonRemote').removeAttribute('disabled', '')
               document.querySelector('button#buttonLocal').removeAttribute('disabled', '')
@@ -78046,6 +78046,22 @@ function uploadJSON() {
             }
             )
           }
-let newButton = document.getElementById("JSONuploader")
-newButton.onclick = uploadJSON
 
+function docReady(fn) {
+    // see if DOM is already available
+    if (
+        document.readyState === 'complete' ||
+        document.readyState === 'interactive'
+    ) {
+        // call on next available tick
+        setTimeout(fn, 1);
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+
+// put into DOM only once
+docReady(function () {
+    let newButton = document.getElementById('JSONuploader');
+    newButton.onclick = uploadJSON;
+});

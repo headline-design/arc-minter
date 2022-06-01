@@ -9,7 +9,6 @@ import Pipeline from '@pipeline-ui-2/pipeline';
 import CID from 'cids';
 import NavLinks from './NavLinks';
 import { NONE_YET } from './utils/constants';
-import NetworkSwitch from './components/shared/NetworkSwitch';
 
 const prevResponse = [{ hash: NONE_YET }];
 
@@ -196,7 +195,7 @@ function Header() {
             <div>
               <NavLinks></NavLinks>
             </div>
-            <NetworkSwitch />
+       
             <div className="buttons">
               <AlgorandWalletConnector
                 darkMode={true}

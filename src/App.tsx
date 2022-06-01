@@ -8,6 +8,7 @@ import ConfigModule from './ConfigModule';
 import DocsModule from './DocsModule';
 import Header from './Header';
 import AccountModule from './AccountModule';
+import NetworkSwitch from './components/shared/NetworkSwitch';
 
 const store = configureReduxStores();
 
@@ -29,6 +30,8 @@ function App() {
           className="bg-primary-500 text-white w-full py-4 justify-center sm:justify-between sm:px-5 items-center relative header-flex"
           style={{ display: HeaderPromo }}
         >
+          <div className="jss1-2">
+            <div className="jss1-3">
           <div className="label-md mr-10 sm:mr-0 sm:max-w-[60%]">
             Built by HEADLINE
           </div>
@@ -36,34 +39,16 @@ function App() {
             href="https://www.twitter.com/headline_crypto"
             target="_blank"
             rel="noreferrer"
-            className="p-2 px-4 bg-white text-black label-sm rounded-full"
+            className="p-2 px-4 bg-white text-black label-sm rounded-full cta-rounded"
           >
             Learn More
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" stroke-width="1.5" d="M5 5h7v7"/><rect width="1.5" height="11.229" fill="#000" transform="rotate(45.006 -.565 15.703)"/></svg>
           </a>
-          <button
-            type="button"
-            onClick={toggle}
-            aria-label="Close"
-            className="absolute bp3-button bp3-minimal bp3-dialog-close-button"
-          >
-            <span
-              icon="small-cross"
-              aria-hidden="true"
-              className="bp3-icon bp3-icon-small-cross"
-            >
-              <svg
-                data-icon="small-cross"
-                width={20}
-                height={20}
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M11.41 10l3.29-3.29c.19-.18.3-.43.3-.71a1.003 1.003 0 00-1.71-.71L10 8.59l-3.29-3.3a1.003 1.003 0 00-1.42 1.42L8.59 10 5.3 13.29c-.19.18-.3.43-.3.71a1.003 1.003 0 001.71.71l3.29-3.3 3.29 3.29c.18.19.43.3.71.3a1.003 1.003 0 00.71-1.71L11.41 10z"
-                  fillRule="evenodd"
-                />
-              </svg>
-            </span>
-          </button>
+          </div>
+
+                 <NetworkSwitch />
+         
+          </div>
         </div>
 
         <HashRouter>

@@ -177,13 +177,14 @@ spam#info {
 .networkToggleLabel {
     border: 1px solid #c7cbd9;
     cursor: pointer;
-    height: 40px;
+    height: 36px;
     width: 150px;
     display: flex;
     padding: 5px;
     position: relative;
     border-radius: 6px;
-    background-color: #fff
+    background-color: #fff;
+    margin-bottom: 0px;
 }
 
 .jss34 div,.networkToggleLabel div {
@@ -195,7 +196,7 @@ spam#info {
     text-align: center;
     transition: .3s ease;
     font-weight: 600;
-    line-height: 30px;
+    line-height: 26px;
     border-radius: 5px
 }
 
@@ -203,7 +204,7 @@ spam#info {
     top: 4px;
     left: 5px;
     width: calc(50% - 7.5px);
-    height: 30px;
+    height: 26px;
     content: " ";
     z-index: 1;
     position: absolute;
@@ -3011,4 +3012,35 @@ button#help-text {
 .label-switch.help-switch {
     display: flex;
     justify-content: flex-start;
+}
+
+.jss1-2 {
+    margin: auto;
+    padding: 0;
+    max-width: 1080px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.jss1-3 {
+    display: flex;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    left: 0px;
+    width: 100%;
+}
+
+@media(max-width: 575px){
+    .cta-rounded {
+        display: none !important;
+    }
+}
+
+.cta-rounded {
+        display: flex;
+        grid-gap: 4px;
+        align-items: center;
 }
