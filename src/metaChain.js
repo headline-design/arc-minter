@@ -75,7 +75,8 @@ return (
               MetaChain
             </h1>
             <h6 className="MuiTypography-root MuiTypography-subtitle1">
-                    On-chain data sharding has arrived.
+                    On-chain data sharding has arrived <br>
+                    </br><i>(Testnet only)</i>
                   </h6>
             <div id="not-connected"></div>
           </div>
