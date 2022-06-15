@@ -8,16 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MyAlgoLogo } from './images/MyAlgo-logo';
 import { WalletConnectLogo } from './images/walletconnect-logo';
 import algorandGlobalActions from './redux/algorand/global/globalActions';
-import { algorandGlobalInitialData } from './redux/algorand/global/globalReducers';
 import algorandGlobalSelectors from './redux/algorand/global/globalSelctors';
 import authActions from './redux/auth/authActions';
+import { Networks } from './utils/constants';
+import { getCurrentGlobalPipeState } from './utils/functions';
 
 const _ = require('lodash');
 
 const wallet = Pipeline.init();
 
-export default function AlgorandWalletConnector(props) {
-  const { darkMode, address, sessionWallet, accts, connected, updateWallet } = props;
+export default function AlgorandWalletConnector(props: any) {
+  const { sessionWallet, accts, connected, updateWallet } = props;
   const dispatch = useDispatch();
   const globalPipeState = useSelector(algorandGlobalSelectors.selectPipeConnectState);
   const [walletConnected, setWalletConnected] = useState(connected);
@@ -25,7 +26,7 @@ export default function AlgorandWalletConnector(props) {
   const [pipeState, setPipeState] = useState({
     myAddress: '',
     checked: true,
-    labelNet: 'MainNet',
+    labelNet: Networks.MainNet,
   });
 
   const refresh = () => {
@@ -50,7 +51,7 @@ export default function AlgorandWalletConnector(props) {
         ...prevState,
         myAddress: globalPipeState.myAddress,
         checked: globalPipeState.mainNet,
-        labelNet: globalPipeState.mainNet ? 'MainNet' : 'TestNet',
+        labelNet: globalPipeState.mainNet ? Networks.MainNet : Networks.TestNet,
       }));
       if (Pipeline.pipeConnector && Pipeline.address && Pipeline.address !== '') {
         setWalletConnected(true);
@@ -59,19 +60,6 @@ export default function AlgorandWalletConnector(props) {
       }
     }
   }, [globalPipeState]);
-
-  function globalPipeStateChanged(newData) {
-    let changed = false;
-    Object.entries(newData).forEach(([key, value]) => {
-      if (globalPipeState[key] !== value) {
-        changed = true;
-      }
-    });
-    return changed;
-  }
-
-  const getPrevGlobalPipeState = () =>
-    _.isEmpty(globalPipeState) ? algorandGlobalInitialData.pipeConnectState : globalPipeState;
 
   function disconnectWallet() {
     dispatch(authActions.doDisconnect());
@@ -147,7 +135,7 @@ export default function AlgorandWalletConnector(props) {
               updateWallet(address);
               dispatch(
                 algorandGlobalActions.doPipeConnectChange({
-                  ...getPrevGlobalPipeState(),
+                  ...getCurrentGlobalPipeState(globalPipeState),
                   myAddress: address,
                   provider: 'WalletConnect',
                 }),
@@ -184,7 +172,7 @@ export default function AlgorandWalletConnector(props) {
               updateWallet(address);
               dispatch(
                 algorandGlobalActions.doPipeConnectChange({
-                  ...getPrevGlobalPipeState(),
+                  ...getCurrentGlobalPipeState(globalPipeState),
                   myAddress: address,
                   provider: 'myAlgoWallet',
                 }),
