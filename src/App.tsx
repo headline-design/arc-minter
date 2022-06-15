@@ -9,6 +9,7 @@ import DocsModule from './DocsModule';
 import Header from './Header';
 import AccountModule from './AccountModule';
 import NetworkSwitch from './components/shared/NetworkSwitch';
+import MetaChain from './metaChain'
 
 const store = configureReduxStores();
 
@@ -69,6 +70,9 @@ function App() {
               </Route>
               <Route exact strict path="/account">
                 <AccountModule />
+              </Route>
+              <Route exact strict path="/meta-chain">
+                <MetaChain />
               </Route>
             </Route>
           </Switch>
