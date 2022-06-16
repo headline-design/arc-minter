@@ -9,7 +9,7 @@ import DocsModule from './DocsModule';
 import Header from './Header';
 import AccountModule from './AccountModule';
 import NetworkSwitch from './components/shared/NetworkSwitch';
-import MetaChain from './metaChain'
+import MetaChain from './metaChain';
 
 const store = configureReduxStores();
 
@@ -33,22 +33,33 @@ function App() {
         >
           <div className="jss1-2">
             <div className="jss1-3">
-          <div className="label-md mr-10 sm:mr-0 sm:max-w-[60%]">
-            Built by HEADLINE
-          </div>
-          <a
-            href="https://www.twitter.com/headline_crypto"
-            target="_blank"
-            rel="noreferrer"
-            className="p-2 px-4 bg-white text-black label-sm rounded-full cta-rounded"
-          >
-            Learn More
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" stroke-width="1.5" d="M5 5h7v7"/><rect width="1.5" height="11.229" fill="#000" transform="rotate(45.006 -.565 15.703)"/></svg>
-          </a>
-          </div>
+              <div className="label-md mr-10 sm:mr-0 sm:max-w-[60%]">Built by HEADLINE</div>
+              <a
+                href="https://www.twitter.com/headline_crypto"
+                target="_blank"
+                rel="noreferrer"
+                className="p-2 px-4 bg-white text-black label-sm rounded-full cta-rounded"
+              >
+                Learn More
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  viewBox="0 0 16 16"
+                >
+                  <path stroke="#000" strokeWidth="1.5" d="M5 5h7v7" />
+                  <rect
+                    width="1.5"
+                    height="11.229"
+                    fill="#000"
+                    transform="rotate(45.006 -.565 15.703)"
+                  />
+                </svg>
+              </a>
+            </div>
 
-                 <NetworkSwitch />
-         
+            <NetworkSwitch />
           </div>
         </div>
 

@@ -1,4 +1,5 @@
 import actions from '../../algorand/global/globalActions';
+import { PIPECONNECT_STATE_KEY } from '../../../utils/constants';
 
 interface ReducerData {
   type: string;
@@ -7,44 +8,24 @@ interface ReducerData {
 
 interface PipeConnectState {
   myAddress?: string;
-  walletBalance?: string;
   mainNet?: boolean;
   provider?: string;
 }
 
 export const algorandGlobalInitialData = {
   pipeConnectState: {
-    myAddress:
-      JSON.parse(
-        String(localStorage.getItem('pipeConnectState')),
-      )?.myAddress || '',
-    walletBalance:
-      JSON.parse(
-        String(localStorage.getItem('pipeConnectState')),
-      )?.walletBalance || '0',
-    mainNet:
-      JSON.parse(
-        String(localStorage.getItem('pipeConnectState')),
-      )?.mainNet ?? true,
-    provider:
-      JSON.parse(
-        String(localStorage.getItem('pipeConnectState')),
-      )?.provider || '',
+    myAddress: JSON.parse(String(localStorage.getItem(PIPECONNECT_STATE_KEY)))?.myAddress || '',
+    mainNet: JSON.parse(String(localStorage.getItem(PIPECONNECT_STATE_KEY)))?.mainNet ?? false,
+    provider: JSON.parse(String(localStorage.getItem(PIPECONNECT_STATE_KEY)))?.provider || '',
   } as PipeConnectState,
   loading: false,
   marketCapData: [] as Array<any>,
   algoPriceData: [] as Array<any>,
 };
 
-export default (
-  state = algorandGlobalInitialData,
-  { type, payload }: ReducerData,
-) => {
+export default (state = algorandGlobalInitialData, { type, payload }: ReducerData) => {
   if (type === actions.PIPE_CONNECT_CHANGE) {
-    localStorage.setItem(
-      'pipeConnectState',
-      JSON.stringify(payload),
-    );
+    localStorage.setItem(PIPECONNECT_STATE_KEY, JSON.stringify(payload));
     return {
       ...state,
       pipeConnectState: payload,

@@ -1,46 +1,39 @@
 // @ts-nocheck
-import { Button, Classes, Dialog, HTMLSelect, Intent } from "@blueprintjs/core";
-import { IconName } from "@blueprintjs/icons";
-import Pipeline from "@pipeline-ui-2/pipeline";
-import { allowedWallets, SessionWallet } from "algorand-session-wallet";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { MyAlgoLogo } from "./images/MyAlgo-logo";
-import { WalletConnectLogo } from "./images/walletconnect-logo";
-import algorandGlobalActions from "./redux/algorand/global/globalActions";
-import { algorandGlobalInitialData } from "./redux/algorand/global/globalReducers";
-import algorandGlobalSelectors from "./redux/algorand/global/globalSelctors";
-import authActions from "./redux/auth/authActions";
+import { Button, Classes, Dialog, HTMLSelect, Intent } from '@blueprintjs/core';
+import { IconName } from '@blueprintjs/icons';
+import Pipeline from '@pipeline-ui-2/pipeline';
+import { allowedWallets, SessionWallet } from 'algorand-session-wallet';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { MyAlgoLogo } from './images/MyAlgo-logo';
+import { WalletConnectLogo } from './images/walletconnect-logo';
+import algorandGlobalActions from './redux/algorand/global/globalActions';
+import algorandGlobalSelectors from './redux/algorand/global/globalSelctors';
+import authActions from './redux/auth/authActions';
+import { Networks } from './utils/constants';
+import { getCurrentGlobalPipeState } from './utils/functions';
 
-const _ = require("lodash");
+const _ = require('lodash');
 
 const wallet = Pipeline.init();
 
-export default function AlgorandWalletConnector(props) {
-  const { darkMode, address, sessionWallet, accts, connected, updateWallet } =
-    props;
+export default function AlgorandWalletConnector(props: any) {
+  const { sessionWallet, accts, connected, updateWallet } = props;
   const dispatch = useDispatch();
-  const globalPipeState = useSelector(
-    algorandGlobalSelectors.selectPipeConnectState
-  );
+  const globalPipeState = useSelector(algorandGlobalSelectors.selectPipeConnectState);
   const [walletConnected, setWalletConnected] = useState(connected);
   const [selectorOpen, setSelectorOpen] = useState(false);
   const [pipeState, setPipeState] = useState({
-    myAddress: "",
-    walletBalance: "0",
+    myAddress: '',
     checked: true,
-    labelNet: "MainNet",
+    labelNet: Networks.MainNet,
   });
 
   const refresh = () => {
-    if (
-      Pipeline.pipeConnector &&
-      pipeState.myAddress &&
-      Pipeline.address !== ""
-    ) {
+    if (Pipeline.pipeConnector && pipeState.myAddress && Pipeline.address !== '') {
       updateWallet(sessionWallet);
     }
-  }
+  };
 
   useEffect(() => {
     if (pipeState.myAddress) {
@@ -57,36 +50,16 @@ export default function AlgorandWalletConnector(props) {
       setPipeState((prevState) => ({
         ...prevState,
         myAddress: globalPipeState.myAddress,
-        walletBalance: globalPipeState.walletBalance,
         checked: globalPipeState.mainNet,
-        labelNet: globalPipeState.mainNet ? "MainNet" : "TestNet",
+        labelNet: globalPipeState.mainNet ? Networks.MainNet : Networks.TestNet,
       }));
-      if (
-        Pipeline.pipeConnector &&
-        Pipeline.address &&
-        Pipeline.address !== ""
-      ) {
+      if (Pipeline.pipeConnector && Pipeline.address && Pipeline.address !== '') {
         setWalletConnected(true);
       } else {
         setWalletConnected(false);
       }
     }
   }, [globalPipeState]);
-
-  function globalPipeStateChanged(newData) {
-    let changed = false;
-    Object.entries(newData).forEach(([key, value]) => {
-      if (globalPipeState[key] !== value) {
-        changed = true;
-      }
-    });
-    return changed;
-  }
-
-  const getPrevGlobalPipeState = () =>
-    _.isEmpty(globalPipeState)
-      ? algorandGlobalInitialData.pipeConnectState
-      : globalPipeState;
 
   function disconnectWallet() {
     dispatch(authActions.doDisconnect());
@@ -104,11 +77,7 @@ export default function AlgorandWalletConnector(props) {
       return setSelectorOpen(false);
     }
 
-    const sw = new SessionWallet(
-      sessionWallet.network,
-      sessionWallet.permissionCallback,
-      choice
-    );
+    const sw = new SessionWallet(sessionWallet.network, sessionWallet.permissionCallback, choice);
 
     if (!(await sw.connect())) {
       sw.disconnect();
@@ -116,17 +85,15 @@ export default function AlgorandWalletConnector(props) {
 
     const interval = setInterval(() => {
       // If they've already walletConnected, we wont get an on connect, have to check here
-      const wc = localStorage.getItem("walletconnect");
-      if (wc === null || wc === undefined || wc === "") return;
+      const wc = localStorage.getItem('walletconnect');
+      if (wc === null || wc === undefined || wc === '') return;
 
       const wcObj = JSON.parse(wc);
       const accounts = wcObj.accounts;
       if (accounts.length > 0) {
         clearInterval(interval);
         sw.setAccountList(wcObj.accounts);
-        updateWallet(
-          new SessionWallet(sw.network, sw.permissionCallback, choice)
-        );
+        updateWallet(new SessionWallet(sw.network, sw.permissionCallback, choice));
       }
     }, 250);
 
@@ -143,7 +110,7 @@ export default function AlgorandWalletConnector(props) {
   const walletOptions = [];
   for (const [k, v] of Object.entries(allowedWallets)) {
     // NOTE: remove if you want other wallets
-    if (k !== "wallet-connect") continue;
+    if (k !== 'wallet-connect') continue;
 
     walletOptions.push(
       <li key={k}>
@@ -151,9 +118,9 @@ export default function AlgorandWalletConnector(props) {
           <Button
             minimal={true}
             style={{
-              color: "rgb(255 255 255 / 90%)",
-              border: "1px solid rgb(88 91 96)",
-              borderRadius: "12px",
+              color: 'rgb(255 255 255 / 90%)',
+              border: '1px solid rgb(88 91 96)',
+              borderRadius: '12px',
             }}
             intent="warning"
             id={k}
@@ -162,16 +129,16 @@ export default function AlgorandWalletConnector(props) {
             className="wallet-btn"
             outlined={true}
             onClick={async () => {
-              Pipeline.pipeConnector = "WalletConnect";
+              Pipeline.pipeConnector = 'WalletConnect';
               let address = await Pipeline.connect(wallet);
               window.pipeAddress = address;
               updateWallet(address);
               dispatch(
                 algorandGlobalActions.doPipeConnectChange({
-                  ...getPrevGlobalPipeState(),
+                  ...getCurrentGlobalPipeState(globalPipeState),
                   myAddress: address,
-                  provider: "WalletConnect",
-                })
+                  provider: 'WalletConnect',
+                }),
               );
             }}
           >
@@ -188,9 +155,9 @@ export default function AlgorandWalletConnector(props) {
           <Button
             id={k}
             style={{
-              color: "rgb(255 255 255 / 90%)",
-              border: "1px solid rgb(88 91 96)",
-              borderRadius: "12px",
+              color: 'rgb(255 255 255 / 90%)',
+              border: '1px solid rgb(88 91 96)',
+              borderRadius: '12px',
             }}
             intent="warning"
             large={true}
@@ -199,16 +166,16 @@ export default function AlgorandWalletConnector(props) {
             className="wallet-btn"
             outlined={true}
             onClick={async () => {
-              Pipeline.pipeConnector = "myAlgoWallet";
+              Pipeline.pipeConnector = 'myAlgoWallet';
               let address = await Pipeline.connect(wallet);
               window.pipeAddress = address;
               updateWallet(address);
               dispatch(
                 algorandGlobalActions.doPipeConnectChange({
-                  ...getPrevGlobalPipeState(),
+                  ...getCurrentGlobalPipeState(globalPipeState),
                   myAddress: address,
-                  provider: "myAlgoWallet",
-                })
+                  provider: 'myAlgoWallet',
+                }),
               );
             }}
           >
@@ -221,21 +188,21 @@ export default function AlgorandWalletConnector(props) {
             </div>
           </Button>
         </div>
-      </li>
+      </li>,
     );
   }
 
   const addr_list = accts.map((addr, idx) => {
     return (
       <option value={idx} key={idx}>
-        {addr.substr(0, 8)}...{" "}
+        {addr.substr(0, 8)}...{' '}
       </option>
     );
   });
 
   const iconprops = {
-    icon: "symbol-circle" as IconName,
-    intent: "success" as Intent,
+    icon: 'symbol-circle' as IconName,
+    intent: 'success' as Intent,
   };
 
   /**
@@ -253,9 +220,9 @@ export default function AlgorandWalletConnector(props) {
         <Button
           minimal={true}
           style={{
-            color: "#3e3b51",
-            borderColor: "rgb(123, 120, 255)",
-            borderRadius: "8px",
+            color: '#3e3b51',
+            borderColor: 'rgb(123, 120, 255)',
+            borderRadius: '8px',
           }}
           rightIcon="selection"
           intent="warning"
@@ -287,9 +254,7 @@ export default function AlgorandWalletConnector(props) {
           iconProps={iconprops}
           defaultValue={sessionWallet.accountIndex()}
         >
-          <option className="option">
-            {truncateString(pipeState.myAddress || "")}
-          </option>
+          <option className="option">{truncateString(pipeState.myAddress || '')}</option>
         </HTMLSelect>
         <Button
           className="btn-selected-2"

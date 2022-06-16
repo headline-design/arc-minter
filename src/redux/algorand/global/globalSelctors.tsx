@@ -2,28 +2,27 @@ import { createSelector } from 'reselect';
 
 const selectRaw = (state: any) => state.algorand.global;
 
-const selectPipeConnectState = createSelector(
+const selectCurrentPipeConnectState = createSelector(
   [selectRaw],
-  (raw: any) => raw.pipeConnectState,
+  (global) => global.pipeConnectState,
 );
 
-const selectLoading = createSelector(
-  [selectRaw],
-  (raw: any) => Boolean(raw.loading),
+const selectPipeConnectState = createSelector([selectRaw], (raw: any) => raw.pipeConnectState);
+
+const selectSignedIn = createSelector(
+  [selectCurrentPipeConnectState],
+  (pipeConnectState) => Boolean(pipeConnectState.myAddress) && Boolean(pipeConnectState.provider),
 );
 
-const selectMarketCapData = createSelector(
-  [selectRaw],
-  (raw: any) => raw.marketCapData,
-);
+const selectLoading = createSelector([selectRaw], (raw: any) => Boolean(raw.loading));
 
-const selectAlgoPriceData = createSelector(
-  [selectRaw],
-  (raw: any) => raw.algoPriceData,
-);
+const selectMarketCapData = createSelector([selectRaw], (raw: any) => raw.marketCapData);
+
+const selectAlgoPriceData = createSelector([selectRaw], (raw: any) => raw.algoPriceData);
 
 const globalSelectors = {
   selectPipeConnectState,
+  selectSignedIn,
   selectLoading,
   selectMarketCapData,
   selectAlgoPriceData,
