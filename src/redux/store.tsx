@@ -7,17 +7,14 @@ import algorand from './algorand/algorandReducers';
 
 let store: Store;
 
-export function configureReduxStores(
-  preloadedState?: PreloadedState<any>,
-) {
+export function configureReduxStores(preloadedState?: PreloadedState<any>) {
   const reducer = {
     auth: auth,
     algorand: algorand,
   };
   store = configureStore({
     reducer,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(logger),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
     devTools: process.env.NODE_ENV !== 'production',
     preloadedState,
   });
@@ -32,3 +29,6 @@ export function configureReduxStores(
 export default function getStore() {
   return store;
 }
+
+export type AppState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

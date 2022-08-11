@@ -1,42 +1,36 @@
-import Pipeline from '@pipeline-ui-2/pipeline'
-import { formatJsonRpcRequest } from "@json-rpc-tools/utils";
-import algosdk from 'algosdk'
+import Pipeline from '@pipeline-ui-2/pipeline';
+import { formatJsonRpcRequest } from '@json-rpc-tools/utils';
+import algosdk from 'algosdk';
 
 export async function sign(mytxnb, group = false, signed = []) {
+  console.log(mytxnb);
+  let signedTxn = '';
 
-    console.log(mytxnb)
-    let signedTxn = ""
-
-    if (Pipeline.pipeConnector === "myAlgoWallet") {
-        if (!group) {
-            signedTxn = await Pipeline.wallet.signTransaction(mytxnb.toByte())
-            signedTxn = signedTxn.blob;
-            return signedTxn
-
-        }
-        else {
-            signedTxn = await Pipeline.wallet.signTransaction(mytxnb.map(txn => txn.toByte()))
-            let txnsb = []
-            signedTxn.forEach(item => {
-                txnsb.push(item.blob)
-            })
-            return txnsb
-        }
+  if (Pipeline.pipeConnector === 'myAlgoWallet') {
+    if (!group) {
+      signedTxn = await Pipeline.wallet.signTransaction(mytxnb.toByte());
+      signedTxn = signedTxn.blob;
+      return signedTxn;
+    } else {
+      signedTxn = await Pipeline.wallet.signTransaction(mytxnb.map((txn) => txn.toByte()));
+      let txnsb = [];
+      signedTxn.forEach((item) => {
+        txnsb.push(item.blob);
+      });
+      return txnsb;
     }
-    else {
+  } else {
+    let txns = [];
+    if (!group) {
+      txns[0] = mytxnb;
+    } else {
+      txns = mytxnb;
+    }
 
-        let txns = []
-        if (!group) {
-            txns[0] = mytxnb
-        }
-        else {
-          txns = mytxnb
-        }
+    console.log('Unencoded txns:');
+    console.log(txns);
 
-        console.log("Unencoded txns:")
-        console.log(txns)
-
-        /*
+    /*
                 let prototxn = {
                     "amt": mytxnb.amount,
                     "fee": 1000,
@@ -77,60 +71,53 @@ export async function sign(mytxnb, group = false, signed = []) {
                         console.log(new TextDecoder().decode(prototxnb))
                         console.log(JSON.stringify(decode(prototxnb)))
                 */
-        // Sign transaction
+    // Sign transaction
 
-        let txnsToSign = txns.map(txnb => {
+    let txnsToSign = txns.map((txnb) => {
+      let packed = algosdk.encodeUnsignedTransaction(txnb);
+      let encodedTxn = Buffer.from(packed).toString('base64');
 
-            let packed = algosdk.encodeUnsignedTransaction(txnb)
-            let encodedTxn = Buffer.from(packed).toString("base64")
+      if (Pipeline.pipeConnector === 'WalletConnect') {
+        return {
+          txn: encodedTxn,
+          message: '',
+          // Note: if the transaction does not need to be signed (because it's part of an atomic group
+          // that will be signed by another party), specify an empty singers array like so:
+          // signers: [],
+        };
+      } else {
+        return { txn: encodedTxn };
+      }
+    });
 
-            if (Pipeline.pipeConnector === "WalletConnect") {
-                return {
-                    txn: encodedTxn,
-                    message: "",
-                    // Note: if the transaction does not need to be signed (because it's part of an atomic group
-                    // that will be signed by another party), specify an empty singers array like so:
-                    // signers: [],
-                };
-            }
-            else {
-                return { txn: encodedTxn }
-            }
-        });
-
-        if (group && signed.length !== 0){
-            for (let i = 0; i< signed.length; i++){
-                txnsToSign[i].Signers = []
-            }
-        }
-
-        let requestParams = [txnsToSign]
-        console.log("TXNs to Sign:")
-        console.log(requestParams)
-
-        if (Pipeline.pipeConnector === "WalletConnect") {
-
-            let request = formatJsonRpcRequest("algo_signTxn", requestParams)
-    
-            //request.id = Pipeline.chainId
-
-            console.log(request);
-
-            try {
-                let result = await Pipeline.connector.sendCustomRequest(request);
-
-                return result
-            }
-            catch (error) { console.log(error) }
-        }
-        else {
-            try {
-                
-                    let result = await window.AlgoSigner.signTxn(requestParams)
-
-                    return result
-            }
-            catch (error) { console.log(error) }
-        }
+    if (group && signed.length !== 0) {
+      for (let i = 0; i < signed.length; i++) {
+        txnsToSign[i].Signers = [];
+      }
     }
+
+    let requestParams = [txnsToSign];
+    console.log('TXNs to Sign:');
+    console.log(requestParams);
+
+    if (Pipeline.pipeConnector === 'WalletConnect') {
+      let request = formatJsonRpcRequest('algo_signTxn', requestParams);
+
+      //request.id = Pipeline.chainId
+
+      console.log(request);
+
+      try {
+        return await Pipeline.connector.sendCustomRequest(request);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        return await window.AlgoSigner.signTxn(requestParams);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 }

@@ -9,13 +9,12 @@ const globalActions = {
   FETCH_SUCCESS: `${prefix}_FETCH_SUCCESS`,
   FETCH_ERROR: `${prefix}_FETCH_ERROR`,
 
-  doPipeConnectChange:
-    (obj: any) => async (dispatch: Dispatch<any>) => {
-      dispatch({
-        type: globalActions.PIPE_CONNECT_CHANGE,
-        payload: obj,
-      });
-    },
+  doPipeConnectChange: (obj: any) => async (dispatch: Dispatch<any>) => {
+    dispatch({
+      type: globalActions.PIPE_CONNECT_CHANGE,
+      payload: obj,
+    });
+  },
 
   doFetch: () => async (dispatch: Dispatch<any>) => {
     try {
@@ -23,8 +22,7 @@ const globalActions = {
         type: globalActions.FETCH_STARTED,
       });
 
-      const data =
-        await AlgorandService.getAlgorandGlobal();
+      const data = await AlgorandService.getAlgorandGlobal();
 
       dispatch({
         type: globalActions.FETCH_SUCCESS,

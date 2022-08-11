@@ -43,8 +43,7 @@ window.defaultJSON = {
   image: 'ipfs://QmeuYSs7pgRLB27q5HQdaUpgLGMuERbqScBSrxtQfvXbQD',
   decimals: 0,
   unitName: 'ARC',
-  image_integrity:
-    'sha256-f628137f76d4dac60eb79325ca1bb4d9bd9d569c2648c4e4ea3c0a025d259b0a',
+  image_integrity: 'sha256-f628137f76d4dac60eb79325ca1bb4d9bd9d569c2648c4e4ea3c0a025d259b0a',
   image_mimetype: 'image/jpeg',
   properties: undefined,
 };
@@ -55,9 +54,7 @@ function ConfigModule() {
   const escrow = params.get('escrow');
   const addr = params.get('addr');
   const secret = params.get('secret');
-  const globalPipeState = useSelector(
-    algorandGlobalSelectors.selectPipeConnectState,
-  );
+  const globalPipeState = useSelector(algorandGlobalSelectors.selectPipeConnectState);
   const [claimable, setClaimable] = useState(true);
   const [address, setAddress] = useState('');
   const [advancedOptions, setAdvancedOptions] = useState('none');
@@ -94,8 +91,7 @@ function ConfigModule() {
   const [inputAssetMetadataHash, setInputAssetMetadataHash] = useState('');
   const [flex, setFlex] = useState(false);
   const [flexHr, setFlexHr] = useState(false);
-  const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] =
-    useState(false);
+  const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
   const [fetchButtonVisible, setFetchButtonVisible] = useState(true);
   const [uploadFile, setUploadFile] = useState('');
   const [checkedA, setCheckedA] = useState(false);
@@ -118,11 +114,7 @@ function ConfigModule() {
 
   useEffect(() => {
     if (globalPipeState) {
-      if (
-        Pipeline.pipeConnector &&
-        Pipeline.address &&
-        Pipeline.address !== ''
-      ) {
+      if (Pipeline.pipeConnector && Pipeline.address && Pipeline.address !== '') {
         window.pipeAddress = Pipeline.address;
         setAddresses(Pipeline.address);
         setConnected(true);
@@ -269,10 +261,7 @@ function ConfigModule() {
   function miniAlerts(parent: any, miniMessage: string) {
     //let Alert = document.createElement("p")
     //Alert = miniMessage
-    parent.insertAdjacentHTML(
-      'afterend',
-      '<div id="miniMessage">' + miniMessage + '</div>',
-    );
+    parent.insertAdjacentHTML('afterend', '<div id="miniMessage">' + miniMessage + '</div>');
   }
 
   async function createAsa() {
@@ -313,11 +302,7 @@ function ConfigModule() {
 
         let signedTxn = await Pipeline.sign(txn);
 
-        let clientb = await configClient(
-          Pipeline.main,
-          Pipeline.EnableDeveloperAPI,
-          Pipeline,
-        );
+        let clientb = await configClient(Pipeline.main, Pipeline.EnableDeveloperAPI, Pipeline);
         let transServer = clientb.tranServer;
 
         let response = await sendTxns(
@@ -404,9 +389,7 @@ function ConfigModule() {
                           hidden
                           className="jss35"
                           checked={checkedA}
-                          onChange={(event) =>
-                            setCheckedA(event.target.checked)
-                          }
+                          onChange={(event) => setCheckedA(event.target.checked)}
                         />
                         <label htmlFor="checkedA" className="jss84">
                           <div onClick={toggle19}>ARC19</div>
@@ -439,7 +422,7 @@ function ConfigModule() {
                           <label className="jss17" htmlFor="upload-file">
                             Upload
                           </label>
-                          <IpfsUpload></IpfsUpload>
+                          <IpfsUpload />
                         </div>
                         <div>
                           <input
@@ -448,9 +431,7 @@ function ConfigModule() {
                             id="upload-file"
                             hidden={true}
                             value={uploadFile}
-                            onChange={(event) =>
-                              setUploadFile(event.target.value)
-                            }
+                            onChange={(event) => setUploadFile(event.target.value)}
                           />
 
                           <br />
@@ -460,10 +441,7 @@ function ConfigModule() {
                           <div className="jss16">
                             <div className="total-supply-label-container">
                               <div style={{ display: jss6 }}>
-                                <label
-                                  htmlFor="input-amount-decimals"
-                                  className=""
-                                >
+                                <label htmlFor="input-amount-decimals" className="">
                                   Decimals
                                 </label>
                               </div>
@@ -486,9 +464,7 @@ function ConfigModule() {
                                     className="custom-control-input"
                                     checked={imageMimetypeSwitch}
                                     onChange={(event) =>
-                                      setImageMimetypeSwitch(
-                                        event.target.checked,
-                                      )
+                                      setImageMimetypeSwitch(event.target.checked)
                                     }
                                   />
                                   <label
@@ -524,8 +500,8 @@ function ConfigModule() {
                             </div>
 
                             <div className="error-total-supply invalid-feedback">
-                              Total asset supply must be a positive number and
-                              smaller than 18,446,744,073,709,552,000
+                              Total asset supply must be a positive number and smaller than
+                              18,446,744,073,709,552,000
                             </div>
                           </div>
                         </div>
@@ -536,9 +512,7 @@ function ConfigModule() {
                           >
                             <div className="jss16">
                               <label htmlFor="input-unit-name" className="">
-                                <span className="unit-name-label">
-                                  Unit Name{' '}
-                                </span>
+                                <span className="unit-name-label">Unit Name </span>
                                 <small className="asset-description">
                                   What Unit is associated with your asset?
                                 </small>
@@ -567,20 +541,15 @@ function ConfigModule() {
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                             <div className="jss16" style={{ display: jss6 }}>
                               <div>
-                                <HexToAlgo
-                                  setInputReserve={setInputReserve}
-                                  hash={hash}
-                                ></HexToAlgo>
+                                <HexToAlgo setInputReserve={setInputReserve} hash={hash} />
                               </div>
                               <JSONer
                                 callBack={function (data: any) {
                                   window.defaultJSON.properties = data;
-                                  setPreview(
-                                    JSON.stringify(window.defaultJSON),
-                                  );
+                                  setPreview(JSON.stringify(window.defaultJSON));
                                 }}
                                 object={myJSON}
-                              ></JSONer>
+                              />
                             </div>
                             <div className="jss16" style={{ display: jss6 }}>
                               <label className="">JSON Object</label>
@@ -596,9 +565,7 @@ function ConfigModule() {
                                     marginBottom: 30,
                                   }}
                                 >
-                                  <span className="MuiButton-label">
-                                    Upload JSON
-                                  </span>
+                                  <span className="MuiButton-label">Upload JSON</span>
                                 </button>
                               </div>
                             </div>
@@ -619,9 +586,7 @@ function ConfigModule() {
                                   name="toggleInputAssetURL"
                                   onClick={handleClick5}
                                   onChange={(event) =>
-                                    setToggleInputAssetURLSwitch(
-                                      event.target.checked,
-                                    )
+                                    setToggleInputAssetURLSwitch(event.target.checked)
                                   }
                                   className="custom-control-input"
                                   checked={toggleInputAssetURLSwitch}
@@ -641,14 +606,10 @@ function ConfigModule() {
                             className="custom-input-size form-control"
                             aria-invalid="false"
                             value={inputAssetUrl}
-                            onChange={(event) =>
-                              setInputAssetUrl(event.target.value)
-                            }
+                            onChange={(event) => setInputAssetUrl(event.target.value)}
                             disabled={isDisabled5}
                           />
-                          <div className="invalid-feedback">
-                            Asset Url Max size is 96 bytes.
-                          </div>
+                          <div className="invalid-feedback">Asset Url Max size is 96 bytes.</div>
                         </div>
                         <div className="jss16" style={{ display: jss6 }}>
                           <div className="label-switch">
@@ -662,9 +623,7 @@ function ConfigModule() {
                                   onClick={handleClick4}
                                   className="custom-control-input"
                                   checked={inputReserveSwitch}
-                                  onChange={(event) =>
-                                    setInputReserveSwitch(event.target.checked)
-                                  }
+                                  onChange={(event) => setInputReserveSwitch(event.target.checked)}
                                 />
                                 <label
                                   className="custom-control-label"
@@ -682,13 +641,9 @@ function ConfigModule() {
                             className="custom-input-size form-control"
                             aria-invalid="false"
                             value={inputReserve}
-                            onChange={(event) =>
-                              setInputReserve(event.target.value)
-                            }
+                            onChange={(event) => setInputReserve(event.target.value)}
                           />
-                          <div className="invalid-feedback">
-                            Reserve Address is invalid
-                          </div>
+                          <div className="invalid-feedback">Reserve Address is invalid</div>
                         </div>
                         <div className="jss16">
                           <div className="label-switch">
@@ -702,22 +657,15 @@ function ConfigModule() {
                             className="note-input-field form-control"
                             aria-invalid="false"
                             id="input-note"
-                            onChange={(event) =>
-                              setInputNote(event.target.value)
-                            }
+                            onChange={(event) => setInputNote(event.target.value)}
                             value={inputNote}
                           />
-                          <div className="invalid-feedback">
-                            Note can not exceed 1000 bytes.
-                          </div>
+                          <div className="invalid-feedback">Note can not exceed 1000 bytes.</div>
                         </div>
                         <div className="accordion" style={{ display: jss6 }}>
                           <div className="accordion-header">
                             <div className="jss16">
-                              <label
-                                className="advanced-options "
-                                onClick={toggle}
-                              >
+                              <label className="advanced-options " onClick={toggle}>
                                 <svg
                                   aria-hidden="true"
                                   focusable="false"
@@ -746,10 +694,7 @@ function ConfigModule() {
                                 }}
                               >
                                 <div className="jss16">
-                                  <label
-                                    htmlFor="assetMetadataHash"
-                                    className=""
-                                  >
+                                  <label htmlFor="assetMetadataHash" className="">
                                     Metadata Hash
                                   </label>
                                   <input
@@ -760,16 +705,13 @@ function ConfigModule() {
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
                                     onChange={(event) =>
-                                      setInputAssetMetadataHash(
-                                        event.target.value,
-                                      )
+                                      setInputAssetMetadataHash(event.target.value)
                                     }
                                     value={inputAssetMetadataHash}
                                   />
                                   <div className="invalid-feedback">
-                                    Asset Metadata Hash size should be 32
-                                    characters, 32 base64 characters or 64 Hex
-                                    characters
+                                    Asset Metadata Hash size should be 32 characters, 32 base64
+                                    characters or 64 Hex characters
                                   </div>
                                 </div>
                                 <div className="jss16">
@@ -785,9 +727,7 @@ function ConfigModule() {
                                           className="custom-control-input"
                                           checked={inputManagerSwitch}
                                           onChange={(event) =>
-                                            setInputManagerSwitch(
-                                              event.target.checked,
-                                            )
+                                            setInputManagerSwitch(event.target.checked)
                                           }
                                         />
                                         <label
@@ -805,14 +745,10 @@ function ConfigModule() {
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
-                                    onChange={(event) =>
-                                      setInputManager(event.target.value)
-                                    }
+                                    onChange={(event) => setInputManager(event.target.value)}
                                     disabled={isDisabled3}
                                   />
-                                  <div className="invalid-feedback">
-                                    Manager Address is invalid
-                                  </div>
+                                  <div className="invalid-feedback">Manager Address is invalid</div>
                                 </div>
                                 <div className="jss16">
                                   <div className="label-switch">
@@ -827,9 +763,7 @@ function ConfigModule() {
                                           className="custom-control-input"
                                           checked={freezeSwitch}
                                           onChange={(event) =>
-                                            setFreezeSwitch(
-                                              event.target.checked,
-                                            )
+                                            setFreezeSwitch(event.target.checked)
                                           }
                                         />
                                         <label
@@ -842,24 +776,18 @@ function ConfigModule() {
                                   <input
                                     name="assetFreeze"
                                     value={freezeAddress}
-                                    onChange={(event) =>
-                                      setFreezeAddress(event.target.value)
-                                    }
+                                    onChange={(event) => setFreezeAddress(event.target.value)}
                                     placeholder="Freeze Address"
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
                                     disabled={isDisabled2}
                                   />
-                                  <div className="invalid-feedback">
-                                    Freeze Address is invalid
-                                  </div>
+                                  <div className="invalid-feedback">Freeze Address is invalid</div>
                                 </div>
                                 <div className="jss16">
                                   <div className="label-switch">
-                                    <label className="">
-                                      Clawback Address:
-                                    </label>
+                                    <label className="">Clawback Address:</label>
                                     <div className="permitted">
                                       <div className="big-switch custom-switch custom-control">
                                         <input
@@ -870,9 +798,7 @@ function ConfigModule() {
                                           className="custom-control-input"
                                           checked={clawbackSwitch}
                                           onChange={(event) =>
-                                            setClawbackSwitch(
-                                              event.target.checked,
-                                            )
+                                            setClawbackSwitch(event.target.checked)
                                           }
                                         />
                                         <label
@@ -886,9 +812,7 @@ function ConfigModule() {
                                     name="assetClawback"
                                     id="assetClawback"
                                     value={clawbackAddress}
-                                    onChange={(event) =>
-                                      setClawbackAddress(event.target.value)
-                                    }
+                                    onChange={(event) => setClawbackAddress(event.target.value)}
                                     type="text"
                                     className="custom-input-size form-control"
                                     placeholder="Clawback address"
@@ -919,9 +843,7 @@ function ConfigModule() {
                               placeholder={'1'}
                               type="text"
                               value={inputAmount}
-                              onChange={(event) =>
-                                setInputAmount(event.target.value)
-                              }
+                              onChange={(event) => setInputAmount(event.target.value)}
                               inputMode="numeric"
                             />
                           </div>
@@ -929,17 +851,15 @@ function ConfigModule() {
                       </div>
 
                       <p className="jss36">
-                        Once your NFT is minted on the Algorand blockchain, you
-                        will not be able to edit or update any of its
-                        information unless you minted the NFT wtih ARC19. If you
-                        minted the NFT with ARC19, you may update the NFT's
-                        information with an "asset config" transaction.
+                        Once your NFT is minted on the Algorand blockchain, you will not be able to
+                        edit or update any of its information unless you minted the NFT wtih ARC19.
+                        If you minted the NFT with ARC19, you may update the NFT's information with
+                        an "asset config" transaction.
                         <br />
                         <br />
-                        You agree that any information uploaded to ARC Minter
-                        will not contain material subject to copyright or other
-                        proprietary rights, unless you have necessary permission
-                        or are otherwise legally entitled to post the material.
+                        You agree that any information uploaded to ARC Minter will not contain
+                        material subject to copyright or other proprietary rights, unless you have
+                        necessary permission or are otherwise legally entitled to post the material.
                       </p>
 
                       {!connected && (
@@ -951,9 +871,7 @@ function ConfigModule() {
                           disabled={false}
                           style={{ marginBottom: 30 }}
                         >
-                          <span className="MuiButton-label">
-                            Wallet not connected
-                          </span>
+                          <span className="MuiButton-label">Wallet not connected</span>
                         </button>
                       )}
 
@@ -964,19 +882,14 @@ function ConfigModule() {
                               <button
                                 hidden={true}
                                 onClick={async () => {
-                                  if (
-                                    Pipeline.pipeConnector === 'WalletConnect'
-                                  ) {
+                                  if (Pipeline.pipeConnector === 'WalletConnect') {
                                     alert(
                                       'Please close alert and sign transaction on mobile device',
                                     );
                                   }
                                   let asaId = await createAsa();
                                   alert(asaId);
-                                  setAsa(
-                                    'https://www.nftexplorer.app/asset/' +
-                                      asaId,
-                                  );
+                                  setAsa('https://www.nftexplorer.app/asset/' + asaId);
                                   setUrlHash('https://ipfs.io/ipfs/' + urlHash);
                                   setAsaId(asaId);
                                 }}
@@ -985,9 +898,7 @@ function ConfigModule() {
                                 style={{ marginBottom: 30 }}
                                 disabled={modifyButtonDisabled}
                               >
-                                <span className="MuiButton-label">
-                                  Modify NFT
-                                </span>
+                                <span className="MuiButton-label">Modify NFT</span>
                               </button>
                             </div>
                           )}
@@ -1000,15 +911,8 @@ function ConfigModule() {
                               />
                             </div>
                           )}
-                          {flexHr && (
-                            <hr id="flex-hr" style={{ display: 'flex' }} />
-                          )}
-                          <Preview
-                            flex={flex}
-                            name={asa}
-                            url={asa}
-                            imgUrl={urlHash}
-                          />
+                          {flexHr && <hr id="flex-hr" style={{ display: 'flex' }} />}
+                          <Preview flex={flex} name={asa} url={asa} imgUrl={urlHash} />
                         </div>
                       )}
                     </div>
@@ -1037,11 +941,7 @@ function ConfigModule() {
                 >
                   <div className="footer-flex">
                     <div className="footer-left">
-                      <img
-                        src="algologo.svg"
-                        alt="banner"
-                        className="footer-img"
-                      />
+                      <img src="algologo.svg" alt="banner" className="footer-img" />
 
                       <p className="jss50">
                         Algorand is the #1 carbon-negative blockchain.{' '}
@@ -1067,11 +967,7 @@ function ConfigModule() {
                           </svg>
                         </div>
                       </a>
-                      <a
-                        href="https://discord.gg/headline_crypto"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                      <a href="https://discord.gg/headline_crypto" target="_blank" rel="noreferrer">
                         <div className="jss51">
                           <svg
                             fill="#000000"

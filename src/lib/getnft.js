@@ -1,6 +1,6 @@
 class Arc69 {
   constructor() {
-    this.algoExplorerApiBaseUrl = "https://algoindexer.algoexplorerapi.io";
+    this.algoExplorerApiBaseUrl = 'https://algoindexer.algoexplorerapi.io';
   }
 
   async fetch(assetId) {
@@ -15,7 +15,7 @@ class Arc69 {
     }
 
     // Sort the most recent `acfg` transactions first.
-    transactions.sort((a, b) => b["round-time"] - a["round-time"]);
+    transactions.sort((a, b) => b['round-time'] - a['round-time']);
 
     // Attempt to parse each `acf` transaction's note for ARC69 metadata.
     for (const transaction of transactions) {
@@ -23,9 +23,9 @@ class Arc69 {
         const noteBase64 = transaction.note;
         const noteString = atob(noteBase64)
           .trim()
-          .replace(/[^ -~]+/g, "");
+          .replace(/[^ -~]+/g, '');
         const noteObject = JSON.parse(noteString);
-        if (noteObject.standard === "arc69") {
+        if (noteObject.standard === 'arc69') {
           return noteObject;
         }
       } catch (err) {

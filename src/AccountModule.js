@@ -31,7 +31,6 @@ const MetaDataProps = (props) => {
 };
 
 const AccountModule = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [modalImgProps, setModalImgProps] = useState({});
   const [address, setAddress] = useState('');
@@ -63,17 +62,7 @@ const AccountModule = (props) => {
   const addr = params.get('addr');
   const secret = params.get('secret');
   const [hash, setHash] = useState('');
-  const [asa, setAsa] = useState('');
-  const [asaId, setAsaId] = useState('');
   const [urlHash, setUrlHash] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [isDisabled2, setIsDisabled2] = useState(true);
-  const [isDisabled3, setIsDisabled3] = useState(true);
-  const [isDisabled4, setIsDisabled4] = useState(true);
-  const [isDisabled5, setIsDisabled5] = useState(true);
-  const [isDisabled6, setIsDisabled6] = useState(true);
-  const [metaData, setMetaData] = useState('');
-  const [metaData2, setMetaData2] = useState('');
   const [jss6, setJss6] = useState('block');
 
   useEffect(() => {
@@ -82,30 +71,6 @@ const AccountModule = (props) => {
       document.getElementById('connected').style.display = 'block';
     }
   }, []);
-
-  const handleClick = () => {
-    setIsDisabled(!isDisabled);
-  };
-
-  const handleClick2 = () => {
-    setIsDisabled2(!isDisabled2);
-  };
-
-  const handleClick3 = () => {
-    setIsDisabled3(!isDisabled3);
-  };
-
-  const handleClick4 = () => {
-    setIsDisabled4(!isDisabled4);
-  };
-
-  const handleClick5 = () => {
-    setIsDisabled5(!isDisabled5);
-  };
-
-  const handleClick6 = () => {
-    setIsDisabled6(!isDisabled6);
-  };
 
   useEffect(() => {
     setClaimable(secret !== null && addr !== null && escrow !== null);
@@ -136,9 +101,7 @@ const AccountModule = (props) => {
       let cidWorking = new CID(window.response1234[0].hash).toV1();
       let cidConverted = 'sha256-' + cidWorking.toString('base16').substring(9);
       window.defaultJSON['image_integrity'] = cidConverted;
-      document.getElementById('preview').innerText = JSON.stringify(
-        window.defaultJSON,
-      );
+      document.getElementById('preview').innerText = JSON.stringify(window.defaultJSON);
       let thisHash = window.response1234[length].hash;
       setHash(thisHash);
     }
@@ -175,9 +138,7 @@ const AccountModule = (props) => {
     }
     function proceed() {
       window.defaultJSON[key] = value;
-      document.getElementById('preview').innerText = JSON.stringify(
-        window.defaultJSON,
-      );
+      document.getElementById('preview').innerText = JSON.stringify(window.defaultJSON);
     }
     function failed(message) {
       let former = document.getElementById('miniMessage');
@@ -192,10 +153,7 @@ const AccountModule = (props) => {
   function miniAlerts(parent, miniMessage) {
     //let Alert = document.createElement("p")
     //Alert = miniMessage
-    parent.insertAdjacentHTML(
-      'afterend',
-      '<div id="miniMessage">' + miniMessage + '</div>',
-    );
+    parent.insertAdjacentHTML('afterend', '<div id="miniMessage">' + miniMessage + '</div>');
   }
 
   async function createAsa() {
@@ -210,9 +168,7 @@ const AccountModule = (props) => {
     asaData.manager = document.getElementById('input-manager').value;
     // asaData.clawback = document.getElementById("input-clawback").value
     // asaData.freeze = document.getElementById("input-freeze").value
-    asaData.assetMetadataHash = document.getElementById(
-      'input-assetMetadataHash',
-    ).value;
+    asaData.assetMetadataHash = document.getElementById('input-assetMetadataHash').value;
 
     let params = await Pipeline.getParams();
 
@@ -235,11 +191,7 @@ const AccountModule = (props) => {
 
     let signedTxn = await Pipeline.sign(txn);
 
-    let clientb = await configClient(
-      Pipeline.main,
-      Pipeline.EnableDeveloperAPI,
-      Pipeline,
-    );
+    let clientb = await configClient(Pipeline.main, Pipeline.EnableDeveloperAPI, Pipeline);
     let transServer = clientb.tranServer;
 
     try {
@@ -291,10 +243,7 @@ const AccountModule = (props) => {
           <Grid item xs={12} sm={4} md={3}>
             <NFTFetch2 />
           </Grid>
-          <NFTCard
-            setModalState={setModalState}
-            setModalImgProps={setModalImgProps}
-          />
+          <NFTCard setModalState={setModalState} setModalImgProps={setModalImgProps} />
         </div>
       </div>
     </main>

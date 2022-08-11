@@ -1,36 +1,32 @@
-// @ts-nocheck
-
-import React, { useState } from "react";
-
+import React, { useState } from 'react';
 
 window.defaultJSON = {
-  name: "ARC Logo",
-  description: "ARC Logo for ARC Minter by HEADLINE",
-  image: "ipfs://QmeuYSs7pgRLB27q5HQdaUpgLGMuERbqScBSrxtQfvXbQD",
+  name: 'ARC Logo',
+  description: 'ARC Logo for ARC Minter by HEADLINE',
+  image: 'ipfs://QmeuYSs7pgRLB27q5HQdaUpgLGMuERbqScBSrxtQfvXbQD',
   decimals: 0,
-  unitName: "ARC",
-  image_integrity:
-    "sha256-f628137f76d4dac60eb79325ca1bb4d9bd9d569c2648c4e4ea3c0a025d259b0a",
-  image_mimetype: "image/jpeg",
+  unitName: 'ARC',
+  image_integrity: 'sha256-f628137f76d4dac60eb79325ca1bb4d9bd9d569c2648c4e4ea3c0a025d259b0a',
+  image_mimetype: 'image/jpeg',
   properties: undefined,
 };
 
 function DocsModule() {
-  const [jss6, setJss6] = useState("block");
-  const [jss7, setJss7] = useState("none");
+  const [jss6, setJss6] = useState('block');
+  const [jss7, setJss7] = useState('none');
 
   function toggle19() {
-    if (jss7 === "block") {
-      setJss7("none");
-      setJss6("block");
+    if (jss7 === 'block') {
+      setJss7('none');
+      setJss6('block');
     } else {
-      setJss6("none");
-      setJss7("block");
+      setJss6('none');
+      setJss7('block');
     }
   }
 
   return (
-    <div className="App" style={{ background: "#000" }}>
+    <div className="App" style={{ background: '#000' }}>
       <div className="container body-1">
         <div id="__next">
           <div className="jss9">
@@ -38,7 +34,7 @@ function DocsModule() {
               <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3">
                 <div
                   className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8"
-                  style={{ alignItems: "center" }}
+                  style={{ alignItems: 'center' }}
                 >
                   <h1 className="MuiTypography-root jss10 MuiTypography-h1">
                     <span>Documentation</span>
@@ -68,7 +64,7 @@ function DocsModule() {
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                             <div
                               className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
-                              style={{ display: "none" }}
+                              style={{ display: 'none' }}
                             >
                               <div className="jss16">
                                 <label htmlFor="quantity">Quantity</label>
@@ -86,28 +82,20 @@ function DocsModule() {
                           </div>
                           <p className="jss83">What is an ARC NFT?</p>
                           <p className="jss36">
-                            ARC NFTs are NFTs minted on Algorand that adhere to
-                            a standard that is submitted as an Algorand Request
-                            for Comment to the community. The goal of these
-                            conventions is to make it simpler for block
-                            explorers, wallets, exchanges, marketplaces, and
-                            more generally, client software to display the
-                            properties of a given ASA.
+                            ARC NFTs are NFTs minted on Algorand that adhere to a standard that is
+                            submitted as an Algorand Request for Comment to the community. The goal
+                            of these conventions is to make it simpler for block explorers, wallets,
+                            exchanges, marketplaces, and more generally, client software to display
+                            the properties of a given ASA.
                             <br></br>
                             <br></br>
-                            Below you will find instructions for minting ARC19
-                            and ARC69 NFTs.
+                            Below you will find instructions for minting ARC19 and ARC69 NFTs.
                             <br />
                           </p>
                         </div>
                         <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12">
                           <p className="jss83">NFT Type</p>
-                          <input
-                            type="checkbox"
-                            id="checkedA"
-                            hidden=""
-                            className="jss35"
-                          />
+                          <input type="checkbox" id="checkedA" hidden="" className="jss35" />
                           <label htmlFor="checkedA" className="jss84">
                             <div onClick={toggle19}>ARC19</div>
                             <div onClick={toggle19}>ARC69</div>
@@ -115,164 +103,122 @@ function DocsModule() {
                         </div>
                         <div
                           className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
-                          style={{ display: "none" }}
+                          style={{ display: 'none' }}
                         ></div>
                       </div>
-                      <p
-                        id="arc19-1"
-                        className="jss36"
-                        style={{ display: jss6 }}
-                      >
+                      <p id="arc19-1" className="jss36" style={{ display: jss6 }}>
                         <p>ARC19 Docs</p>
-                        ARC19 NFTs allow anyone to mint NFTs and update the
-                        image at a later date via asset config transaction. This
-                        is "a proposal to allow a templating mechanism of the
-                        URL so that changeable data in an asset can be
-                        substituted by a client, providing a mutable URL".
+                        ARC19 NFTs allow anyone to mint NFTs and update the image at a later date
+                        via asset config transaction. This is "a proposal to allow a templating
+                        mechanism of the URL so that changeable data in an asset can be substituted
+                        by a client, providing a mutable URL".
                         <br />
                         <br />
-<p>
- ARC Minter was constructed modularly so that users can enter and exit at different points in the minting process. For example, if someone has already uploaded an image to IPFS, uploaded a JSON object, etc they could use ARC Minter with ease. 
- </p>
- <p>
- With that in mind, we still encourage users to approach the minter with the intention of using the minter from beginning to end, starting with uploading an image or file to IPFS, then entering JSON properties. Much of the complexity of ARC19 minting is automated. So users can create programmable/upgradeable NFTs without having to deal with hashing hexs and the like. 
- </p>
- <p>
- The ARC minter is a highly-experimental application and should be used with caution. 
- </p>
+                        <p>
+                          ARC Minter was constructed modularly so that users can enter and exit at
+                          different points in the minting process. For example, if someone has
+                          already uploaded an image to IPFS, uploaded a JSON object, etc they could
+                          use ARC Minter with ease.
+                        </p>
+                        <p>
+                          With that in mind, we still encourage users to approach the minter with
+                          the intention of using the minter from beginning to end, starting with
+                          uploading an image or file to IPFS, then entering JSON properties. Much of
+                          the complexity of ARC19 minting is automated. So users can create
+                          programmable/upgradeable NFTs without having to deal with hashing hexs and
+                          the like.
+                        </p>
+                        <p>
+                          The ARC minter is a highly-experimental application and should be used
+                          with caution.
+                        </p>
                       </p>
-                      <p
-                        id="arc69-1"
-                        className="jss36"
-                        style={{ display: jss7 }}
-                      >
+                      <p id="arc69-1" className="jss36" style={{ display: jss7 }}>
                         <p>ARC69 Docs</p>
-                        ARC69 NFTs allow anyone to mint NFTs and update the
-                        metadata at a later date via asset config transaction.
-                        "The goal of these conventions is to make it simpler to
-                        display the properties of a given ASA. This ARC differs
-                        from ARC3 by focusing on optimization for fetching of
-                        digital media, as well as the use of onchain metadata.
-                        Furthermore, since asset configuration transactions are
-                        used to store the metadata, this ARC can be applied to
-                        existing ASAs."
+                        ARC69 NFTs allow anyone to mint NFTs and update the metadata at a later date
+                        via asset config transaction. "The goal of these conventions is to make it
+                        simpler to display the properties of a given ASA. This ARC differs from ARC3
+                        by focusing on optimization for fetching of digital media, as well as the
+                        use of onchain metadata. Furthermore, since asset configuration transactions
+                        are used to store the metadata, this ARC can be applied to existing ASAs."
                         <br />
                         <br />
                         Here are the steps to mint/configure ARC69 NFTs with ARC Minter:
+                        <p>Mint ARC69</p>
+                        <p>1. Upload image or file to IPFS</p>
+                        <p>2. Set Asset Name</p>
+                        3. Set Unit Name
+                        <p>4. Choose an asset URL</p>
                         <p>
- Mint ARC69
- </p>
- <p>
- 1. Upload image or file to IPFS
- </p>
- <p>
- 2. Set Asset Name
- </p>
- 3. Set Unit Name
- <p>
- 4. Choose an asset URL
- </p>
- <p>
- 5. In the note field, you can choose to add your metadata at mint or configure at a later date.
- </p>
- <p>
- 6. Choose the quantity of NFTs per ASA.
- </p>
- <p>
- 7. Connect Wallet and sign Asset Creation Transaction
- </p>
+                          5. In the note field, you can choose to add your metadata at mint or
+                          configure at a later date.
+                        </p>
+                        <p>6. Choose the quantity of NFTs per ASA.</p>
+                        <p>7. Connect Wallet and sign Asset Creation Transaction</p>
                       </p>
                     </div>
 
                     <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6">
                       <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12" />
                       <div spacing={2} />
-                      <p
-                        id="arc19-2"
-                        className="jss36"
-                        style={{ display: jss6 }}
-                      >
+                      <p id="arc19-2" className="jss36" style={{ display: jss6 }}>
                         ARC19 Mint
- <p>
- 1. Upload image or file to IPFS.
- </p>
- <p>
- 2. Choose an Asset Name for your NFT.
- </p>
- <p>
- 3. Choose a Unit Name for your NFT.
- </p>
- <p>
- 4. Write a solid description of your NFT.
- </p>
- <p>
- 5. Choose how many decimals you want for your NFT (0 is the recommended number).
- </p>
- <p>
- 6. Change the Image Mimetype if you are inclined. 
- </p>
- <p>
- 7. Use the Advanced JSON Editor to add additional properties to your NFT’s JSON object. 
- </p>
- <p>
- 8. Upload the JSON object to IPFS.
- </p>
- 9. Add an additional note field if you are so inclined.
- <p>
- 10. At this point, you must sign in with your Algorand wallet if you have not already. Perra Wallet and MyAlgo are both supported at launch. 
- </p>
- <p>
- 11. Sign the Asset creation transaction.
- </p>
- <p>
- 12. Wait approximately 15 seconds for your asset number to be returned. 
- </p>
- <p>
- 13. Review the NFT details via NFTExplorer, ARC3.xyz, or any other provider that supports ARC19 NFTs. 
- </p>
+                        <p>1. Upload image or file to IPFS.</p>
+                        <p>2. Choose an Asset Name for your NFT.</p>
+                        <p>3. Choose a Unit Name for your NFT.</p>
+                        <p>4. Write a solid description of your NFT.</p>
+                        <p>
+                          5. Choose how many decimals you want for your NFT (0 is the recommended
+                          number).
+                        </p>
+                        <p>6. Change the Image Mimetype if you are inclined.</p>
+                        <p>
+                          7. Use the Advanced JSON Editor to add additional properties to your NFT’s
+                          JSON object.
+                        </p>
+                        <p>8. Upload the JSON object to IPFS.</p>
+                        9. Add an additional note field if you are so inclined.
+                        <p>
+                          10. At this point, you must sign in with your Algorand wallet if you have
+                          not already. Perra Wallet and MyAlgo are both supported at launch.
+                        </p>
+                        <p>11. Sign the Asset creation transaction.</p>
+                        <p>
+                          12. Wait approximately 15 seconds for your asset number to be returned.
+                        </p>
+                        <p>
+                          13. Review the NFT details via NFTExplorer, ARC3.xyz, or any other
+                          provider that supports ARC19 NFTs.
+                        </p>
                         <br />
-
                         ARC19 Config
- <p>
- 1. Paste your asset ID into the Asset Index field. Click “Fetch Metadata” to pre-populate fields with your latest JSON object.
- </p>
- <p> 
- 2. Modify your new JSON object with the decimals, image mimetype, unit name, description, and advanced editor fields.
- </p>
- <p>
- 3. Upload your new JSON object to IPFS. 
- </p>
- <p>
- 4. Complete any additional asset config fields if you are so inclined. Sign the asset config transaction. You have now minted and modified an ARC19 NFT!
- chain.  </p>
+                        <p>
+                          1. Paste your asset ID into the Asset Index field. Click “Fetch Metadata”
+                          to pre-populate fields with your latest JSON object.
+                        </p>
+                        <p>
+                          2. Modify your new JSON object with the decimals, image mimetype, unit
+                          name, description, and advanced editor fields.
+                        </p>
+                        <p>3. Upload your new JSON object to IPFS.</p>
+                        <p>
+                          4. Complete any additional asset config fields if you are so inclined.
+                          Sign the asset config transaction. You have now minted and modified an
+                          ARC19 NFT! chain.{' '}
+                        </p>
                       </p>
-                      <p
-                        id="arc69-2"
-                        className="jss36"
-                        style={{ display: jss7 }}
-                      >
-                       
- Modify ARC69
- <p>
-  1. Paste your NFT’s ASA number in the Asset Index field.
-  </p> 
-  <p> 
-  2. Fetch Metadata to pre-populate some fields.
-  </p> 
-  3. You can choose an alternate image Mimetype
-  <p> 
-  4. Paste your metadata JSON Object in the note field.
-  </p> 
-  <p> 
-  5. Connect Wallet and sign Asset Config Transaction
-  </p> 
+                      <p id="arc69-2" className="jss36" style={{ display: jss7 }}>
+                        Modify ARC69
+                        <p>1. Paste your NFT’s ASA number in the Asset Index field.</p>
+                        <p>2. Fetch Metadata to pre-populate some fields.</p>
+                        3. You can choose an alternate image Mimetype
+                        <p>4. Paste your metadata JSON Object in the note field.</p>
+                        <p>5. Connect Wallet and sign Asset Config Transaction</p>
                         <br />
-                       
-                        And just a reminder!
-                        You agree that any information uploaded to ARC Minter
-                        will not contain material subject to copyright or other
-                        proprietary rights, unless you have necessary permission
-                        or are otherwise legally entitled to post the material.
+                        And just a reminder! You agree that any information uploaded to ARC Minter
+                        will not contain material subject to copyright or other proprietary rights,
+                        unless you have necessary permission or are otherwise legally entitled to
+                        post the material.
                       </p>
                     </div>
                   </div>
@@ -288,16 +234,15 @@ function DocsModule() {
             <div className="MuiContainer-root jss47 MuiContainer-maxWidthLg">
               <div
                 className="MuiGrid-root MuiGrid-container"
-                style={{ position: "relative", zIndex: 2 }}
+                style={{ position: 'relative', zIndex: 2 }}
               >
-                <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6" style={{width:"100%", maxWidth: "100%", flexBasis: "100%"}}>
+                <div
+                  className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+                  style={{ width: '100%', maxWidth: '100%', flexBasis: '100%' }}
+                >
                   <div className="footer-flex">
                     <div className="footer-left">
-                      <img
-                        src="algologo.svg"
-                        alt="banner"
-                        className="footer-img"
-                      />
+                      <img src="algologo.svg" alt="banner" className="footer-img" />
 
                       <p className="jss50">
                         Algorand is the #1 carbon-negative blockchain. <br></br>
@@ -322,11 +267,7 @@ function DocsModule() {
                           </svg>
                         </div>
                       </a>
-                      <a
-                        href="https://discord.gg/headline_crypto"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                      <a href="https://discord.gg/headline_crypto" target="_blank" rel="noreferrer">
                         <div className="jss51">
                           <svg
                             fill="#000000"
@@ -347,7 +288,6 @@ function DocsModule() {
           </footer>
         </div>
       </div>
-
       <div className="container body-2"></div>
     </div>
   );

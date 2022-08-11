@@ -192,14 +192,6 @@ export default function AlgorandWalletConnector(props: any) {
     );
   }
 
-  const addr_list = accts.map((addr, idx) => {
-    return (
-      <option value={idx} key={idx}>
-        {addr.substr(0, 8)}...{' '}
-      </option>
-    );
-  });
-
   const iconprops = {
     icon: 'symbol-circle' as IconName,
     intent: 'success' as Intent,

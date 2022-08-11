@@ -1,5 +1,5 @@
 import algosdk from 'algosdk';
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { base58btc } from 'multiformats/bases/base58';
 import ButtonSpinner from './components/shared/ButtonSpinner';
 
@@ -12,9 +12,7 @@ function NftFetch({ fetchButtonVisible }) {
       let parent = document.getElementById('imageParent');
       parent.innerHTML = '';
       let assetId = parseInt(document.getElementById('assetIndex').value);
-      let asaData = await fetch(
-        'https://algoindexer.algoexplorerapi.io/v2/assets/' + assetId,
-      );
+      let asaData = await fetch('https://algoindexer.algoexplorerapi.io/v2/assets/' + assetId);
       let asaDataJson = await asaData.json();
       console.log(asaDataJson);
       let account = algosdk.decodeAddress(asaDataJson.asset.params.reserve);
@@ -42,10 +40,7 @@ function NftFetch({ fetchButtonVisible }) {
       let child = document.createElement('img');
       child.style.width = 'auto';
       child.style.height = '70px';
-      child.src = myJsonParsed.image.replace(
-        'ipfs://',
-        'https://ipfs.io/ipfs/',
-      );
+      child.src = myJsonParsed.image.replace('ipfs://', 'https://ipfs.io/ipfs/');
       parent.appendChild(child);
       alert(jsonString);
     } catch (e) {
@@ -75,21 +70,13 @@ function NftFetch({ fetchButtonVisible }) {
               Fetch Metadata
             </button>
           ) : (
-            <ButtonSpinner
-              id={'nftFetchButtonSpinner'}
-              text={'fetching...'}
-              disabled={false}
-            />
+            <ButtonSpinner id={'nftFetchButtonSpinner'} text={'fetching...'} disabled={false} />
           )}
         </div>
       )}
       <div id="preview0" style={{ display: 'none', marginTop: '2rem' }}>
         <div id="list2" style={{ width: '100%' }}>
-          <ul
-            style={{ display: 'flex' }}
-            className="jss29"
-            id="img-preview-block2"
-          >
+          <ul style={{ display: 'flex' }} className="jss29" id="img-preview-block2">
             <div id="imageParent" style={{ width: 'auto', height: '70px' }} />
             <li id="preview2">
               <strong className="fileName"></strong>
