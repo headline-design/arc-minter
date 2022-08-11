@@ -5,14 +5,8 @@ interface ReducerData {
   payload?: any;
 }
 
-const initialData = {
+const initialData = {};
 
-};
-
-export default (
-  state = initialData,
-  { type, payload }: ReducerData,
-) => {
-
+export default (state = initialData, { type, payload }: ReducerData) => {
   return state;
 };

@@ -76,8 +76,7 @@ window.defaultJSON = {
   image: 'ipfs://QmQxyz7KEHaDoGUE2z5DxvFwLYXFC21uD4dpxAqFUsG6Ks',
   decimals: 0,
   unitName: 'ASTRO220',
-  image_integrity:
-    'sha256-2706140d2327ee37d13112cf7123beb28253132af94a1af323caa3b25486bdd2',
+  image_integrity: 'sha256-2706140d2327ee37d13112cf7123beb28253132af94a1af323caa3b25486bdd2',
   image_mimetype: 'image/jpeg',
   properties: undefined,
 };
@@ -93,9 +92,7 @@ function Arc19Minter() {
   const addr = params.get('addr');
   const secret = params.get('secret');
   const sw = new SessionWallet(conf.network);
-  const globalPipeState = useSelector(
-    algorandGlobalSelectors.selectPipeConnectState,
-  );
+  const globalPipeState = useSelector(algorandGlobalSelectors.selectPipeConnectState);
   const [preview, setPreview] = useState('');
   const [connected, setConnected] = useState(sw.connected());
   const [claimable, setClaimable] = useState(true);
@@ -138,8 +135,7 @@ function Arc19Minter() {
   const [inputAssetMetadataHash, setInputAssetMetadataHash] = useState('');
   const [flex, setFlex] = useState(false);
   const [flexHr, setFlexHr] = useState(false);
-  const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] =
-    useState(false);
+  const [toggleInputAssetURLSwitch, setToggleInputAssetURLSwitch] = useState(false);
   const [checkedA, setCheckedA] = useState(false);
   const [imageMimetypeSwitch, setImageMimetypeSwitch] = useState(false);
   const [imageMimetype, setImageMimetype] = useState('');
@@ -161,11 +157,7 @@ function Arc19Minter() {
 
   useEffect(() => {
     if (globalPipeState) {
-      if (
-        Pipeline.pipeConnector &&
-        Pipeline.address &&
-        Pipeline.address !== ''
-      ) {
+      if (Pipeline.pipeConnector && Pipeline.address && Pipeline.address !== '') {
         window.pipeAddress = Pipeline.address;
         setAddresses(Pipeline.address);
         setConnected(true);
@@ -249,8 +241,7 @@ function Arc19Minter() {
   }
 
   function toggle19() {
-    let arc19Placeholder =
-      'template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}';
+    let arc19Placeholder = 'template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}';
     arc19 = !arc19;
     if (!arc19) {
       setInputAssetUrl('');
@@ -351,10 +342,7 @@ function Arc19Minter() {
   function miniAlerts(parent: any, miniMessage: string) {
     //let Alert = document.createElement("p")
     //Alert = miniMessage
-    parent.insertAdjacentHTML(
-      'afterend',
-      '<div id="miniMessage">' + miniMessage + '</div>',
-    );
+    parent.insertAdjacentHTML('afterend', '<div id="miniMessage">' + miniMessage + '</div>');
   }
 
   async function createAsa() {
@@ -463,11 +451,7 @@ function Arc19Minter() {
       disabled={!connected || !claimable}
     >
       {loading && (
-        <span
-          className="spinner-border spinner-border-sm"
-          role="status"
-          aria-hidden="true"
-        ></span>
+        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       )}
       Collect
     </button>
@@ -568,9 +552,7 @@ function Arc19Minter() {
                           hidden
                           className="jss35"
                           checked={checkedA}
-                          onChange={(event) =>
-                            setCheckedA(event.target.checked)
-                          }
+                          onChange={(event) => setCheckedA(event.target.checked)}
                         />
                         <label htmlFor="checkedA" className="jss84">
                           <div onClick={toggle19}>ARC19</div>
@@ -596,9 +578,7 @@ function Arc19Minter() {
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                             <div className="jss16">
                               <label htmlFor="name">
-                                <span className="unit-name-label">
-                                  Asset Name{' '}
-                                </span>
+                                <span className="unit-name-label">Asset Name </span>
                                 <small className="asset-description">
                                   What is the name of your NFT?
                                 </small>
@@ -618,9 +598,7 @@ function Arc19Minter() {
                           <div className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12">
                             <div className="jss16">
                               <label htmlFor="input-unit-name" className="">
-                                <span className="unit-name-label">
-                                  Unit Name{' '}
-                                </span>
+                                <span className="unit-name-label">Unit Name </span>
                                 <small className="asset-description">
                                   What Unit is associated with your asset?
                                 </small>
@@ -654,10 +632,7 @@ function Arc19Minter() {
 
                           <div className="jss16" style={{ display: jss6 }}>
                             <div className="total-supply-label-container">
-                              <label
-                                htmlFor="input-amount-decimals"
-                                className=""
-                              >
+                              <label htmlFor="input-amount-decimals" className="">
                                 Decimals
                               </label>
 
@@ -680,9 +655,7 @@ function Arc19Minter() {
                                     className="custom-control-input"
                                     checked={imageMimetypeSwitch}
                                     onChange={(event) =>
-                                      setImageMimetypeSwitch(
-                                        event.target.checked,
-                                      )
+                                      setImageMimetypeSwitch(event.target.checked)
                                     }
                                   />
                                   <label
@@ -718,8 +691,8 @@ function Arc19Minter() {
                             </div>
 
                             <div className="error-total-supply invalid-feedback">
-                              Total asset supply must be a positive number and
-                              smaller than 18,446,744,073,709,552,000
+                              Total asset supply must be a positive number and smaller than
+                              18,446,744,073,709,552,000
                             </div>
                           </div>
                         </div>
@@ -729,19 +702,14 @@ function Arc19Minter() {
                             style={{ display: jss6 }}
                           >
                             <div className="jss16">
-                              <HexToAlgo
-                                setInputReserve={setInputReserve}
-                                hash={hash}
-                              />
+                              <HexToAlgo setInputReserve={setInputReserve} hash={hash} />
                               <JSONer
                                 callBack={function (data: any) {
                                   window.defaultJSON.properties = data;
-                                  setPreview(
-                                    JSON.stringify(window.defaultJSON),
-                                  );
+                                  setPreview(JSON.stringify(window.defaultJSON));
                                 }}
                                 object={myJSON}
-                              ></JSONer>
+                              />
                             </div>
                             <div className="jss16">
                               <label className="">JSON Object</label>
@@ -757,9 +725,7 @@ function Arc19Minter() {
                                     marginBottom: 30,
                                   }}
                                 >
-                                  <span className="MuiButton-label">
-                                    Upload JSON
-                                  </span>
+                                  <span className="MuiButton-label">Upload JSON</span>
                                 </button>
                               </div>
                             </div>
@@ -780,9 +746,7 @@ function Arc19Minter() {
                                   name="toggleInputAssetURL"
                                   onClick={handleClick5}
                                   onChange={(event) =>
-                                    setToggleInputAssetURLSwitch(
-                                      event.target.checked,
-                                    )
+                                    setToggleInputAssetURLSwitch(event.target.checked)
                                   }
                                   className="custom-control-input"
                                   checked={toggleInputAssetURLSwitch}
@@ -802,14 +766,10 @@ function Arc19Minter() {
                             className="custom-input-size form-control"
                             aria-invalid="false"
                             value={inputAssetUrl}
-                            onChange={(event) =>
-                              setInputAssetUrl(event.target.value)
-                            }
+                            onChange={(event) => setInputAssetUrl(event.target.value)}
                             disabled={isDisabled5}
                           />
-                          <div className="invalid-feedback">
-                            Asset Url Max size is 96 bytes.
-                          </div>
+                          <div className="invalid-feedback">Asset Url Max size is 96 bytes.</div>
                         </div>
                         <div className="jss16" style={{ display: jss6 }}>
                           <div className="label-switch">
@@ -823,9 +783,7 @@ function Arc19Minter() {
                                   onClick={handleClick4}
                                   className="custom-control-input"
                                   checked={inputReserveSwitch}
-                                  onChange={(event) =>
-                                    setInputReserveSwitch(event.target.checked)
-                                  }
+                                  onChange={(event) => setInputReserveSwitch(event.target.checked)}
                                 />
                                 <label
                                   className="custom-control-label"
@@ -843,13 +801,9 @@ function Arc19Minter() {
                             className="custom-input-size form-control"
                             aria-invalid="false"
                             value={inputReserve}
-                            onChange={(event) =>
-                              setInputReserve(event.target.value)
-                            }
+                            onChange={(event) => setInputReserve(event.target.value)}
                           />
-                          <div className="invalid-feedback">
-                            Reserve Address is invalid
-                          </div>
+                          <div className="invalid-feedback">Reserve Address is invalid</div>
                         </div>
                         <div className="jss16">
                           <div className="label-switch">
@@ -865,22 +819,15 @@ function Arc19Minter() {
                             className="note-input-field form-control"
                             aria-invalid="false"
                             id="input-note"
-                            onChange={(event) =>
-                              setInputNote(event.target.value)
-                            }
+                            onChange={(event) => setInputNote(event.target.value)}
                             value={inputNote}
                           />
-                          <div className="invalid-feedback">
-                            Note can not exceed 1000 bytes.
-                          </div>
+                          <div className="invalid-feedback">Note can not exceed 1000 bytes.</div>
                         </div>
                         <div className="accordion" style={{ display: jss6 }}>
                           <div className="accordion-header">
                             <div className="jss16">
-                              <label
-                                className="advanced-options "
-                                onClick={toggle}
-                              >
+                              <label className="advanced-options " onClick={toggle}>
                                 <svg
                                   aria-hidden="true"
                                   focusable="false"
@@ -909,10 +856,7 @@ function Arc19Minter() {
                                 }}
                               >
                                 <div className="jss16">
-                                  <label
-                                    htmlFor="assetMetadataHash"
-                                    className=""
-                                  >
+                                  <label htmlFor="assetMetadataHash" className="">
                                     Metadata Hash
                                   </label>
                                   <input
@@ -923,16 +867,13 @@ function Arc19Minter() {
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
                                     onChange={(event) =>
-                                      setInputAssetMetadataHash(
-                                        event.target.value,
-                                      )
+                                      setInputAssetMetadataHash(event.target.value)
                                     }
                                     value={inputAssetMetadataHash}
                                   />
                                   <div className="invalid-feedback">
-                                    Asset Metadata Hash size should be 32
-                                    characters, 32 base64 characters or 64 Hex
-                                    characters
+                                    Asset Metadata Hash size should be 32 characters, 32 base64
+                                    characters or 64 Hex characters
                                   </div>
                                 </div>
                                 <div className="jss16">
@@ -948,9 +889,7 @@ function Arc19Minter() {
                                           className="custom-control-input"
                                           checked={inputManagerSwitch}
                                           onChange={(event) =>
-                                            setInputManagerSwitch(
-                                              event.target.checked,
-                                            )
+                                            setInputManagerSwitch(event.target.checked)
                                           }
                                         />
                                         <label
@@ -968,14 +907,10 @@ function Arc19Minter() {
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
-                                    onChange={(event) =>
-                                      setInputManager(event.target.value)
-                                    }
+                                    onChange={(event) => setInputManager(event.target.value)}
                                     disabled={isDisabled3}
                                   />
-                                  <div className="invalid-feedback">
-                                    Manager Address is invalid
-                                  </div>
+                                  <div className="invalid-feedback">Manager Address is invalid</div>
                                 </div>
                                 <div className="jss16">
                                   <div className="label-switch">
@@ -990,9 +925,7 @@ function Arc19Minter() {
                                           className="custom-control-input"
                                           checked={freezeSwitch}
                                           onChange={(event) =>
-                                            setFreezeSwitch(
-                                              event.target.checked,
-                                            )
+                                            setFreezeSwitch(event.target.checked)
                                           }
                                         />
                                         <label
@@ -1005,24 +938,18 @@ function Arc19Minter() {
                                   <input
                                     name="assetFreeze"
                                     value={freezeAddress}
-                                    onChange={(event) =>
-                                      setFreezeAddress(event.target.value)
-                                    }
+                                    onChange={(event) => setFreezeAddress(event.target.value)}
                                     placeholder="Freeze Address"
                                     type="text"
                                     className="custom-input-size form-control"
                                     aria-invalid="false"
                                     disabled={isDisabled2}
                                   />
-                                  <div className="invalid-feedback">
-                                    Freeze Address is invalid
-                                  </div>
+                                  <div className="invalid-feedback">Freeze Address is invalid</div>
                                 </div>
                                 <div className="jss16">
                                   <div className="label-switch">
-                                    <label className="">
-                                      Clawback Address:
-                                    </label>
+                                    <label className="">Clawback Address:</label>
                                     <div className="permitted">
                                       <div className="big-switch custom-switch custom-control">
                                         <input
@@ -1033,9 +960,7 @@ function Arc19Minter() {
                                           className="custom-control-input"
                                           checked={clawbackSwitch}
                                           onChange={(event) =>
-                                            setClawbackSwitch(
-                                              event.target.checked,
-                                            )
+                                            setClawbackSwitch(event.target.checked)
                                           }
                                         />
                                         <label
@@ -1049,9 +974,7 @@ function Arc19Minter() {
                                     name="assetClawback"
                                     id="assetClawback"
                                     value={clawbackAddress}
-                                    onChange={(event) =>
-                                      setClawbackAddress(event.target.value)
-                                    }
+                                    onChange={(event) => setClawbackAddress(event.target.value)}
                                     type="text"
                                     className="custom-input-size form-control"
                                     placeholder="Clawback address"
@@ -1079,26 +1002,22 @@ function Arc19Minter() {
                               placeholder={'1'}
                               type="text"
                               value={inputAmount}
-                              onChange={(event) =>
-                                setInputAmount(event.target.value)
-                              }
+                              onChange={(event) => setInputAmount(event.target.value)}
                               inputMode="numeric"
                             />
                           </div>
                         </div>
                       </div>
                       <p className="jss36">
-                        Once your NFT is minted on the Algorand blockchain, you
-                        will not be able to edit or update any of its
-                        information unless you minted the NFT wtih ARC19. If you
-                        minted the NFT with ARC19, you may update the NFT's
-                        information with an "asset config" transaction.
+                        Once your NFT is minted on the Algorand blockchain, you will not be able to
+                        edit or update any of its information unless you minted the NFT wtih ARC19.
+                        If you minted the NFT with ARC19, you may update the NFT's information with
+                        an "asset config" transaction.
                         <br />
                         <br />
-                        You agree that any information uploaded to ARC Minter
-                        will not contain material subject to copyright or other
-                        proprietary rights, unless you have necessary permission
-                        or are otherwise legally entitled to post the material.
+                        You agree that any information uploaded to ARC Minter will not contain
+                        material subject to copyright or other proprietary rights, unless you have
+                        necessary permission or are otherwise legally entitled to post the material.
                       </p>
                       {!connected && (
                         <button
@@ -1109,9 +1028,7 @@ function Arc19Minter() {
                           disabled={false}
                           style={{ marginBottom: 30 }}
                         >
-                          <span className="MuiButton-label">
-                            Wallet not connected
-                          </span>
+                          <span className="MuiButton-label">Wallet not connected</span>
                         </button>
                       )}
                       {connected && (
@@ -1121,19 +1038,14 @@ function Arc19Minter() {
                               <button
                                 hidden={true}
                                 onClick={async () => {
-                                  if (
-                                    Pipeline.pipeConnector === 'WalletConnect'
-                                  ) {
+                                  if (Pipeline.pipeConnector === 'WalletConnect') {
                                     alert(
                                       'Please close alert and sign transaction on mobile device',
                                     );
                                   }
                                   let asaId = await createAsa();
                                   alert(asaId);
-                                  setAsa(
-                                    'https://www.nftexplorer.app/asset/' +
-                                      asaId,
-                                  );
+                                  setAsa('https://www.nftexplorer.app/asset/' + asaId);
                                   setUrlHash('https://ipfs.io/ipfs/' + urlHash);
                                   setAsaId(asaId);
                                 }}
@@ -1142,9 +1054,7 @@ function Arc19Minter() {
                                 style={{ marginBottom: 30 }}
                                 disabled={mintButtonDisabled}
                               >
-                                <span className="MuiButton-label">
-                                  Mint NFT
-                                </span>
+                                <span className="MuiButton-label">Mint NFT</span>
                                 <span id="countdown"></span>
                               </button>
                             </div>
@@ -1158,15 +1068,8 @@ function Arc19Minter() {
                               />
                             </div>
                           )}
-                          {flexHr && (
-                            <hr id="flex-hr" style={{ display: 'flex' }} />
-                          )}
-                          <Preview
-                            flex={flex}
-                            name={asa}
-                            url={asa}
-                            imgUrl={urlHash}
-                          />
+                          {flexHr && <hr id="flex-hr" style={{ display: 'flex' }} />}
+                          <Preview flex={flex} name={asa} url={asa} imgUrl={urlHash} />
                         </div>
                       )}
                     </div>
@@ -1195,11 +1098,7 @@ function Arc19Minter() {
                 >
                   <div className="footer-flex">
                     <div className="footer-left">
-                      <img
-                        src="algologo.svg"
-                        alt="banner"
-                        className="footer-img"
-                      />
+                      <img src="algologo.svg" alt="banner" className="footer-img" />
 
                       <p className="jss50">
                         Algorand is the #1 carbon-negative blockchain. <br></br>
@@ -1224,11 +1123,7 @@ function Arc19Minter() {
                           </svg>
                         </div>
                       </a>
-                      <a
-                        href="https://discord.gg/headline_crypto"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                      <a href="https://discord.gg/headline_crypto" target="_blank" rel="noreferrer">
                         <div className="jss51">
                           <svg
                             fill="#000000"
@@ -1269,7 +1164,6 @@ function Arc19Minter() {
         </p>
         <div id="WEB3_CONNECT_MODAL_ID" />
       </div>
-
       <div className="container body-2"></div>
     </div>
   );
@@ -1323,7 +1217,7 @@ function HelpDropdown() {
                 <path
                   d="M11.41 10l3.29-3.29c.19-.18.3-.43.3-.71a1.003 1.003 0 00-1.71-.71L10 8.59l-3.29-3.3a1.003 1.003 0 00-1.42 1.42L8.59 10 5.3 13.29c-.19.18-.3.43-.3.71a1.003 1.003 0 001.71.71l3.29-3.3 3.29 3.29c.18.19.43.3.71.3a1.003 1.003 0 00.71-1.71L11.41 10z"
                   fillRule="evenodd"
-                ></path>
+                />
               </svg>
             </span>
           </button>
@@ -1334,18 +1228,16 @@ function HelpDropdown() {
               <h3>⚠️🚧ARC Minter is an EXPERIMENTAL Dapp</h3>
 
               <p>
-                The ARC Minter NFT minter from HEADLINE is in active
-                development. User experience may vary dramatically as features
-                are added. It's also recommended that users look into pinning
-                images on IPFS (we use the public gateway). Although rare,
-                images can be dropped from IPFS if not pinned. With that being
-                said ARC Minter is <b>100% free</b> to use and experiment with.
-                We welcome feedback!
+                The ARC Minter NFT minter from HEADLINE is in active development. User experience
+                may vary dramatically as features are added. It's also recommended that users look
+                into pinning images on IPFS (we use the public gateway). Although rare, images can
+                be dropped from IPFS if not pinned. With that being said ARC Minter is{' '}
+                <b>100% free</b> to use and experiment with. We welcome feedback!
               </p>
 
               <p>
-                Please exercise caution when using the app. Make sure to follow
-                the minting steps in order when possible.
+                Please exercise caution when using the app. Make sure to follow the minting steps in
+                order when possible.
               </p>
 
               <ul>
@@ -1354,29 +1246,24 @@ function HelpDropdown() {
                 <li>Choose a Unit Name for your NFT.</li>
                 <li>Write a solid description of your NFT.</li>
                 <li>
-                  Choose how many decimals you want for your NFT<br></br> (0 is
-                  the recommended number).
+                  Choose how many decimals you want for your NFT<br></br> (0 is the recommended
+                  number).
                 </li>
                 <li>
-                  6. Change the Image Mimetype if you are inclined. Use the
-                  Advanced JSON Editor to add additional properties to your
-                  NFT’s JSON object.
+                  6. Change the Image Mimetype if you are inclined. Use the Advanced JSON Editor to
+                  add additional properties to your NFT’s JSON object.
                 </li>
                 <li>Upload the JSON object to IPFS.</li>
                 <li>Add an additional note field if you are so inclined.</li>
                 <li>
-                  At this point, you must sign in with your Algorand wallet if
-                  you have not already. Perra Wallet and MyAlgo are both
-                  supported at launch.
+                  At this point, you must sign in with your Algorand wallet if you have not already.
+                  Perra Wallet and MyAlgo are both supported at launch.
                 </li>
                 <li>Sign the Asset creation transaction.</li>
+                <li>Wait approximately 15 seconds for your asset number to be returned.</li>
                 <li>
-                  Wait approximately 15 seconds for your asset number to be
-                  returned.
-                </li>
-                <li>
-                  Review the NFT details via NFTExplorer, ARC3.xyz, or any other
-                  provider that supports ARC19 NFTs.
+                  Review the NFT details via NFTExplorer, ARC3.xyz, or any other provider that
+                  supports ARC19 NFTs.
                 </li>
               </ul>
             </p>

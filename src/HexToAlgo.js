@@ -105,17 +105,11 @@ class HexToAlgo extends React.Component {
           id="hex"
           disabled={!!this.state.disabled}
         />
-        <div
-          className="alert alert-secondary alert-dismissible fade show"
-          role="alert"
-        >
+        <div className="alert alert-secondary alert-dismissible fade show" role="alert">
           URL: &nbsp;
           {this.state.url}
         </div>
-        <div
-          className="alert alert-secondary alert-dismissible fade show"
-          role="alert"
-        >
+        <div className="alert alert-secondary alert-dismissible fade show" role="alert">
           Reserve Address: &nbsp;
           {this.state.address}
         </div>

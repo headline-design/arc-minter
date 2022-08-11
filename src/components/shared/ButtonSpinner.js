@@ -23,10 +23,7 @@ function ButtonSpinner({
           role="progressbar"
           style={{ width: 24, height: 24 }}
         >
-          <svg
-            className="MuiCircularProgress-svg css-13o7eu2"
-            viewBox="22 22 44 44"
-          >
+          <svg className="MuiCircularProgress-svg css-13o7eu2" viewBox="22 22 44 44">
             <circle
               className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-14891ef"
               cx="44"

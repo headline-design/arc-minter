@@ -10,15 +10,11 @@ function NetworkSwitch() {
   const onLabel = 'MainNet';
   const offLabel = 'TestNet';
   const dispatch = useDispatch();
-  const globalPipeState = useSelector(
-    algorandGlobalSelectors.selectPipeConnectState,
-  );
+  const globalPipeState = useSelector(algorandGlobalSelectors.selectPipeConnectState);
   const [checked, setChecked] = useState(!globalPipeState.mainNet);
 
   const getPrevGlobalPipeState = () =>
-    _.isEmpty(globalPipeState)
-      ? algorandGlobalInitialData.pipeConnectState
-      : globalPipeState;
+    _.isEmpty(globalPipeState) ? algorandGlobalInitialData.pipeConnectState : globalPipeState;
 
   const switchNet = (networkType) => {
     Pipeline.main = networkType;

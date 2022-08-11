@@ -19,7 +19,7 @@ class NFTFetch3 extends Component {
           id="appId"
           disabled
           style={{ marginBottom: 'unset' }}
-        ></input>
+        />
         <div id="fetchButton">
           <p className="metadata-object" style={{ marginTop: '15px' }}>
             {this.props.txIds}
