@@ -1,6 +1,5 @@
 node_modules
 .idea/
-/build/
 
 ### VisualStudioCode ###
 .vscode/
