@@ -49,8 +49,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && rm -r ../static && mv build/* ../",
-    "windows-build": "react-scripts build && rd /s build\\static && move build\\* ..\\"
+    "build": "react-scripts build"
   },
   "homepage": "https://arcminter.com",
   "eslintConfig": {
