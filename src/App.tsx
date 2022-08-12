@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Redirect, HashRouter, Route, Switch } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { configureReduxStores } from 'redux/store';
 import { Provider } from 'react-redux';
 import Arc19Minter from './Arc19Minter';
@@ -10,6 +10,7 @@ import Header from './Header';
 import AccountModule from './AccountModule';
 import NetworkSwitch from './components/shared/NetworkSwitch';
 import MetaChain from './metaChain';
+import { arcConfig } from 'js/config';
 
 const store = configureReduxStores();
 
@@ -24,8 +25,11 @@ function App() {
     }
   }
 
+  useEffect (arcConfig, [])
+
   return (
     <Provider store={store}>
+      <div id="div.form"></div>
       <div>
         <div
           className="bg-primary-500 text-white w-full py-4 justify-center sm:justify-between sm:px-5 items-center relative header-flex"

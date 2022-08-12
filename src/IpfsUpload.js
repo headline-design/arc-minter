@@ -14,7 +14,7 @@ function loadScripts() {
 
 class IpfsUpload extends Component {
   componentDidMount() {
-    loadScripts();
+    //loadScripts();
   }
 
   render() {
