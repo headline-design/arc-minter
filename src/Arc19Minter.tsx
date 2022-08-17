@@ -66,8 +66,7 @@ const MetaDataProps = (props: any) => {
 };
 
 const myJSON = {
-  Logo: 'NFDomains',
-  Background: 'Code',
+
 };
 
 window.defaultJSON = {

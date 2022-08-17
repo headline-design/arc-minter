@@ -39132,7 +39132,7 @@ Address all questions regarding this license to:
               protocol: ''.concat(config.protocol, ':'),
             };
             headers['Authorization'] = `Basic ${window.btoa(
-              `${process.env.REACT_APP_projectId}:${process.env.REACT_APP_projectSecret}`,
+              `${'2DBkstoKSMYdoXsQxIFtZ8QwKA1'}:${'6591c8745af7365b9e08c8357a3e4d42'}`,
 )}`;
             const req = getRequest(reqOptions, onRes(options.buffer, callback));
             req.on('error', function (err) {

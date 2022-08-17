@@ -41,7 +41,7 @@ const JSONer = (props) => {
           key +
           '"><input id="input' +
           key +
-          '"><button class="MuiButton-root field-btn-change plus-circle-icon" id="' +
+          '"><button class="MuiButton-root field-btn-change save-icon" id="' +
           key +
           '"></button><button class="MuiButton-root field-btn-delete delete-icon" name="' +
           key +
@@ -60,7 +60,7 @@ const JSONer = (props) => {
         alert('Key already exists!');
       }
     } else {
-      alert('enter a key value knucklehead!');
+      alert('Enter a key value!');
     }
   }
 
@@ -108,37 +108,11 @@ const JSONer = (props) => {
                         Delete
                       </button>
                     </div>
-                    {Object.keys(props.object).map((key, index) => {
-                      return (
-                        <div
-                          key={`FieldRowItemKey_${index}`}
-                          className="field-row"
-                          id={'div' + key}
-                        >
-                          <input value={key} disabled></input>
-                          <input id={'input' + key}></input>
-                          <button
-                            className={'MuiButton-root field-btn-change save-icon'}
-                            id={key}
-                            onClick={(event) => {
-                              doJsonStuff(event.target.id);
-                            }}
-                          ></button>
-                          <button
-                            className={'MuiButton-root field-btn-delete delete-icon'}
-                            name={key}
-                            onClick={(event) => {
-                              remove(event.target.name);
-                            }}
-                          ></button>
-                        </div>
-                      );
-                    })}
                   </div>
                   <div className="grid">
                     <input id="jsonerNew" placeholder="New key"></input>
                     <button
-                      className={'MuiButton-root field-btn-create plus-icon'}
+                      className={'MuiButton-root field-btn-change plus-circle-icon'}
                       onClick={createNew}
                     ></button>
                   </div>

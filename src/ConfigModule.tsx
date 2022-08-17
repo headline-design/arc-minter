@@ -33,8 +33,8 @@ const asaData = {
 };
 
 const myJSON = {
-  Logo: 'NFDomains',
-  Background: 'Code',
+  Logo: undefined,
+  Background: undefined,
 };
 
 window.defaultJSON = {
@@ -206,7 +206,7 @@ function ConfigModule() {
   }
 
   function updateJSON(event: any) {
-    let value = event.target.value;
+    let value = event.target.id;
     let key = event.target.id;
     switch (key) {
       case 'name':
