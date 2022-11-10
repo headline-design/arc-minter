@@ -2,7 +2,7 @@
 import { Redirect, HashRouter, Route, Switch } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { configureReduxStores } from 'redux/store';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import Arc19Minter from './Arc19Minter';
 import ConfigModule from './ConfigModule';
 import DocsModule from './DocsModule';
@@ -11,11 +11,24 @@ import AccountModule from './AccountModule';
 import NetworkSwitch from './components/shared/NetworkSwitch';
 import MetaChain from './metaChain';
 import { arcConfig } from 'js/config';
+import { isEmpty } from 'lodash';
+import Pipeline from '@pipeline-ui-2/pipeline';
+import algorandGlobalSelectors from './redux/algorand/global/globalSelctors';
 
 const store = configureReduxStores();
 
 function App() {
   const [HeaderPromo, setHeaderPromo] = useState('true');
+  const globalPipeState = useSelector(algorandGlobalSelectors.selectPipeConnectState);
+  const isSignedIn = useSelector(algorandGlobalSelectors.selectSignedIn);
+
+  useEffect(() => {
+    if (isSignedIn && !isEmpty(globalPipeState)) {
+      Pipeline.main = globalPipeState.isMainNet;
+      Pipeline.pipeConnector = globalPipeState.provider;
+      Pipeline.address = globalPipeState.myAddress;
+    }
+  }, [globalPipeState, isSignedIn]);
 
   function toggle() {
     if (HeaderPromo === 'none') {
@@ -25,7 +38,7 @@ function App() {
     }
   }
 
-  useEffect (arcConfig, [])
+  useEffect(arcConfig, []);
 
   return (
     <Provider store={store}>
