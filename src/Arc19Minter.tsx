@@ -33,7 +33,7 @@ const asaData = {
 
 const default69 = `{
   "standard": "arc69",
-  "description": ARC Logo for ARC Minter,
+  "description": "ARC Logo for ARC Minter",
   "external_url": "https://arcminter.daotools.org",
   "mime_type": "image/png",
   "properties": {
@@ -66,8 +66,7 @@ const MetaDataProps = (props: any) => {
 };
 
 const myJSON = {
-  Logo: 'NFDomains',
-  Background: 'Code',
+
 };
 
 window.defaultJSON = {
