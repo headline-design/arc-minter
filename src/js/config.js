@@ -6,7 +6,7 @@ const self = window
 const buffer = Buffer
 
 export async function arcConfig () {
-  console.log(process.env)
+  //console.log(process.env)
 var config = {
   port: 5001,
   gateway: 8080,
